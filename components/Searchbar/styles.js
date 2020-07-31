@@ -19,14 +19,19 @@ export const SearchbarContainer = styled.div`
       transform: translateY(-35%);
       cursor: pointer;
       svg {
-        fill: ${({ theme }) => theme.grey};
-        transition: all 0.4s;
         backface-visibility: hidden;
+        transition: all 0.4s;
+        path {
+          stroke: ${({ theme }) => theme.grey};
+          transition: all 0.4s;
+        }
       }
       &:hover {
         svg {
-          fill: ${({ theme }) => theme.primary};
           transform: scale(1.1);
+          path {
+            stroke: ${({ theme }) => theme.primary};
+          }
         }
       }
     }

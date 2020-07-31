@@ -1,4 +1,4 @@
-import IosSearch from "react-ionicons/lib/IosSearch";
+import { Search } from "../Icons";
 import { SearchbarContainer } from "./styles";
 
 const Searchbar = () => {
@@ -7,7 +7,7 @@ const Searchbar = () => {
       <form>
         <input type="text" placeholder="Recipe, ingredients..." />
         <span>
-          <IosSearch />
+          <Search />
         </span>
       </form>
     </SearchbarContainer>

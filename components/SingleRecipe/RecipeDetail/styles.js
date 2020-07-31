@@ -10,7 +10,6 @@ export const RecipeDetailContainer = styled.section`
     height: 400px;
     object-fit: cover;
   }
-  margin-bottom: 150px;
 `;
 
 export const RecipeDetailHeader = styled.div`

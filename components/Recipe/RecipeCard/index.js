@@ -9,9 +9,9 @@ import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 import InfoDetail from "../../../styles/shared/InfoDetail";
 import Difficulty from "../../../styles/shared/Difficulty";
 
-const RecipeCard = () => {
+const RecipeCard = ({ isSidebar }) => {
   return (
-    <RecipeCardContainer>
+    <RecipeCardContainer isSidebar={isSidebar}>
       <img
         src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
         alt=""
@@ -25,25 +25,29 @@ const RecipeCard = () => {
           <Servings /> 5 People
         </InfoDetail>
         <InfoDetail>
-          <Difficulty /> Easy
+          <Difficulty /> Medium
         </InfoDetail>
       </RecipeCardDetail>
-      <BadgeGroup>
-        <Badge>Breakfast</Badge>
-        <Badge>Breakfast</Badge>
-        <Badge>Breakfast</Badge>
-        <Badge>Breakfast</Badge>
-        <Badge>Breakfast</Badge>
-        <Badge>Breakfast</Badge>
-      </BadgeGroup>
-      <RecipeCardSocial>
-        <span>
-          <Heart /> 1k people like this
-        </span>
-        <span>
-          <Chat /> 20 comments
-        </span>
-      </RecipeCardSocial>
+      {!isSidebar && (
+        <React.Fragment>
+          <BadgeGroup>
+            <Badge>Breakfast</Badge>
+            <Badge>Breakfast</Badge>
+            <Badge>Breakfast</Badge>
+            <Badge>Breakfast</Badge>
+            <Badge>Breakfast</Badge>
+            <Badge>Breakfast</Badge>
+          </BadgeGroup>
+          <RecipeCardSocial>
+            <span>
+              <Heart /> 1k people like this
+            </span>
+            <span>
+              <Chat /> 20 comments
+            </span>
+          </RecipeCardSocial>
+        </React.Fragment>
+      )}
     </RecipeCardContainer>
   );
 };

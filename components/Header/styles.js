@@ -23,7 +23,8 @@ export const NavMenu = styled.ul`
 `;
 
 export const NavMenuItem = styled.li`
-  padding: 20px;
+  margin-left: 40px;
+  padding: 20px 0;
   a {
     color: ${({ theme }) => theme.darkgrey};
     font-weight: 500;

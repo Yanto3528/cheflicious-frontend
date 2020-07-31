@@ -20,4 +20,7 @@ export const RecipeIngredientsHeader = styled.div`
 export const RecipeIngredientList = styled.ul`
   padding: 0 20px;
   list-style: disc inside;
+  li {
+    margin-bottom: 5px;
+  }
 `;

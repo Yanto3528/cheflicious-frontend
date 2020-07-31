@@ -7,7 +7,7 @@ export const RecipeCardContainer = styled.div`
   box-shadow: ${({ theme }) => theme.boxShadow};
   img {
     width: 100%;
-    height: 300px;
+    height: ${({ isSidebar }) => (isSidebar ? "200px" : "300px")};
     object-fit: cover;
   }
   h2 {
