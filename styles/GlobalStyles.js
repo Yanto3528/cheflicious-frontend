@@ -37,4 +37,8 @@ export default createGlobalStyle`
   ul {
     list-style: none;
   }
+
+  #nprogress .bar {
+    background-color: ${({ theme }) => theme.primary} !important; 
+  }
 `;
