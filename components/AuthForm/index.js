@@ -28,22 +28,26 @@ const AuthForm = (props) => {
       <img src="/ingredients-min.jpg" alt="background-ingredients" />
       <div>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <img src="/logo.svg" alt="cheflicious-logo" />
+          <Link href="/">
+            <img src="/logo.svg" alt="cheflicious-logo" />
+          </Link>
           <FormSubtitle>{subtitle}</FormSubtitle>
-          {formInputs.map(({ type, placeholder, name, options, errorMsg }) => {
-            return (
-              <FormGroup>
-                <FormInput
-                  type={type}
-                  placeholder={placeholder}
-                  name={name}
-                  error={errors[name]}
-                  ref={register(options)}
-                />
-                {errors && errors[name] && <p>{errorMsg}</p>}
-              </FormGroup>
-            );
-          })}
+          {formInputs.map(
+            ({ type, placeholder, name, options, errorMsg }, index) => {
+              return (
+                <FormGroup key={index}>
+                  <FormInput
+                    type={type}
+                    placeholder={placeholder}
+                    name={name}
+                    error={errors[name]}
+                    ref={register(options)}
+                  />
+                  {errors && errors[name] && <p>{errorMsg}</p>}
+                </FormGroup>
+              );
+            }
+          )}
           <span>
             {accountText}{" "}
             <Link href={link}>

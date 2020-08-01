@@ -34,6 +34,7 @@ export const Form = styled.form`
   width: 550px;
   img {
     width: 200px;
+    cursor: pointer;
   }
   span {
     align-self: flex-end;

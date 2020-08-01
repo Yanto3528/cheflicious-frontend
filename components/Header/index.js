@@ -21,7 +21,7 @@ const Header = () => {
               </Link>
             </NavMenuItem>
             <NavMenuItem>
-              <Link href="/login">
+              <Link href="/signin">
                 <a>Log in</a>
               </Link>
             </NavMenuItem>
