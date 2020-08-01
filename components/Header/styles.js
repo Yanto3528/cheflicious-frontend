@@ -5,6 +5,9 @@ export const HeaderContainer = styled.header`
   margin-bottom: 50px;
   background-color: white;
   box-shadow: ${({ theme }) => theme.boxShadow};
+  > div:first-child {
+    height: 100%;
+  }
 `;
 
 export const Logo = styled.img`
@@ -15,29 +18,5 @@ export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const NavMenu = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-
-export const NavMenuItem = styled.li`
-  margin-left: 40px;
-  padding: 20px 0;
-  a {
-    color: ${({ theme }) => theme.darkgrey};
-    font-weight: 500;
-  }
-  .btn-signup {
-    display: inline-block;
-    padding: 8px 24px;
-    background-color: ${({ theme }) => theme.primary};
-    border-radius: 50px;
-    color: white;
-    transition: opacity 0.4s;
-    &:hover {
-      opacity: 0.8;
-    }
-  }
+  height: 100%;
 `;

@@ -1,36 +1,25 @@
-import Searchbar from "../Searchbar";
-
+import { useContext } from "react";
 import Link from "next/link";
+import { AuthContext } from "../../context/AuthContext";
+import Searchbar from "../Searchbar";
+import Menu from "../Menu";
+import AuthMenu from "../Menu/AuthMenu";
+
+import { HeaderContainer, Logo, Nav } from "./styles";
 import Container from "../../styles/shared/Container";
 
-import { HeaderContainer, Logo, Nav, NavMenu, NavMenuItem } from "./styles";
-
 const Header = () => {
+  const { user } = useContext(AuthContext);
+
   return (
     <HeaderContainer>
       <Container>
         <Nav>
           <Link href="/">
-            <Logo src="/logo.svg" alt="" />
+            <Logo src="/logo.svg" alt="cheflicious-logo" />
           </Link>
           <Searchbar />
-          <NavMenu>
-            <NavMenuItem>
-              <Link href="/categories">
-                <a>Categories</a>
-              </Link>
-            </NavMenuItem>
-            <NavMenuItem>
-              <Link href="/signin">
-                <a>Log in</a>
-              </Link>
-            </NavMenuItem>
-            <NavMenuItem>
-              <Link href="/signup">
-                <a className="btn-signup">Sign up</a>
-              </Link>
-            </NavMenuItem>
-          </NavMenu>
+          {user ? <AuthMenu /> : <Menu />}
         </Nav>
       </Container>
     </HeaderContainer>
