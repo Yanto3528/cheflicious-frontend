@@ -4,11 +4,15 @@ const inputBaseStyles = css`
   background-color: white;
   padding: 10px;
   outline: none;
-  border: none;
+  border: 1px solid white;
   border-radius: 5px;
+  transition: all 0.2s;
   &:not([type="number"]) {
     width: 100%;
     padding-right: 40px;
+  }
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.primary};
   }
 `;
 

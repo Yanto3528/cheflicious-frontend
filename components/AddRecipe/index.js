@@ -1,6 +1,11 @@
+import { useState } from "react";
+import { produce } from "immer";
+import { v4 } from "uuid";
 import ClientOnlyPortal from "../ClientOnlyPortal";
 import { Camera, Close, Add } from "../Icons";
 import MultipleSelect from "../MultipleSelect";
+import Ingredient from "./Ingredient";
+import Step from "./Step";
 import {
   AddRecipeContainer,
   AddRecipeForm,
@@ -15,7 +20,47 @@ import {
   SubmitButton,
 } from "./styles";
 
+const onChange = (setArray, value, index) => {
+  setArray((currentArray) =>
+    produce(currentArray, (array) => {
+      array[index].value = value;
+    })
+  );
+};
+
 const AddRecipe = ({ title }) => {
+  const [ingredients, setIngredients] = useState([{ id: v4(), value: "" }]);
+  const [steps, setSteps] = useState([{ id: v4(), value: "" }]);
+  const [categories, setCategories] = useState([]);
+
+  const addIngredient = () =>
+    setIngredients([...ingredients, { id: v4(), value: "" }]);
+  const addStep = () => setSteps([...steps, { id: v4(), value: "" }]);
+  const addCategories = (category) => {
+    setCategories([...categories, category]);
+  };
+
+  const onChangeIngredient = (e, index) => {
+    onChange(setIngredients, e.target.value, index);
+  };
+  const onChangeStep = (e, index) => {
+    onChange(setSteps, e.target.value, index);
+  };
+
+  const onRemoveIngredient = (id) => {
+    if (ingredients.length > 1) {
+      setIngredients(ingredients.filter((ingredient) => ingredient.id !== id));
+    }
+  };
+  const onRemoveStep = (id) => {
+    if (steps.length > 1) {
+      setSteps(steps.filter((step) => step.id !== id));
+    }
+  };
+  const onRemoveCategories = (id) => {
+    setCategories(categories.filter((category) => category.id !== id));
+  };
+
   return (
     <ClientOnlyPortal selector="#modal-root">
       <AddRecipeContainer>
@@ -71,33 +116,25 @@ const AddRecipe = ({ title }) => {
           </AddRecipeFormGroup>
           <AddRecipeFormGroup>
             <label htmlFor="categories">Categories</label>
-            <MultipleSelect placeholder="Choose Category" />
+            <MultipleSelect
+              placeholder="Choose Category"
+              categories={categories}
+              onAdd={addCategories}
+              onRemove={onRemoveCategories}
+            />
           </AddRecipeFormGroup>
           <AddRecipeFormGroupContainer>
             <h3>Ingredients</h3>
-            <AddRecipeFormGroup>
-              <AddRecipeInput
-                type="text"
-                placeholder="Ingredient..."
-                name="ingredient"
-                id="ingredient"
+            {ingredients.map((ingredient, index) => (
+              <Ingredient
+                key={ingredient}
+                ingredient={ingredient}
+                index={index}
+                onChange={onChangeIngredient}
+                onRemove={onRemoveIngredient}
               />
-              <CloseIcon>
-                <Close />
-              </CloseIcon>
-            </AddRecipeFormGroup>
-            <AddRecipeFormGroup>
-              <AddRecipeInput
-                type="text"
-                placeholder="Ingredient..."
-                name="ingredient"
-                id="ingredient"
-              />
-              <CloseIcon>
-                <Close />
-              </CloseIcon>
-            </AddRecipeFormGroup>
-            <AddButton>
+            ))}
+            <AddButton onClick={addIngredient}>
               <span>
                 <Add />
               </span>
@@ -106,31 +143,16 @@ const AddRecipe = ({ title }) => {
           </AddRecipeFormGroupContainer>
           <AddRecipeFormGroupContainer>
             <h3>Steps</h3>
-            <StepFormGroup>
-              <p>1</p>
-              <AddRecipeTextaera
-                rows="5"
-                placeholder="Describe this step"
-                name="step"
-                id="step"
+            {steps.map((step, index) => (
+              <Step
+                key={step.id}
+                step={step}
+                index={index}
+                onChange={onChangeStep}
+                onRemove={onRemoveStep}
               />
-              <CloseIcon top>
-                <Close />
-              </CloseIcon>
-            </StepFormGroup>
-            <StepFormGroup>
-              <p>2</p>
-              <AddRecipeTextaera
-                rows="5"
-                placeholder="Describe this step"
-                name="step"
-                id="step"
-              />
-              <CloseIcon top>
-                <Close />
-              </CloseIcon>
-            </StepFormGroup>
-            <AddButton>
+            ))}
+            <AddButton onClick={addStep}>
               <span>
                 <Add />
               </span>
