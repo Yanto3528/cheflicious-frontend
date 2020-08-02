@@ -35,6 +35,7 @@ export const AccountDropdownItem = styled.div`
   display: flex;
   align-items: center;
   transition: all 0.2s;
+  cursor: pointer;
   svg {
     width: 20px;
     height: 20px;

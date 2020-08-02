@@ -1,4 +1,4 @@
-import { Clock, Servings, Heart, Chat } from "../../Icons";
+import { Clock, Servings, Heart, CommentOutline } from "../../Icons";
 
 import {
   RecipeCardContainer,
@@ -43,7 +43,7 @@ const RecipeCard = ({ isSidebar }) => {
               <Heart /> 1k people like this
             </span>
             <span>
-              <Chat /> 20 comments
+              <CommentOutline /> 20 comments
             </span>
           </RecipeCardSocial>
         </React.Fragment>

@@ -30,7 +30,7 @@ export default createGlobalStyle`
     }
   }
 
-  input {
+  input, textarea {
     font-family: "Poppins", sans-serif;
   }
 

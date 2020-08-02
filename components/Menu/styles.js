@@ -8,8 +8,10 @@ export const NavMenu = styled.ul`
 export const NavMenuItem = styled.li`
   margin-left: 40px;
   padding: 20px 0;
-  cursor: pointer;
   position: relative;
+  img {
+    cursor: pointer;
+  }
 `;
 
 export const NavLink = styled.a`
@@ -30,6 +32,7 @@ export const SignupButton = styled.a`
 `;
 
 export const MenuIcon = styled.span`
+  cursor: pointer;
   svg {
     width: 25px;
     height: 25px;

@@ -1,5 +1,6 @@
 import Avatar from "../../../styles/shared/Avatar";
 import { Setting, Person, PowerOff } from "../../Icons";
+import dropdownVariants from "../variants";
 
 import {
   AccountDropdownContainer,
@@ -7,40 +8,10 @@ import {
   AccountDropdownItem,
 } from "./styles";
 
-const accountDropdownVariants = {
-  hidden: {
-    scale: 0.4,
-    opacity: 0,
-    originY: 0,
-    originX: 1,
-    y: "100%",
-  },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    originY: 0,
-    originX: 1,
-    y: "100%",
-    transition: {
-      duration: 0.3,
-    },
-  },
-  exit: {
-    scale: 0.4,
-    opacity: 0,
-    originY: 0,
-    originX: 1,
-    y: "100%",
-    transition: {
-      duration: 0.3,
-    },
-  },
-};
-
 const AccountDropdown = ({ toggle }) => {
   return (
     <AccountDropdownContainer
-      variants={accountDropdownVariants}
+      variants={dropdownVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
