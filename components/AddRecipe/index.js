@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { produce } from "immer";
 import { v4 } from "uuid";
+import axios from "axios";
+import useSWR from "swr";
 import ClientOnlyPortal from "../ClientOnlyPortal";
 import { Camera, Add, Close } from "../Icons";
-import MultipleSelect from "../MultipleSelect";
+import Select from "../Select";
 import Ingredient from "./Ingredient";
 import Instruction from "./Instruction";
+import { categoriesMockData, difficultyData } from "./mockData";
+
 import {
   AddRecipeContainer,
   AddRecipeForm,
@@ -37,29 +41,49 @@ const onChangeArray = (setArray, e, index) => {
 };
 
 const AddRecipe = ({ titleText, toggle }) => {
+  // const { data: categoriesOptionData } = useSWR("/api/categories");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     servings: 1,
     cookingTime: 5,
+    difficulty: "easy",
   });
-  const { title, description, servings, cookingTime } = formData;
+  const { title, description, servings, cookingTime, difficulty } = formData;
 
   const [ingredients, setIngredients] = useState([{ id: v4(), value: "" }]);
   const [instructions, setInstructions] = useState([{ id: v4(), value: "" }]);
   const [categories, setCategories] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState(categoriesMockData);
+  const [difficultyOptions] = useState(difficultyData);
 
   const [file, setFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCategoryOptions = async () => {
+      const res = await axios.get("/api/categories");
+      setCategoryOptions(res.data);
+    };
+    fetchCategoryOptions();
+  }, []);
 
   const addIngredient = () =>
     setIngredients([...ingredients, { id: v4(), value: "" }]);
   const addInstruction = () =>
     setInstructions([...instructions, { id: v4(), value: "" }]);
   const addCategories = (category) => {
-    errors.category = false;
+    errors.categories = false;
     setCategories([...categories, category]);
+    setCategoryOptions(
+      categoryOptions.filter((option) => option._id !== category._id)
+    );
+  };
+
+  const onSelectDifficulty = (selectedOption) => {
+    errors.difficulty = false;
+    setFormData({ ...formData, difficulty: selectedOption });
   };
 
   const onChangeIngredient = (e, index) => {
@@ -81,8 +105,19 @@ const AddRecipe = ({ titleText, toggle }) => {
       );
     }
   };
-  const onRemoveCategories = (id) => {
-    setCategories(categories.filter((category) => category.id !== id));
+  const onRemoveCategories = (data) => {
+    setCategories(categories.filter((category) => category._id !== data._id));
+    setCategoryOptions(
+      [...categoryOptions, data].sort(function (a, b) {
+        if (a.value < b.value) {
+          return -1;
+        }
+        if (a.value > b.value) {
+          return 1;
+        }
+        return 0;
+      })
+    );
   };
 
   const handleChange = (e) => {
@@ -95,6 +130,7 @@ const AddRecipe = ({ titleText, toggle }) => {
 
   const handleChangeImage = (e) => {
     if (e.target.files && e.target.files.length !== 0) {
+      setFile(e.target.files[0]);
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -109,7 +145,7 @@ const AddRecipe = ({ titleText, toggle }) => {
     setImagePreview(null);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (title === "") {
       errors.title = true;
@@ -124,9 +160,25 @@ const AddRecipe = ({ titleText, toggle }) => {
       errors.instruction = true;
     }
     if (categories.length === 0) {
-      errors.category = true;
+      errors.categories = true;
     }
-    setFormData({ ...formData, ingredients, instructions, categories });
+    try {
+      const imageRes = await axios.post("/api/upload", file);
+      console.log("Image", imageRes.data);
+      const image = imageRes.data.Location;
+      const data = {
+        ...formData,
+        image,
+        ingredients,
+        instructions,
+        categories,
+      };
+      console.log(data);
+      const res = await axios.post("/api/recipes", data);
+      console.log(res.data);
+    } catch (error) {
+      setError(error.response.data.error);
+    }
   };
 
   return (
@@ -222,10 +274,24 @@ const AddRecipe = ({ titleText, toggle }) => {
             min
           </AddRecipeFormGroup>
           <AddRecipeFormGroup>
+            <label htmlFor="difficulty">Difficulty</label>
+            <Select
+              placeholder="Choose Difficulty"
+              values={difficulty}
+              options={difficultyOptions}
+              name="difficulty"
+              onSelect={onSelectDifficulty}
+              errors={errors}
+            />
+          </AddRecipeFormGroup>
+          <AddRecipeFormGroup>
             <label htmlFor="categories">Categories</label>
-            <MultipleSelect
+            <Select
               placeholder="Choose Category"
-              categories={categories}
+              isMulti
+              values={categories}
+              options={categoryOptions}
+              name="categories"
               onAdd={addCategories}
               onRemove={onRemoveCategories}
               errors={errors}

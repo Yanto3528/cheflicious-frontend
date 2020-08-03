@@ -1,5 +1,6 @@
 import Router from "next/router";
 import axios from "axios";
+import { SWRConfig } from "swr";
 import cookie from "js-cookie";
 import NProgress from "nprogress";
 import { ThemeProvider } from "styled-components";
@@ -22,22 +23,28 @@ if (cookie.get("token")) {
   )}`;
 }
 
+const options = {
+  fetcher: (url) => axios.get(url).then((res) => res.data),
+};
+
 function MyApp({ Component, pageProps, router }) {
   const renderLayout = !router.pathname.startsWith("/sign");
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <AuthProvider>
-        {renderLayout ? (
-          <Layout>
-            <Container>
-              <Component {...pageProps} />
-            </Container>
-          </Layout>
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </AuthProvider>
+      <SWRConfig value={options}>
+        <AuthProvider>
+          {renderLayout ? (
+            <Layout>
+              <Container>
+                <Component {...pageProps} />
+              </Container>
+            </Layout>
+          ) : (
+            <Component {...pageProps} />
+          )}
+        </AuthProvider>
+      </SWRConfig>
     </ThemeProvider>
   );
 }

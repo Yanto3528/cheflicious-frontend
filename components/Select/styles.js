@@ -3,18 +3,19 @@ import { motion } from "framer-motion";
 
 export const Placeholder = styled(motion.p)`
   font-size: 1.4rem;
+  text-transform: capitalize;
   position: absolute;
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
 `;
 
-export const MultipleSelectContainer = styled.div`
+export const SelectContainer = styled.div`
   position: relative;
   cursor: pointer;
 `;
 
-export const MultipleSelectInput = styled.div`
+export const SelectInput = styled.div`
   outline: none;
   background-color: white;
   min-height: 47px;
@@ -30,7 +31,7 @@ export const MultipleSelectInput = styled.div`
     `}
 `;
 
-export const MultipleSelectItem = styled(motion.span)`
+export const SelectItem = styled(motion.span)`
   background-color: ${({ theme }) => theme.primaryLight};
   color: ${({ theme }) => theme.primary};
   border-radius: 5px;
@@ -47,7 +48,7 @@ export const MultipleSelectItem = styled(motion.span)`
   }
 `;
 
-export const MultipleSelectItemCloseIcon = styled.span`
+export const SelectItemCloseIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
