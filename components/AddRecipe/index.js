@@ -43,8 +43,8 @@ const onChangeArray = (setArray, e, index) => {
 const AddRecipe = ({ titleText, toggle }) => {
   // const { data: categoriesOptionData } = useSWR("/api/categories");
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
+    title: "Super Spicy Chicken",
+    description: "This is the best recipe in the world",
     servings: 1,
     cookingTime: 5,
     difficulty: "easy",
@@ -145,6 +145,13 @@ const AddRecipe = ({ titleText, toggle }) => {
     setImagePreview(null);
   };
 
+  const handleImageUpload = async () => {
+    const fileFormData = new FormData();
+    fileFormData.append("image", file);
+    const res = await axios.post("/api/upload", fileFormData);
+    return res.data.Location;
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (title === "") {
@@ -163,9 +170,7 @@ const AddRecipe = ({ titleText, toggle }) => {
       errors.categories = true;
     }
     try {
-      const imageRes = await axios.post("/api/upload", file);
-      console.log("Image", imageRes.data);
-      const image = imageRes.data.Location;
+      const image = await handleImageUpload();
       const data = {
         ...formData,
         image,
@@ -173,9 +178,7 @@ const AddRecipe = ({ titleText, toggle }) => {
         instructions,
         categories,
       };
-      console.log(data);
-      const res = await axios.post("/api/recipes", data);
-      console.log(res.data);
+      await axios.post("/api/recipes", data);
     } catch (error) {
       setError(error.response.data.error);
     }

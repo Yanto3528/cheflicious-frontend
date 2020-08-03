@@ -12,4 +12,9 @@ export const Category = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+  h2 {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 2rem;
+  }
 `;
