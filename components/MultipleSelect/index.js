@@ -15,6 +15,7 @@ import {
   Dropdown,
   DropdownItem,
 } from "./styles";
+import ErrorText from "../../styles/shared/ErrorText";
 import {
   dropdownVariants,
   categoriesVariants,
@@ -51,7 +52,13 @@ const categoriesMockData = [
 
 let variants;
 
-const MultipleSelect = ({ placeholder, categories, onAdd, onRemove }) => {
+const MultipleSelect = ({
+  placeholder,
+  categories,
+  onAdd,
+  onRemove,
+  errors,
+}) => {
   const [placeholderText, setPlaceholderText] = useState(placeholder);
   const [showDropdown, toggleShowDropdown, setShowDropdown] = useToggle(false);
   const [categoryList, setCategoryList] = useState(categoriesMockData);
@@ -60,7 +67,7 @@ const MultipleSelect = ({ placeholder, categories, onAdd, onRemove }) => {
     variants = plaholderStartVariants;
   }, []);
 
-  const onSelectItem = (data) => {
+  const onSelectItem = (e, data) => {
     onAdd(data);
     setCategoryList(categoryList.filter((category) => category.id !== data.id));
   };
@@ -85,13 +92,10 @@ const MultipleSelect = ({ placeholder, categories, onAdd, onRemove }) => {
     }
   };
 
-  const resetPlaceholder = () => setPlaceholderText(placeholder);
-  const resetValue = () => setPlaceholderText("");
-
   return (
     <OutsideClickHandler onOutsideClick={() => setShowDropdown(false)}>
       <MultipleSelectContainer onClick={() => setShowDropdown(true)}>
-        <MultipleSelectInput>
+        <MultipleSelectInput error={errors && errors.category}>
           {categories.length === 0 && (
             <Placeholder variants={variants} initial="hidden" animate="visible">
               {placeholderText}
@@ -117,6 +121,9 @@ const MultipleSelect = ({ placeholder, categories, onAdd, onRemove }) => {
             ))}
           </AnimatePresence>
         </MultipleSelectInput>
+        {errors && errors.category && (
+          <ErrorText>*Please choose at least 1 category</ErrorText>
+        )}
         <IconContainer>
           <ChevronDown />
         </IconContainer>
@@ -131,7 +138,7 @@ const MultipleSelect = ({ placeholder, categories, onAdd, onRemove }) => {
               {categoryList.map((category) => (
                 <DropdownItem
                   key={category.id}
-                  onClick={() => onSelectItem(category)}
+                  onClick={(e) => onSelectItem(e, category)}
                 >
                   {category.value}
                 </DropdownItem>
@@ -145,15 +152,3 @@ const MultipleSelect = ({ placeholder, categories, onAdd, onRemove }) => {
 };
 
 export default MultipleSelect;
-
-// {
-//   categories.length === 0 && (
-//     <Placeholder
-//       variants={plaholderVariants}
-//       initial={controls}
-//       animate={controls}
-//     >
-//       {placeholderText}
-//     </Placeholder>
-//   );
-// }

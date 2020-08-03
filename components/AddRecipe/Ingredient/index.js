@@ -1,7 +1,7 @@
 import { Close } from "../../Icons";
 import { AddRecipeFormGroup, AddRecipeInput, CloseIcon } from "../styles";
 
-const Ingredient = ({ ingredient, index, onChange, onRemove }) => {
+const Ingredient = ({ ingredient, index, errors, onChange, onRemove }) => {
   const handleChange = (e) => onChange(e, index);
   const handleRemove = (e) => onRemove(ingredient.id);
 
@@ -14,6 +14,7 @@ const Ingredient = ({ ingredient, index, onChange, onRemove }) => {
         id="ingredient"
         value={ingredient.value}
         onChange={handleChange}
+        error={errors && errors.ingredient}
       />
       <CloseIcon onClick={handleRemove}>
         <Close />

@@ -19,18 +19,20 @@ const AuthMenu = () => {
   const [
     showAccountDropdown,
     toggleAccountDropdown,
-    setAccountDropdownOff,
+    setAccountDropdown,
   ] = useToggle(false);
   const [
     showNotificationDropdown,
     toggleNotificationDropdown,
-    setNotificationDropdownOff,
+    setNotificationDropdown,
   ] = useToggle(false);
+
+  const [showAddRecipe, toggleShowAddRecipe] = useToggle(false);
 
   return (
     <React.Fragment>
       <NavMenu>
-        <NavMenuItem>
+        <NavMenuItem onClick={toggleShowAddRecipe}>
           <MenuIcon>
             <Add />
           </MenuIcon>
@@ -47,7 +49,9 @@ const AuthMenu = () => {
             <ChatBubbles />
           </MenuIcon>
         </NavMenuItem>
-        <OutsideClickHandler onOutsideClick={setNotificationDropdownOff}>
+        <OutsideClickHandler
+          onOutsideClick={() => setNotificationDropdown(false)}
+        >
           <NavMenuItem onClick={toggleNotificationDropdown}>
             <MenuIcon>
               <Notifications />
@@ -59,7 +63,7 @@ const AuthMenu = () => {
             </AnimatePresence>
           </NavMenuItem>
         </OutsideClickHandler>
-        <OutsideClickHandler onOutsideClick={setAccountDropdownOff}>
+        <OutsideClickHandler onOutsideClick={() => setAccountDropdown(false)}>
           <NavMenuItem onClick={toggleAccountDropdown}>
             <Avatar
               marginRight="0"
@@ -73,7 +77,11 @@ const AuthMenu = () => {
           </NavMenuItem>
         </OutsideClickHandler>
       </NavMenu>
-      <AddRecipe title="Create Recipe" />
+      <AnimatePresence>
+        {showAddRecipe && (
+          <AddRecipe titleText="Create Recipe" toggle={toggleShowAddRecipe} />
+        )}
+      </AnimatePresence>
     </React.Fragment>
   );
 };

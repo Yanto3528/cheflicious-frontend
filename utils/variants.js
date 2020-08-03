@@ -1,3 +1,21 @@
+export const addRecipeVariants = {
+  hidden: {
+    y: "100%",
+  },
+  visible: {
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    y: "100%",
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export const dropdownVariants = {
   hidden: {
     opacity: 0,

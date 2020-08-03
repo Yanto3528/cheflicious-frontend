@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 
 export const Placeholder = styled(motion.p)`
@@ -11,18 +11,23 @@ export const Placeholder = styled(motion.p)`
 
 export const MultipleSelectContainer = styled.div`
   position: relative;
-  height: 40px;
   cursor: pointer;
 `;
 
 export const MultipleSelectInput = styled.div`
-  background-color: white;
-  height: 100%;
-  padding: 10px;
   outline: none;
+  background-color: white;
+  min-height: 47px;
+  padding: 10px;
   border-radius: 5px;
-  font-size: 1.4rem;
+  border: 1px solid white;
+  font-size: 1.2rem;
   position: relative;
+  ${({ error }) =>
+    error &&
+    css`
+      border-color: ${({ theme }) => theme.red};
+    `}
 `;
 
 export const MultipleSelectItem = styled(motion.span)`
@@ -37,7 +42,8 @@ export const MultipleSelectItem = styled(motion.span)`
     align-items: center;
   }
   p {
-    padding: 5px 0 5px 10px;
+    padding: 2px 0 2px 10px;
+    text-transform: capitalize;
   }
 `;
 
@@ -45,11 +51,13 @@ export const MultipleSelectItemCloseIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   margin-left: 5px;
   transition: all 0.2s;
   svg {
+    width: 15px;
+    height: 15px;
     path {
       stroke: ${({ theme }) => theme.primary};
       transition: all 0.2s;
@@ -68,9 +76,8 @@ export const MultipleSelectItemCloseIcon = styled.span`
 export const IconContainer = styled.span`
   display: inline-block;
   position: absolute;
-  top: 50%;
+  top: 15px;
   right: 10px;
-  transform: translateY(-50%);
   cursor: pointer;
   svg {
     width: 20px;

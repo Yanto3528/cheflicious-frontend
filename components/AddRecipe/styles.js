@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
 
 const inputBaseStyles = css`
   background-color: white;
@@ -12,11 +13,19 @@ const inputBaseStyles = css`
     padding-right: 40px;
   }
   &:focus {
-    border: 1px solid ${({ theme }) => theme.primary};
+    border-color: ${({ theme }) => theme.primary};
   }
+  ${({ error }) =>
+    error &&
+    css`
+      border-color: ${({ theme }) => theme.red};
+      &:focus {
+        border-color: ${({ theme }) => theme.red};
+      }
+    `}
 `;
 
-export const AddRecipeContainer = styled.div`
+export const AddRecipeContainer = styled(motion.div)`
   position: absolute;
   top: 0;
   left: 0;
@@ -42,27 +51,41 @@ export const InputFileContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 300px;
-  background-color: ${({ theme }) => theme.grey2};
+  position: relative;
+  height: 375px;
+  background-color: ${({ theme }) => theme.lightgrey2};
   margin-bottom: 20px;
+  label {
+    cursor: pointer;
+    ${({ src }) =>
+      src &&
+      css`
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        background-image: ${({ src }) => `url(${src})`};
+        background-position: center;
+        background-size: cover;
+      `}
+  }
   input {
     display: none;
   }
-  span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: white;
-    cursor: pointer;
-    svg {
-      width: 40px;
-      height: 40px;
-      path {
-        stroke: ${({ theme }) => theme.primary};
-      }
+`;
+
+export const CameraUpload = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+  svg {
+    width: 40px;
+    height: 40px;
+    path {
+      stroke: ${({ theme }) => theme.primary};
     }
   }
 `;
@@ -136,26 +159,30 @@ export const AddButton = styled.div`
 `;
 
 export const CloseIcon = styled.span`
-  height: 20px;
+  width: ${({ size }) => (size ? size : "20px")};
+  height: ${({ size }) => (size ? size : "20px")};
   position: absolute;
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
   svg {
+    width: 100%;
+    height: 100%;
     path {
-      stroke: ${({ theme }) => theme.grey};
+      stroke: ${({ color, theme }) => (color ? color : theme.grey)};
     }
   }
   ${({ top }) =>
     top &&
     css`
-      top: 20px;
+      top: ${({ wide }) => (wide ? "30px" : "20px")};
+      right: ${({ wide }) => (wide ? "30px" : "20px")};
       transform: translateY(0);
     `}
 `;
 
-export const StepFormGroup = styled.div`
+export const InstructionFormGroup = styled.div`
   margin-bottom: 10px;
   padding: 10px;
   position: relative;

@@ -4,7 +4,7 @@ import Grid from "../../styles/shared/Grid";
 const Categories = () => {
   return (
     <div>
-      <h1>Categories</h1>
+      <h1 style={{ fontSize: "2.4rem" }}>Categories</h1>
       <Grid>
         <Category>
           <img
