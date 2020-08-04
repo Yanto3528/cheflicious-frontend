@@ -22,7 +22,7 @@ const RecipeCard = ({ isSidebar, recipe }) => {
           <Servings /> {`${recipe.servings} servings`}
         </InfoDetail>
         <InfoDetail>
-          <Difficulty /> {recipe.difficulty}
+          <Difficulty type={recipe.difficulty} /> {recipe.difficulty}
         </InfoDetail>
       </RecipeCardDetail>
       {!isSidebar && (

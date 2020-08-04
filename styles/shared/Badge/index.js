@@ -6,12 +6,14 @@ export default styled.span`
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 1.4rem;
+  margin-right: 10px;
+  margin-bottom: 10px;
 `;
 
 export const BadgeGroup = styled.div`
   padding: 20px;
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: flex-start; */
   gap: 10px;
 `;

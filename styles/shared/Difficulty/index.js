@@ -4,7 +4,18 @@ export default styled.span`
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-color: ${({ theme }) => theme.success};
   border-radius: 50%;
   margin-right: 5px;
+  background-color: ${({ type, theme }) => {
+    switch (type) {
+      case "easy":
+        return theme.success;
+      case "medium":
+        return theme.info;
+      case "hard":
+        return theme.danger;
+      default:
+        return theme.success;
+    }
+  }};
 `;
