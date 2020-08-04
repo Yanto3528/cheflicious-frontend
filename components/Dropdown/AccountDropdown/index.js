@@ -11,7 +11,7 @@ import {
 } from "./styles";
 
 const AccountDropdown = ({ toggle }) => {
-  const { signout } = useContext(AuthContext);
+  const { user, signout } = useContext(AuthContext);
   return (
     <AccountDropdownContainer
       variants={dropdownVariants}
@@ -20,13 +20,10 @@ const AccountDropdown = ({ toggle }) => {
       exit="exit"
     >
       <AccountDropdownHeader>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80"
-          alt=""
-        />
+        <Avatar src={user.avatar} alt={user.name} />
         <div>
-          <p>Chris William</p>
-          <span>chris@gmail.com</span>
+          <p>{user.name}</p>
+          <span>{user.email}</span>
         </div>
       </AccountDropdownHeader>
       <AccountDropdownItem>

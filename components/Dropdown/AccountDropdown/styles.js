@@ -10,7 +10,7 @@ export const AccountDropdownContainer = styled(motion.div)`
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 5px;
   overflow: hidden;
-  width: 250px;
+  width: 300px;
 `;
 
 export const AccountDropdownHeader = styled.div`

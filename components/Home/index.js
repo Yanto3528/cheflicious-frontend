@@ -1,9 +1,9 @@
 import RecipeList from "../Recipe/RecipeList";
 
-const Home = () => {
+const Home = ({ recipes }) => {
   return (
     <main>
-      <RecipeList title="Recent Recipes" />
+      <RecipeList title="Recent Recipes" recipes={recipes} />
     </main>
   );
 };

@@ -1,4 +1,5 @@
-import { Clock, Servings, Heart, CommentOutline } from "../../Icons";
+import { Clock, Servings, HeartOutline, CommentOutline } from "../../Icons";
+import convertNumberToTime from "../../../utils/convertNumberToTime";
 import {
   RecipeCardContainer,
   RecipeCardDetail,
@@ -8,41 +9,35 @@ import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 import InfoDetail from "../../../styles/shared/InfoDetail";
 import Difficulty from "../../../styles/shared/Difficulty";
 
-const RecipeCard = ({ isSidebar }) => {
+const RecipeCard = ({ isSidebar, recipe }) => {
   return (
     <RecipeCardContainer isSidebar={isSidebar}>
-      <img
-        src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
-        alt=""
-      />
-      <h2>Toast Bread with Blueberry and Banana</h2>
+      <img src={recipe.image} alt={recipe.title} />
+      <h2>{recipe.title}</h2>
       <RecipeCardDetail>
         <InfoDetail>
-          <Clock /> 30 mins
+          <Clock /> {convertNumberToTime(recipe.cookingTime)}
         </InfoDetail>
         <InfoDetail>
-          <Servings /> 5 People
+          <Servings /> {`${recipe.servings} servings`}
         </InfoDetail>
         <InfoDetail>
-          <Difficulty /> Medium
+          <Difficulty /> {recipe.difficulty}
         </InfoDetail>
       </RecipeCardDetail>
       {!isSidebar && (
         <React.Fragment>
           <BadgeGroup>
-            <Badge>Breakfast</Badge>
-            <Badge>Breakfast</Badge>
-            <Badge>Breakfast</Badge>
-            <Badge>Breakfast</Badge>
-            <Badge>Breakfast</Badge>
-            <Badge>Breakfast</Badge>
+            {recipe.categories.map((category) => (
+              <Badge key={category._id}>{category.value}</Badge>
+            ))}
           </BadgeGroup>
           <RecipeCardSocial>
             <span>
-              <Heart /> 1k people like this
+              <HeartOutline /> {recipe.likes.length} likes
             </span>
             <span>
-              <CommentOutline /> 20 comments
+              <CommentOutline /> {recipe.comments.length} comments
             </span>
           </RecipeCardSocial>
         </React.Fragment>

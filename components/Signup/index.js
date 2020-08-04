@@ -29,7 +29,7 @@ const formInputs = [
 const Signup = () => {
   const { signup, error } = useContext(AuthContext);
   const onSubmit = (data) => {
-    console.log(data);
+    signup(data);
   };
   return (
     <AuthForm

@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import { BadgeGroup } from "../../../styles/shared/Badge";
 import { motion } from "framer-motion";
 
 export const RecipeCardContainer = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border-radius: 5px;
   overflow: hidden;
@@ -14,6 +17,9 @@ export const RecipeCardContainer = styled(motion.div)`
   h2 {
     padding: 20px 20px 10px 20px;
     font-weight: 600;
+  }
+  ${BadgeGroup} {
+    flex: 1;
   }
 `;
 export const RecipeCardDetail = styled.div`
@@ -40,6 +46,7 @@ export const RecipeCardSocial = styled.div`
     display: flex;
     align-items: center;
     font-size: 1.4rem;
+    cursor: pointer;
     svg {
       width: 20px;
       height: 20px;
