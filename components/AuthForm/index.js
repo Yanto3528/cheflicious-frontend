@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -9,6 +10,7 @@ import {
   FormInput,
   FormButton,
 } from "./styles";
+import ErrorText from "../../styles/shared/ErrorText";
 
 const AuthForm = (props) => {
   const {
@@ -18,6 +20,7 @@ const AuthForm = (props) => {
     linkText,
     link,
     submitText,
+    error,
     onSubmit,
   } = props;
 
@@ -32,6 +35,11 @@ const AuthForm = (props) => {
             <img src="/logo.svg" alt="cheflicious-logo" />
           </Link>
           <FormSubtitle>{subtitle}</FormSubtitle>
+          {error && (
+            <ErrorText center fontSize="2rem">
+              {error}
+            </ErrorText>
+          )}
           {formInputs.map(
             ({ type, placeholder, name, options, errorMsg }, index) => {
               return (

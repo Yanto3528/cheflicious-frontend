@@ -1,3 +1,25 @@
+export const recipeCardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+    },
+  },
+};
+
+export const staggerVariants = {
+  animate: {
+    transition: {
+      staggerChildren: 1,
+    },
+  },
+};
+
 export const addRecipeVariants = {
   hidden: {
     y: "100%",

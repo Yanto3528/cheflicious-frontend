@@ -1,5 +1,4 @@
 import { Clock, Servings, Heart, CommentOutline } from "../../Icons";
-
 import {
   RecipeCardContainer,
   RecipeCardDetail,

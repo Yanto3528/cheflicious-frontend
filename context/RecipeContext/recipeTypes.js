@@ -1,0 +1,3 @@
+export default {
+  TOGGLE_SHOW_ADD_RECIPE: "TOGGLE_SHOW_ADD_RECIPE",
+};

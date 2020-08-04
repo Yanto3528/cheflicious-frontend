@@ -17,6 +17,7 @@ export const NavMenuItem = styled.li`
 export const NavLink = styled.a`
   color: ${({ theme }) => theme.darkgrey};
   font-weight: 500;
+  cursor: pointer;
 `;
 
 export const SignupButton = styled.a`
@@ -25,9 +26,11 @@ export const SignupButton = styled.a`
   background-color: ${({ theme }) => theme.primary};
   border-radius: 50px;
   color: white;
+  cursor: pointer;
   transition: opacity 0.4s;
   &:hover {
     opacity: 0.8;
+    color: white;
   }
 `;
 

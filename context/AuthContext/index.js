@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
         type: authTypes.SIGN_UP_SUCCESS,
         payload: res.data,
       });
-      cookie.set("token", res.data, { expires: 7 });
+      cookie.set("token", res.data.token, { expires: 7 });
       await getCurrentUser();
       Router.push("/");
     } catch (error) {
@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
         type: authTypes.SIGN_IN_SUCCESS,
         payload: res.data,
       });
-      cookie.set("token", res.data, { expires: 7 });
+      cookie.set("token", res.data.token, { expires: 7 });
       await getCurrentUser();
       Router.push("/");
     } catch (error) {
@@ -67,10 +67,18 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const signout = () => {
+    cookie.remove("token");
+    Router.push("/signin");
+  };
+
   const getCurrentUser = async () => {
     setLoading();
     try {
-      const res = await axios.get("/api/users/me");
+      const token = cookie.get("token");
+      const res = await axios.get("/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch({ type: authTypes.GET_USER_SUCCESS, payload: res.data });
     } catch (error) {
       console.log(error);
@@ -87,7 +95,9 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: authTypes.SET_LOADING, payload: value });
 
   return (
-    <AuthContext.Provider value={{ ...state, signin, signup, getCurrentUser }}>
+    <AuthContext.Provider
+      value={{ ...state, signin, signup, signout, getCurrentUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

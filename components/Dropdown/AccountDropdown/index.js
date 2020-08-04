@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 import Avatar from "../../../styles/shared/Avatar";
 import { Setting, Person, PowerOff } from "../../Icons";
 import dropdownVariants from "../variants";
@@ -9,6 +11,7 @@ import {
 } from "./styles";
 
 const AccountDropdown = ({ toggle }) => {
+  const { signout } = useContext(AuthContext);
   return (
     <AccountDropdownContainer
       variants={dropdownVariants}
@@ -34,7 +37,7 @@ const AccountDropdown = ({ toggle }) => {
         <Setting />
         <span>Settings</span>
       </AccountDropdownItem>
-      <AccountDropdownItem>
+      <AccountDropdownItem onClick={signout}>
         <PowerOff />
         <span>Log out</span>
       </AccountDropdownItem>

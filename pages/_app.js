@@ -1,10 +1,10 @@
 import Router from "next/router";
 import axios from "axios";
-import { SWRConfig } from "swr";
 import cookie from "js-cookie";
 import NProgress from "nprogress";
+import { SWRConfig } from "swr";
 import { ThemeProvider } from "styled-components";
-import AuthProvider from "../context/AuthContext";
+import RootProvider from "../context/RootContext";
 import Layout from "../components/Layout";
 import GlobalStyles from "../styles/GlobalStyles";
 import theme from "../styles/theme";
@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps, router }) {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <SWRConfig value={options}>
-        <AuthProvider>
+        <RootProvider>
           {renderLayout ? (
             <Layout>
               <Container>
@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps, router }) {
           ) : (
             <Component {...pageProps} />
           )}
-        </AuthProvider>
+        </RootProvider>
       </SWRConfig>
     </ThemeProvider>
   );

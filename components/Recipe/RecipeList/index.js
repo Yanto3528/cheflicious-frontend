@@ -1,5 +1,6 @@
 import RecipeCard from "../RecipeCard";
 
+import { staggerVariants } from "../../../utils/variants";
 import Grid from "../../../styles/shared/Grid";
 
 const RecipeList = ({ title }) => {

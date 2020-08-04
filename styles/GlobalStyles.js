@@ -17,6 +17,7 @@ export default createGlobalStyle`
     color: ${({ theme }) => theme.grey};
     background-color: ${({ theme }) => theme.lightgrey};
     line-height: 1.5;
+    padding-bottom: 50px;
   }
   h1, h2, h3, h4, h5,h6 {
     font-family: "Poppins", sans-serif;

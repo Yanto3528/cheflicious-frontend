@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-export const RecipeCardContainer = styled.div`
+export const RecipeCardContainer = styled(motion.div)`
   background-color: white;
   border-radius: 5px;
   overflow: hidden;

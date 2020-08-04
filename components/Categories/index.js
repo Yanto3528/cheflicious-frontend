@@ -8,7 +8,7 @@ const Categories = ({ categories }) => {
       <h1 style={{ fontSize: "2.4rem" }}>Categories</h1>
       <Grid>
         {categories.map((category) => (
-          <Category>
+          <Category key={category._id}>
             <img src={category.image} alt={category.value} />
             <h2>{category.value}</h2>
           </Category>

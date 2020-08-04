@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import Link from "next/link";
 import useToggle from "../../../lib/hook/useToggle";
 import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
+import { AuthContext } from "../../../context/AuthContext";
+import { RecipeContext } from "../../../context/RecipeContext";
 import AccountDropdown from "../../Dropdown/AccountDropdown";
 import NotificationDropdown from "../../Dropdown/NotificationDropdown";
 import AddRecipe from "../../AddRecipe";
@@ -27,15 +30,18 @@ const AuthMenu = () => {
     setNotificationDropdown,
   ] = useToggle(false);
 
-  const [showAddRecipe, toggleShowAddRecipe] = useToggle(false);
+  const { showAddRecipe, toggleShowAddRecipe } = useContext(RecipeContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <React.Fragment>
       <NavMenu>
         <NavMenuItem onClick={toggleShowAddRecipe}>
+          {/* <Link href="/recipes/add"> */}
           <MenuIcon>
             <Add />
           </MenuIcon>
+          {/* </Link> */}
         </NavMenuItem>
         <NavMenuItem>
           <Link href="/categories">
@@ -65,10 +71,7 @@ const AuthMenu = () => {
         </OutsideClickHandler>
         <OutsideClickHandler onOutsideClick={() => setAccountDropdown(false)}>
           <NavMenuItem onClick={toggleAccountDropdown}>
-            <Avatar
-              marginRight="0"
-              src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80"
-            />
+            <Avatar marginRight="0" src={user.avatar} alt={user.name} />
             <AnimatePresence>
               {showAccountDropdown && (
                 <AccountDropdown toggle={toggleAccountDropdown} />

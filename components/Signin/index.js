@@ -20,7 +20,7 @@ const formInputs = [
 ];
 
 const Signin = () => {
-  const { signin } = useContext(AuthContext);
+  const { signin, error } = useContext(AuthContext);
   const onSubmit = (data) => {
     signin(data);
   };
@@ -33,6 +33,7 @@ const Signin = () => {
       linkText="Sign up"
       link="/signup"
       submitText="Sign in"
+      error={error}
       onSubmit={onSubmit}
     />
   );

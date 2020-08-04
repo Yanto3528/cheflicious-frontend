@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { produce } from "immer";
 import { v4 } from "uuid";
+import { useRouter } from "next/router";
 import axios from "axios";
 import useSWR from "swr";
 import ClientOnlyPortal from "../ClientOnlyPortal";
@@ -42,6 +43,7 @@ const onChangeArray = (setArray, e, index) => {
 
 const AddRecipe = ({ titleText, toggle }) => {
   // const { data: categoriesOptionData } = useSWR("/api/categories");
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: "Super Spicy Chicken",
     description: "This is the best recipe in the world",
