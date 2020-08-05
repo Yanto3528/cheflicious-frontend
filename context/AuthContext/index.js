@@ -90,13 +90,16 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const setUser = (user) => {
+    dispatch({ type: authTypes.SET_USER, payload: user });
+  };
 
   const setLoading = (value = true) =>
     dispatch({ type: authTypes.SET_LOADING, payload: value });
 
   return (
     <AuthContext.Provider
-      value={{ ...state, signin, signup, signout, getCurrentUser }}
+      value={{ ...state, signin, signup, signout, getCurrentUser, setUser }}
     >
       {children}
     </AuthContext.Provider>

@@ -11,7 +11,12 @@ const SingleRecipeDetail = ({ recipe }) => {
       <img src={recipe.image} alt={`${recipe.slug}-image`} />
       <BadgeGroup>
         {recipe.categories.map((category) => (
-          <Badge key={category._id}>{category.value}</Badge>
+          <Link
+            href="/recipes/categories/[slug]"
+            as={`/recipes/categories/${category.slug}`}
+          >
+            <Badge key={category._id}>{category.value}</Badge>
+          </Link>
         ))}
       </BadgeGroup>
       <RecipeDetailHeader>

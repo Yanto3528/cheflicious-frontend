@@ -5,14 +5,14 @@ import { Clock } from "../../Icons";
 import convertNumberToTime from "../../../utils/convertNumberToTime";
 
 import {
-  RecipeInstructionsContainer,
   RecipeInstructionsHeader,
+  RecipeInstructionsStepContainer,
   RecipeInstructionsStep,
 } from "./styles";
 
 const RecipeInstructions = ({ instructions, cookingTime, difficulty }) => {
   return (
-    <RecipeInstructionsContainer>
+    <main>
       <RecipeInstructionsHeader>
         <h2>Instructions</h2>
         <div>
@@ -24,13 +24,15 @@ const RecipeInstructions = ({ instructions, cookingTime, difficulty }) => {
           </InfoDetail>
         </div>
       </RecipeInstructionsHeader>
-      {instructions.map((instruction, index) => (
-        <RecipeInstructionsStep key={instruction._id}>
-          <span>{index + 1}</span>
-          <p>{instruction.value}</p>
-        </RecipeInstructionsStep>
-      ))}
-    </RecipeInstructionsContainer>
+      <RecipeInstructionsStepContainer>
+        {instructions.map((instruction, index) => (
+          <RecipeInstructionsStep key={instruction._id}>
+            <span>{index + 1}</span>
+            <p>{instruction.value}</p>
+          </RecipeInstructionsStep>
+        ))}
+      </RecipeInstructionsStepContainer>
+    </main>
   );
 };
 

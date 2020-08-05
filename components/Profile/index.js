@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import RecipeCard from "../Recipe/RecipeCard";
+import { AuthContext } from "../../context/AuthContext";
 import { Star } from "../Icons";
 import {
   ProfileContainer,
@@ -11,8 +12,9 @@ import {
 import Avatar from "../../styles/shared/Avatar";
 import Grid from "../../styles/shared/Grid";
 
-const Profile = () => {
+const Profile = ({ user }) => {
   const [activeTab, setActiveTab] = useState(0);
+  const { user: currentUser } = useContext(AuthContext);
 
   const onChangeTab = (index) => setActiveTab(index);
 
@@ -20,19 +22,20 @@ const Profile = () => {
     <ProfileContainer>
       <ProfileDetailContainer>
         <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=150&q=80"
-          alt=""
+          src={user.avatar}
+          alt={user.name}
           size="150px"
           marginRight="20px"
         />
         <ProfileDetail>
-          <h1>Chris William</h1>
-          <p>I love cooking and sharing it with other people</p>
+          <h1>{user.name}</h1>
+          <p>{user.bio}</p>
           <div>
-            <span>Followers: 875</span>
-            <span>Following: 54</span>
+            <span>Followers: {user.followers.length}</span>
+            <span>Following: {user.following.length}</span>
           </div>
-          <button>Follow</button>
+          {!currentUser ||
+            (currentUser._id !== user._id && <button>Follow</button>)}
         </ProfileDetail>
       </ProfileDetailContainer>
       <div>
@@ -51,11 +54,9 @@ const Profile = () => {
           </ProfileRecipesNav>
         </ProfileRecipesHeader>
         <Grid>
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
-          <RecipeCard />
+          {user.recipes.map((recipe) => (
+            <RecipeCard key={recipe._id} recipe={recipe} />
+          ))}
         </Grid>
       </div>
     </ProfileContainer>

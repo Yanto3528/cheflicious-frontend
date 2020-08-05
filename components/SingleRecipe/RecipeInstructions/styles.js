@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-export const RecipeInstructionsContainer = styled.div``;
-
 export const RecipeInstructionsHeader = styled.div`
   padding: 0 20px;
   padding-bottom: 10px;
@@ -22,10 +20,14 @@ export const RecipeInstructionsHeader = styled.div`
   }
 `;
 
+export const RecipeInstructionsStepContainer = styled.div`
+  padding: 0 20px;
+  margin-bottom: 50px;
+`;
+
 export const RecipeInstructionsStep = styled.div`
   display: flex;
   align-items: flex-start;
-  padding: 0 20px;
   margin-bottom: 20px;
   span {
     font-weight: 900;

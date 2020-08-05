@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import Avatar from "../../../styles/shared/Avatar";
@@ -26,10 +27,12 @@ const AccountDropdown = ({ toggle }) => {
           <span>{user.email}</span>
         </div>
       </AccountDropdownHeader>
-      <AccountDropdownItem>
-        <Person />
-        <span>My profile</span>
-      </AccountDropdownItem>
+      <Link href="/profile/[id]" as={`/profile/${user._id}`}>
+        <AccountDropdownItem>
+          <Person />
+          <span>My profile</span>
+        </AccountDropdownItem>
+      </Link>
       <AccountDropdownItem>
         <Setting />
         <span>Settings</span>

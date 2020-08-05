@@ -23,6 +23,7 @@ const authReducer = (state, action) => {
         user: null,
       };
     case authTypes.GET_USER_SUCCESS:
+    case authTypes.SET_USER:
       return {
         ...state,
         user: action.payload,
