@@ -11,7 +11,7 @@ import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 import InfoDetail from "../../../styles/shared/InfoDetail";
 import Difficulty from "../../../styles/shared/Difficulty";
 
-const RecipeCard = ({ small, recipe }) => {
+const RecipeCard = React.forwardRef(({ small, recipe }, ref) => {
   const router = useRouter();
 
   const handleChangeSingleRecipeRoute = () => {
@@ -24,6 +24,7 @@ const RecipeCard = ({ small, recipe }) => {
         small={small}
         // onClick={handleChangeSingleRecipeRoute}
         whileHover={{ y: -5 }}
+        ref={ref && ref}
       >
         <img src={recipe.image} alt={recipe.title} />
         <h2>{recipe.title}</h2>
@@ -64,6 +65,6 @@ const RecipeCard = ({ small, recipe }) => {
       </RecipeCardContainer>
     </Link>
   );
-};
+});
 
 export default RecipeCard;

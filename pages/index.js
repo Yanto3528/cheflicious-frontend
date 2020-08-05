@@ -8,7 +8,7 @@ const HomePage = ({ recipes }) => {
 
 export const getServerSideProps = async () => {
   const res = await axios.get("/api/recipes");
-  return { props: { recipes: res.data } };
+  return { props: { recipes: res.data.data } };
 };
 
 export default HomePage;

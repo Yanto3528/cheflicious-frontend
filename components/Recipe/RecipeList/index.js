@@ -1,9 +1,30 @@
+import { useState, useCallback, useRef } from "react";
 import RecipeCard from "../RecipeCard";
-
+import useInfiniteScroll from "../../../lib/hook/useInfiniteScroll";
 import { RecipeListContainer } from "./styles";
 import Grid from "../../../styles/shared/Grid";
 
-const RecipeList = ({ title, recipes }) => {
+const RecipeList = ({ title, recipes, url }) => {
+  const [pageNumber, setPageNumber] = useState(1);
+  const { data, loading, error, hasMore } = useInfiniteScroll(
+    recipes,
+    url,
+    pageNumber
+  );
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
   return (
     <RecipeListContainer>
       <h1>{title}</h1>
@@ -13,10 +34,21 @@ const RecipeList = ({ title, recipes }) => {
         </h2>
       )}
       <Grid>
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe._id} recipe={recipe} />
-        ))}
+        {data.map((recipe, index) => {
+          if (data.length === index + 1) {
+            return (
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                ref={lastElementRef}
+              />
+            );
+          }
+          return <RecipeCard key={recipe._id} recipe={recipe} />;
+        })}
       </Grid>
+      <h2>Loading...</h2>
+      <h2>Error...</h2>
     </RecipeListContainer>
   );
 };
