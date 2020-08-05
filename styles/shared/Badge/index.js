@@ -8,6 +8,12 @@ export default styled.span`
   font-size: 1.4rem;
   margin-right: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background-color: ${({ theme }) => theme.grey};
+    color: white;
+  }
 `;
 
 export const BadgeGroup = styled.div`

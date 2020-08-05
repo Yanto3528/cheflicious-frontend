@@ -1,18 +1,23 @@
 import RecipeCard from "../RecipeCard";
 
-import { staggerVariants } from "../../../utils/variants";
+import { RecipeListContainer } from "./styles";
 import Grid from "../../../styles/shared/Grid";
 
 const RecipeList = ({ title, recipes }) => {
   return (
-    <section>
+    <RecipeListContainer>
       <h1>{title}</h1>
+      {recipes.length === 0 && (
+        <h2>
+          Unfortunately, <span>{title}</span> does not have any recipe.
+        </h2>
+      )}
       <Grid>
         {recipes.map((recipe) => (
           <RecipeCard key={recipe._id} recipe={recipe} />
         ))}
       </Grid>
-    </section>
+    </RecipeListContainer>
   );
 };
 

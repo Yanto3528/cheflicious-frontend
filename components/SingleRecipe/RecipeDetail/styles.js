@@ -7,7 +7,7 @@ export const RecipeDetailContainer = styled.section`
   overflow: hidden;
   img {
     width: 100%;
-    height: 400px;
+    height: 500px;
     object-fit: cover;
   }
 `;
@@ -20,5 +20,8 @@ export const RecipeDetailHeader = styled.div`
   }
   a {
     color: ${({ theme }) => theme.primary};
+  }
+  p {
+    margin-top: 10px;
   }
 `;

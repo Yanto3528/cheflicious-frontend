@@ -29,7 +29,7 @@ export const RecipeInstructionsStep = styled.div`
   margin-bottom: 20px;
   span {
     font-weight: 900;
-    font-size: 2.4rem;
+    font-size: 1.7rem;
     color: ${({ theme }) => theme.darkgrey};
     margin-right: 10px;
   }

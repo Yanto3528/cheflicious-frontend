@@ -7,20 +7,19 @@ import {
   RecipeIngredientList,
 } from "./styles";
 
-const RecipeIngredients = () => {
+const RecipeIngredients = ({ ingredients, servings }) => {
   return (
     <RecipeIngredientsContainer>
       <RecipeIngredientsHeader>
         <h2>Ingredients</h2>
         <InfoDetail>
-          <Servings /> 5 people
+          <Servings /> {servings} servings
         </InfoDetail>
       </RecipeIngredientsHeader>
       <RecipeIngredientList>
-        <li>1 slice of bread</li>
-        <li>1 slice of bread</li>
-        <li>1 slice of bread</li>
-        <li>1 slice of bread</li>
+        {ingredients.map((ingredient) => (
+          <li key={ingredient._id}>{ingredient.value}</li>
+        ))}
       </RecipeIngredientList>
     </RecipeIngredientsContainer>
   );

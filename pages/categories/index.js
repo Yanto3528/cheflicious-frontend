@@ -1,5 +1,5 @@
 import axios from "axios";
-import Categories from "../components/Categories";
+import Categories from "../../components/Categories";
 
 const CategoriesPage = ({ categories }) => {
   return <Categories categories={categories} />;

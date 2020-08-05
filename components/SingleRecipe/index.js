@@ -1,17 +1,18 @@
+import useSWR from "swr";
 import RecipeDetail from "./RecipeDetail";
 import Comments from "./Comments";
 import RelatedRecipe from "./RelatedRecipe";
 
 import { SingleRecipeContainer } from "./styles";
 
-const SingleRecipe = () => {
+const SingleRecipe = ({ recipe, relatedRecipes }) => {
   return (
     <SingleRecipeContainer>
       <div>
-        <RecipeDetail />
-        <Comments />
+        <RecipeDetail recipe={recipe} />
+        <Comments recipe={recipe} />
       </div>
-      <RelatedRecipe />
+      <RelatedRecipe relatedRecipes={relatedRecipes} />
     </SingleRecipeContainer>
   );
 };

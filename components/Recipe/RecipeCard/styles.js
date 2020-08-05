@@ -8,15 +8,20 @@ export const RecipeCardContainer = styled(motion.div)`
   background-color: white;
   border-radius: 5px;
   overflow: hidden;
+  cursor: pointer;
   box-shadow: ${({ theme }) => theme.boxShadow};
   img {
     width: 100%;
-    height: ${({ isSidebar }) => (isSidebar ? "200px" : "300px")};
+    height: ${({ small }) => (small ? "200px" : "300px")};
     object-fit: cover;
   }
   h2 {
     padding: 20px 20px 10px 20px;
     font-weight: 600;
+    transition: all 0.2s;
+    &:hover {
+      color: ${({ theme }) => theme.primary};
+    }
   }
   ${BadgeGroup} {
     flex: 1;

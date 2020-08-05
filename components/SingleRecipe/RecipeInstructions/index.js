@@ -2,50 +2,34 @@ import InfoDetail from "../../../styles/shared/InfoDetail";
 import Difficulty from "../../../styles/shared/Difficulty";
 import { Clock } from "../../Icons";
 
+import convertNumberToTime from "../../../utils/convertNumberToTime";
+
 import {
   RecipeInstructionsContainer,
   RecipeInstructionsHeader,
   RecipeInstructionsStep,
 } from "./styles";
 
-const RecipeInstructions = () => {
+const RecipeInstructions = ({ instructions, cookingTime, difficulty }) => {
   return (
     <RecipeInstructionsContainer>
       <RecipeInstructionsHeader>
-        <h2>Instruction</h2>
+        <h2>Instructions</h2>
         <div>
           <InfoDetail>
-            <Difficulty /> Easy
+            <Difficulty type={difficulty} /> {difficulty}
           </InfoDetail>
           <InfoDetail>
-            <Clock /> 30 min
+            <Clock /> {convertNumberToTime(cookingTime)}
           </InfoDetail>
         </div>
       </RecipeInstructionsHeader>
-      <RecipeInstructionsStep>
-        <span>1</span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-          expedita inventore repudiandae officia, corrupti fuga maxime quas
-          numquam exercitationem autem.
-        </p>
-      </RecipeInstructionsStep>
-      <RecipeInstructionsStep>
-        <span>2</span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-          expedita inventore repudiandae officia, corrupti fuga maxime quas
-          numquam exercitationem autem.
-        </p>
-      </RecipeInstructionsStep>
-      <RecipeInstructionsStep>
-        <span>3</span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-          expedita inventore repudiandae officia, corrupti fuga maxime quas
-          numquam exercitationem autem.
-        </p>
-      </RecipeInstructionsStep>
+      {instructions.map((instruction, index) => (
+        <RecipeInstructionsStep key={instruction._id}>
+          <span>{index + 1}</span>
+          <p>{instruction.value}</p>
+        </RecipeInstructionsStep>
+      ))}
     </RecipeInstructionsContainer>
   );
 };
