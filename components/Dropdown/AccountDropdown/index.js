@@ -12,6 +12,12 @@ import {
 
 const AccountDropdown = ({ toggle }) => {
   const { user, signout } = useAuth();
+
+  const handleLogout = () => {
+    toggle();
+    signout();
+  };
+
   return (
     <AccountDropdownContainer
       variants={dropdownVariants}
@@ -38,7 +44,7 @@ const AccountDropdown = ({ toggle }) => {
           <span>Settings</span>
         </AccountDropdownItem>
       </Link>
-      <AccountDropdownItem onClick={signout}>
+      <AccountDropdownItem onClick={handleLogout}>
         <PowerOff />
         <span>Log out</span>
       </AccountDropdownItem>

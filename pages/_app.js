@@ -19,6 +19,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
 if (cookie.get("token")) {
+  console.log(cookie.get("token"));
   axios.defaults.headers.common["Authorization"] = `Bearer ${cookie.get(
     "token"
   )}`;

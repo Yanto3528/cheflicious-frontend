@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { produce } from "immer";
 import { v4 } from "uuid";
 import axios from "axios";
+import { useAlert } from "../../context/AlertContext";
 import { Camera, Add } from "../Icons";
 import Select from "../Select";
 import Ingredient from "./Ingredient";
@@ -55,6 +56,8 @@ const AddRecipe = ({ titleText, toggle }) => {
   const [file, setFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState(null);
+
+  const { setAlert } = useAlert();
 
   useEffect(() => {
     const fetchCategoryOptions = async () => {
@@ -158,17 +161,19 @@ const AddRecipe = ({ titleText, toggle }) => {
       errors.categories = true;
     }
     try {
-      const image = await handleImageUpload(file);
+      // const image = await handleImageUpload(file);
       const data = {
         ...formData,
-        image,
+        // image,
         ingredients,
         instructions,
         categories,
       };
-      await axios.post("/api/recipes", data);
+      const res = await axios.post("/api/recipes", data);
+      setAlert(res.data.message);
     } catch (error) {
       setError(error.response.data.error);
+      setAlert(error.response.data.error, "danger");
     }
   };
 

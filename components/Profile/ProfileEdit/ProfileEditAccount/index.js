@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../../context/AuthContext";
+import { useAlert } from "../../../../context/AlertContext";
 import useImage from "../../../../lib/hook/useImage";
 import ProfileEditNav from "../ProfileEditNav";
 
@@ -18,7 +19,9 @@ import Button from "../../../../styles/shared/Button";
 
 const ProfileEditAccount = () => {
   const { user } = useAuth();
+  const { setAlert } = useAlert();
   const { imagePreview, handleChangeImage, handleImageUpload } = useImage();
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, setValue, getValues, error } = useForm({
     defaultValues: {
       name: user && user.name,
@@ -27,13 +30,17 @@ const ProfileEditAccount = () => {
   });
 
   const onSubmit = async (data) => {
-    const avatar = handleImageUpload();
+    const avatar = await handleImageUpload();
     const formData = { ...data, avatar };
     try {
+      setLoading(true);
       const res = await axios.put("/api/users/update", formData);
-      console.log(res.data);
+      setAlert(res.data.message);
     } catch (error) {
       console.log(error);
+      setAlert(error.response.data.error, "danger");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,7 +95,7 @@ const ProfileEditAccount = () => {
               ref={register}
             />
           </FormGroup>
-          <Button>Submit</Button>
+          <Button>{loading ? "Submiting..." : "Submit"}</Button>
         </Form>
       </ProfileEditContainer>
     )
