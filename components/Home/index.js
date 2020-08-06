@@ -1,13 +1,9 @@
 import RecipeList from "../Recipe/RecipeList";
 
-const Home = ({ recipes }) => {
+const Home = (props) => {
   return (
     <main>
-      <RecipeList
-        title="Recent Recipes"
-        recipes={recipes}
-        url={`/api/recipes`}
-      />
+      <RecipeList title="Recent Recipes" url={`/api/recipes`} {...props} />
     </main>
   );
 };

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Router from "next/router";
 import axios from "axios";
 import cookie from "js-cookie";
@@ -18,12 +19,6 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
-if (cookie.get("token")) {
-  console.log(cookie.get("token"));
-  axios.defaults.headers.common["Authorization"] = `Bearer ${cookie.get(
-    "token"
-  )}`;
-}
 
 const options = {
   fetcher: (url) => axios.get(url).then((res) => res.data),
@@ -31,6 +26,12 @@ const options = {
 
 function MyApp({ Component, pageProps, router }) {
   const renderLayout = !router.pathname.startsWith("/sign");
+
+  useEffect(() => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${cookie.get(
+      "token"
+    )}`;
+  }, [cookie.get("token")]);
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />

@@ -5,12 +5,13 @@ import Spinner from "../../Spinner";
 import { RecipeListContainer } from "./styles";
 import Grid from "../../../styles/shared/Grid";
 
-const RecipeList = ({ title, recipes, url }) => {
+const RecipeList = ({ title, recipes, url, nextPage }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const { data, loading, error, hasMore } = useInfiniteScroll(
     recipes,
     url,
-    pageNumber
+    pageNumber,
+    nextPage
   );
   const observer = useRef();
   const lastElementRef = useCallback(
@@ -26,6 +27,7 @@ const RecipeList = ({ title, recipes, url }) => {
     },
     [loading, hasMore]
   );
+
   return (
     <RecipeListContainer>
       <h1>{title}</h1>

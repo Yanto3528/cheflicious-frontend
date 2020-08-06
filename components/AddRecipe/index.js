@@ -3,6 +3,7 @@ import { produce } from "immer";
 import { v4 } from "uuid";
 import axios from "axios";
 import { useAlert } from "../../context/AlertContext";
+import useImage from "../../lib/hook/useImage";
 import { Camera, Add } from "../Icons";
 import Select from "../Select";
 import Ingredient from "./Ingredient";
@@ -10,7 +11,6 @@ import Instruction from "./Instruction";
 import CloseIcon from "../CloseIcon";
 import { difficultyData } from "./constant";
 import { addRecipeVariants } from "../../utils/variants";
-import { handleImageUpload } from "../../lib/api";
 
 import {
   AddRecipeContainer,
@@ -53,8 +53,13 @@ const AddRecipe = ({ titleText, toggle }) => {
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [difficultyOptions] = useState(difficultyData);
 
-  const [file, setFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const {
+    imagePreview,
+    handleChangeImage,
+    handleImageUpload,
+    handleRemoveImagePreview,
+  } = useImage();
+
   const [error, setError] = useState(null);
 
   const { setAlert } = useAlert();
@@ -124,23 +129,6 @@ const AddRecipe = ({ titleText, toggle }) => {
       errors[name] = false;
     }
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleChangeImage = (e) => {
-    if (e.target.files && e.target.files.length !== 0) {
-      setFile(e.target.files[0]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagePreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  const handleRemoveImagePreview = (e) => {
-    setImagePreview(null);
   };
 
   const onSubmit = async (e) => {
