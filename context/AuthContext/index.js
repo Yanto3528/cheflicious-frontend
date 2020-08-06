@@ -1,11 +1,11 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import cookie from "js-cookie";
 import Router from "next/router";
 import authReducer from "./authReducer";
 import authTypes from "./authTypes";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const initialState = {
@@ -104,6 +104,11 @@ const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  return context;
 };
 
 export default AuthProvider;

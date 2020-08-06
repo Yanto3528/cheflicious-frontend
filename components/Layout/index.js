@@ -1,16 +1,10 @@
-import { useContext, useEffect } from "react";
-import { RecipeContext } from "../../context/RecipeContext";
-import { AuthContext } from "../../context/AuthContext";
+import { useRecipe } from "../../context/RecipeContext";
+import { useAuth } from "../../context/AuthContext";
 import Header from "../Header";
 
 const Layout = ({ children, user }) => {
-  const { showAddRecipe } = useContext(RecipeContext);
-  const { setUser } = useContext(AuthContext);
-  // useEffect(() => {
-  //   if (user !== null) {
-  //     setUser(user);
-  //   }
-  // }, []);
+  const { showAddRecipe } = useRecipe();
+  const { setUser } = useAuth();
 
   return (
     <React.Fragment>

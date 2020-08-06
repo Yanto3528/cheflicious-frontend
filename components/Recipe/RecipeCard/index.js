@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 import { Clock, Servings, HeartOutline, CommentOutline } from "../../Icons";
 import convertNumberToTime from "../../../utils/convertNumberToTime";
 import {
   RecipeCardContainer,
+  RecipeCardImageContainer,
   RecipeCardDetail,
   RecipeCardSocial,
 } from "./styles";
@@ -20,13 +22,10 @@ const RecipeCard = React.forwardRef(({ small, recipe }, ref) => {
 
   return (
     <Link href="/recipes/[slug]" as={`/recipes/${recipe.slug}`}>
-      <RecipeCardContainer
-        small={small}
-        // onClick={handleChangeSingleRecipeRoute}
-        whileHover={{ y: -5 }}
-        ref={ref && ref}
-      >
-        <img src={recipe.image} alt={recipe.title} />
+      <RecipeCardContainer small={small} ref={ref && ref}>
+        <RecipeCardImageContainer>
+          <motion.img src={recipe.image} alt={recipe.title} />
+        </RecipeCardImageContainer>
         <h2>{recipe.title}</h2>
         <RecipeCardDetail>
           <InfoDetail>

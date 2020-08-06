@@ -10,11 +10,6 @@ export const RecipeCardContainer = styled(motion.div)`
   overflow: hidden;
   cursor: pointer;
   box-shadow: ${({ theme }) => theme.boxShadow};
-  img {
-    width: 100%;
-    height: ${({ small }) => (small ? "200px" : "300px")};
-    object-fit: cover;
-  }
   h2 {
     padding: 20px 20px 10px 20px;
     font-weight: 600;
@@ -27,6 +22,21 @@ export const RecipeCardContainer = styled(motion.div)`
     flex: 1;
   }
 `;
+
+export const RecipeCardImageContainer = styled.div`
+  overflow: hidden;
+  position: relative;
+  img {
+    width: 100%;
+    height: ${({ small }) => (small ? "200px" : "300px")};
+    object-fit: cover;
+    transition: all 0.5s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`;
+
 export const RecipeCardDetail = styled.div`
   padding: 0 20px;
   display: flex;

@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import AuthForm from "../AuthForm";
 
 const formInputs = [
@@ -27,7 +26,7 @@ const formInputs = [
 ];
 
 const Signup = () => {
-  const { signup, error } = useContext(AuthContext);
+  const { signup, error } = useAuth();
   const onSubmit = (data) => {
     signup(data);
   };

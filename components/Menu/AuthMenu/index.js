@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import Link from "next/link";
 import useToggle from "../../../lib/hook/useToggle";
 import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
-import { AuthContext } from "../../../context/AuthContext";
-import { RecipeContext } from "../../../context/RecipeContext";
+import { useAuth } from "../../../context/AuthContext";
+import { useRecipe } from "../../../context/RecipeContext";
 import AccountDropdown from "../../Dropdown/AccountDropdown";
 import NotificationDropdown from "../../Dropdown/NotificationDropdown";
 import AddRecipe from "../../AddRecipe";
@@ -30,8 +29,8 @@ const AuthMenu = () => {
     setNotificationDropdown,
   ] = useToggle(false);
 
-  const { showAddRecipe, toggleShowAddRecipe } = useContext(RecipeContext);
-  const { user } = useContext(AuthContext);
+  const { showAddRecipe, toggleShowAddRecipe } = useRecipe();
+  const { user } = useAuth();
 
   return (
     <React.Fragment>

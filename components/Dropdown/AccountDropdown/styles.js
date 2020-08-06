@@ -5,6 +5,7 @@ export const AccountDropdownContainer = styled(motion.div)`
   position: absolute;
   bottom: 10px;
   right: 0;
+  z-index: 20;
   transform: translateY(100%);
   background-color: ${({ theme }) => theme.lightgrey};
   box-shadow: ${({ theme }) => theme.boxShadow};

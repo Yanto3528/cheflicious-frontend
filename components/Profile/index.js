@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import RecipeCard from "../Recipe/RecipeCard";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { Star } from "../Icons";
 import {
   ProfileContainer,
@@ -14,7 +14,7 @@ import Grid from "../../styles/shared/Grid";
 
 const Profile = ({ user }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser } = useAuth();
 
   const onChangeTab = (index) => setActiveTab(index);
 

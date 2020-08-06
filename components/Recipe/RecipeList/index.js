@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from "react";
 import RecipeCard from "../RecipeCard";
 import useInfiniteScroll from "../../../lib/hook/useInfiniteScroll";
+import Spinner from "../../Spinner";
 import { RecipeListContainer } from "./styles";
 import Grid from "../../../styles/shared/Grid";
 
@@ -47,8 +48,10 @@ const RecipeList = ({ title, recipes, url }) => {
           return <RecipeCard key={recipe._id} recipe={recipe} />;
         })}
       </Grid>
-      <h2>Loading...</h2>
-      <h2>Error...</h2>
+      <div>
+        {loading && <Spinner />}
+        {error && <h3>Something went wrong when fetching data</h3>}
+      </div>
     </RecipeListContainer>
   );
 };

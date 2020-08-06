@@ -1,8 +1,8 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import recipeReducer from "./recipeReducer";
 import recipeTypes from "./recipeTypes";
 
-export const RecipeContext = createContext();
+const RecipeContext = createContext();
 
 const RecipeProvider = ({ children }) => {
   const initialState = {
@@ -19,6 +19,11 @@ const RecipeProvider = ({ children }) => {
       {children}
     </RecipeContext.Provider>
   );
+};
+
+export const useRecipe = () => {
+  const context = useContext(RecipeContext);
+  return context;
 };
 
 export default RecipeProvider;

@@ -1,5 +1,6 @@
-import { Close } from "../../Icons";
-import { InstructionFormGroup, AddRecipeTextaera, CloseIcon } from "../styles";
+import CloseIcon from "../../CloseIcon";
+import { InstructionFormGroup } from "./styles";
+import { Textarea } from "../../../styles/shared/Form";
 
 const Instruction = ({ instruction, index, errors, onChange, onRemove }) => {
   const handleChange = (e) => onChange(e, index);
@@ -7,7 +8,7 @@ const Instruction = ({ instruction, index, errors, onChange, onRemove }) => {
   return (
     <InstructionFormGroup>
       <p>{index + 1}</p>
-      <AddRecipeTextaera
+      <Textarea
         rows="5"
         placeholder="Describe this step"
         name="instruction"
@@ -16,9 +17,7 @@ const Instruction = ({ instruction, index, errors, onChange, onRemove }) => {
         value={instruction.value}
         error={errors && errors.instruction}
       />
-      <CloseIcon top onClick={handleRemove}>
-        <Close />
-      </CloseIcon>
+      <CloseIcon top onClick={handleRemove} />
     </InstructionFormGroup>
   );
 };
