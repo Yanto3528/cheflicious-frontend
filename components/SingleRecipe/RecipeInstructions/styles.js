@@ -34,5 +34,10 @@ export const RecipeInstructionsStep = styled.div`
     font-size: 1.7rem;
     color: ${({ theme }) => theme.darkgrey};
     margin-right: 10px;
+    width: 18px;
+    display: inline-block;
+  }
+  p {
+    flex: 1;
   }
 `;

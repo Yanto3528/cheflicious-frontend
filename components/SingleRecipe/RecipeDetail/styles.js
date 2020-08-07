@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 
 export const RecipeDetailContainer = styled.section`
   background-color: white;
@@ -7,8 +8,14 @@ export const RecipeDetailContainer = styled.section`
   overflow: hidden;
   img {
     width: 100%;
-    height: 500px;
+    height: 600px;
     object-fit: cover;
+  }
+  ${BadgeGroup} {
+    padding: 10px 20px;
+    ${Badge} {
+      margin-bottom: 0;
+    }
   }
 `;
 

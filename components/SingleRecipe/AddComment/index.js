@@ -1,36 +1,44 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../../context/AuthContext";
+import useAxios from "../../../lib/hook/useAxios";
 import calculateRows from "../../../utils/calculateRows";
 
-import { AddCommentContainer, AddCommentFormGroup } from "./styles";
+import Button from "../../Button";
+import { AddCommentFormContainer, AddCommentFormGroup } from "./styles";
 import Avatar from "../../../styles/shared/Avatar";
 
-const AddComment = () => {
-  const [content, setContent] = useState("");
+const AddComment = ({ recipeId }) => {
   const [rows, setRows] = useState(1);
+  const { user } = useAuth();
+  const { data: comment, loading, error, API } = useAxios();
+
+  const { register, handleSubmit, errors, reset } = useForm();
 
   const onChange = (e) => {
     const currentRows = calculateRows(e.target);
-    setContent(e.target.value);
     setRows(currentRows);
   };
 
+  const onSubmit = async (data) => {
+    await API(`/api/recipes/${recipeId}/comments`, data, "POST");
+    reset();
+  };
+
   return (
-    <AddCommentContainer>
-      <Avatar
-        src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=80&q=80"
-        alt=""
-      />
+    <AddCommentFormContainer onSubmit={handleSubmit(onSubmit)}>
+      <Avatar src={user && user.avatar} alt={user && user.name} />
       <AddCommentFormGroup>
         <textarea
           placeholder="Write a comment..."
           rows={rows}
           onChange={onChange}
-          value={content}
+          name="content"
+          ref={register({ required: true })}
         />
-        <button>Send</button>
+        <Button loading={loading}>Send</Button>
       </AddCommentFormGroup>
-    </AddCommentContainer>
+    </AddCommentFormContainer>
   );
 };
 

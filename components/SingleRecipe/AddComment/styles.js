@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AddCommentContainer = styled.form`
+export const AddCommentFormContainer = styled.form`
   display: flex;
   align-items: center;
   padding: 20px 0;
@@ -28,14 +28,7 @@ export const AddCommentFormGroup = styled.div`
   }
   button {
     align-self: flex-end;
-    background-color: ${({ theme }) => theme.primary};
-    color: white;
-    font-family: "Poppins", sans-serif;
+    width: auto;
     margin-left: 10px;
-    cursor: pointer;
-    transition: all 0.4s;
-    &:hover {
-      opacity: 0.8;
-    }
   }
 `;

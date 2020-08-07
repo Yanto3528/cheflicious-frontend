@@ -14,8 +14,9 @@ const SingleRecipeDetail = ({ recipe }) => {
           <Link
             href="/recipes/categories/[slug]"
             as={`/recipes/categories/${category.slug}`}
+            key={category._id}
           >
-            <Badge key={category._id}>{category.value}</Badge>
+            <Badge>{category.value}</Badge>
           </Link>
         ))}
       </BadgeGroup>

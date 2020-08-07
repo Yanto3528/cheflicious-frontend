@@ -1,16 +1,19 @@
+import moment from "moment";
+
 import AddComment from "../AddComment";
 
 import { HeartOutline } from "../../Icons";
 import {
   CommentsContainer,
   Comment,
+  CommentText,
   CommentsHeader,
   CommentHeader,
   LikesContainer,
 } from "./styles";
 import Avatar from "../../../styles/shared/Avatar";
 
-const Comments = () => {
+const Comments = ({ recipe }) => {
   return (
     <CommentsContainer>
       <CommentsHeader>
@@ -19,46 +22,19 @@ const Comments = () => {
           <HeartOutline /> 1k people like this
         </LikesContainer>
       </CommentsHeader>
-      <Comment>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=80&q=80"
-          alt=""
-        />
-        <div>
-          <CommentHeader>
-            <p>Sarah Williams</p>
-            <span>2 days ago</span>
-          </CommentHeader>
-          <p>Looks delicious! I wanna try it at home</p>
-        </div>
-      </Comment>
-      <Comment>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=80&q=80"
-          alt=""
-        />
-        <div>
-          <CommentHeader>
-            <p>Sarah Williams</p>
-            <span>2 days ago</span>
-          </CommentHeader>
-          <p>Looks delicious! I wanna try it at home</p>
-        </div>
-      </Comment>
-      <Comment>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=80&q=80"
-          alt=""
-        />
-        <div>
-          <CommentHeader>
-            <p>Sarah Williams</p>
-            <span>2 days ago</span>
-          </CommentHeader>
-          <p>Looks delicious! I wanna try it at home</p>
-        </div>
-      </Comment>
-      <AddComment />
+      {recipe.comments.map((comment) => (
+        <Comment>
+          <Avatar src={comment.author.avatar} alt={comment.author.name} />
+          <div>
+            <CommentHeader>
+              <p>{comment.author.name}</p>
+              <span>{moment(comment.createdAt).fromNow()}</span>
+            </CommentHeader>
+            <CommentText>{comment.content}</CommentText>
+          </div>
+        </Comment>
+      ))}
+      <AddComment recipeId={recipe._id} />
     </CommentsContainer>
   );
 };

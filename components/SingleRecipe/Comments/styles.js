@@ -44,10 +44,14 @@ export const Comment = styled.div`
     flex: 1;
   }
 `;
+
+export const CommentText = styled.p`
+  white-space: pre;
+`;
+
 export const CommentHeader = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   margin-bottom: 5px;
   p {
     margin-right: 20px;
