@@ -30,6 +30,19 @@ const authReducer = (state, action) => {
         isAuthenticated: true,
         error: null,
       };
+    case authTypes.FOLLOW_USER_SUCCESS:
+    case authTypes.UNFOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        error: null,
+      };
+    case authTypes.FOLLOW_USER_FAIL:
+    case authTypes.UNFOLLOW_USER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case authTypes.SET_LOADING:
       return {
         ...state,

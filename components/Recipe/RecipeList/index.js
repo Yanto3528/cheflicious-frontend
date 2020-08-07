@@ -4,6 +4,7 @@ import useInfiniteScroll from "../../../lib/hook/useInfiniteScroll";
 import Spinner from "../../Spinner";
 import { RecipeListContainer } from "./styles";
 import Grid from "../../../styles/shared/Grid";
+import { LoadingMoreContainer } from "../../../styles/shared/LoadingIcon";
 
 const RecipeList = ({ title, recipes, url, nextPage }) => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -49,10 +50,10 @@ const RecipeList = ({ title, recipes, url, nextPage }) => {
           return <RecipeCard key={recipe._id} recipe={recipe} />;
         })}
       </Grid>
-      <div>
+      <LoadingMoreContainer>
         {loading && <Spinner />}
         {error && <h3>Something went wrong when fetching data</h3>}
-      </div>
+      </LoadingMoreContainer>
     </RecipeListContainer>
   );
 };

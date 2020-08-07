@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import LoadingIcon from "../../../styles/shared/LoadingIcon";
 
 export const RecipeListContainer = styled.section`
   h1 {
@@ -12,18 +11,6 @@ export const RecipeListContainer = styled.section`
     margin-bottom: 10px;
     span {
       text-transform: capitalize;
-    }
-  }
-  > div:last-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0;
-    ${LoadingIcon} {
-    }
-    h3 {
-      font-weight: 600;
     }
   }
 `;

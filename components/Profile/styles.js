@@ -22,13 +22,19 @@ export const ProfileDetail = styled.div`
     border-radius: 3px;
     color: ${({ theme }) => theme.red};
     padding: 8px 24px;
+    background-color: transparent;
+    width: auto;
     margin-top: 10px;
-    cursor: pointer;
     font-weight: 600;
+    cursor: pointer;
     transition: all 0.4s;
     &:hover {
       background-color: ${({ theme }) => theme.red};
       color: white;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
     }
   }
 `;

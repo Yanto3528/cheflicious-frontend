@@ -23,7 +23,7 @@ const SingleRecipeDetail = ({ recipe }) => {
         <h1>{recipe.title}</h1>
         <span>
           by{" "}
-          <Link href="/">
+          <Link href="/profile/:id" as={`/profile/${recipe.author._id}`}>
             <a>{recipe.author.name}</a>
           </Link>
         </span>

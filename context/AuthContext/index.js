@@ -98,12 +98,59 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: authTypes.SET_USER, payload: user });
   };
 
+  const followUser = async (id) => {
+    setLoading();
+    try {
+      const res = await axios.put(`/api/users/${id}/follow`);
+      dispatch({
+        type: authTypes.FOLLOW_USER_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: authTypes.FOLLOW_USER_FAIL,
+        payload: error.response.data.error,
+      });
+      setAlert(error.response.data.error, "danger");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const unFollowUser = async (id) => {
+    try {
+      setLoading();
+      const res = await axios.put(`/api/users/${id}/unfollow`);
+      dispatch({
+        type: authTypes.UNFOLLOW_USER_SUCCESS,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: authTypes.UNFOLLOW_USER_FAIL,
+        payload: error.response.data.error,
+      });
+      setAlert(error.response.data.error, "danger");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const setLoading = (value = true) =>
     dispatch({ type: authTypes.SET_LOADING, payload: value });
 
   return (
     <AuthContext.Provider
-      value={{ ...state, signin, signup, signout, getCurrentUser, setUser }}
+      value={{
+        ...state,
+        signin,
+        signup,
+        signout,
+        getCurrentUser,
+        setUser,
+        followUser,
+        unFollowUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

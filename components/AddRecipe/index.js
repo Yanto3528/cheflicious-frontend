@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { produce } from "immer";
 import { v4 } from "uuid";
 import axios from "axios";
+
+// Hook and Contexts
 import { useAlert } from "../../context/AlertContext";
 import useImage from "../../lib/hook/useImage";
+
+// Components
 import Select from "../Select";
 import Ingredient from "./Ingredient";
 import Instruction from "./Instruction";
@@ -11,9 +15,12 @@ import CloseIcon from "../CloseIcon";
 import Button from "../Button";
 import InputFile from "./InputFile";
 import FormList from "./FormList";
+
+// Data
 import { difficultyData } from "./constant";
 import { addRecipeVariants } from "../../utils/variants";
 
+// Styles
 import { AddRecipeContainer } from "./styles";
 import ErrorText from "../../styles/shared/ErrorText";
 import { Form, Input, Textarea, FormGroup } from "../../styles/shared/Form";

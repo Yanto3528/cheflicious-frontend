@@ -16,3 +16,14 @@ export default styled(motion.span)`
       border-width: 2px;
     `}
 `;
+
+export const LoadingMoreContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px 0;
+  h3 {
+    font-weight: 600;
+  }
+`;

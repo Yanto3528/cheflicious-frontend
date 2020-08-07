@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import RecipeCard from "../Recipe/RecipeCard";
+import Spinner from "../Spinner";
 import { useAuth } from "../../context/AuthContext";
+import useInfiniteScroll from "../../lib/hook/useInfiniteScroll";
+import Button from "../Button";
 import { Star } from "../Icons";
 import {
   ProfileContainer,
@@ -11,10 +14,45 @@ import {
 } from "./styles";
 import Avatar from "../../styles/shared/Avatar";
 import Grid from "../../styles/shared/Grid";
+import { LoadingMoreContainer } from "../../styles/shared/LoadingIcon";
 
-const Profile = ({ user }) => {
+const Profile = ({ user, id }) => {
   const [activeTab, setActiveTab] = useState(0);
-  const { user: currentUser } = useAuth();
+  const {
+    user: currentUser,
+    followUser,
+    unFollowUser,
+    loading: userLoading,
+  } = useAuth();
+
+  const handleFollowAndUnfollow = () => {
+    if (currentUser.following.includes(user._id)) {
+      unFollowUser(user._id);
+    } else {
+      followUser(user._id);
+    }
+  };
+
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const { data, loading, error, hasMore } = useInfiniteScroll(
+    [],
+    `/api/recipes?author=${user._id}`,
+    pageNumber
+  );
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
 
   const onChangeTab = (index) => setActiveTab(index);
 
@@ -35,7 +73,13 @@ const Profile = ({ user }) => {
             <span>Following: {user.following.length}</span>
           </div>
           {!currentUser ||
-            (currentUser._id !== user._id && <button>Follow</button>)}
+            (currentUser._id !== user._id && (
+              <button disabled={userLoading} onClick={handleFollowAndUnfollow}>
+                {currentUser.following.includes(user._id)
+                  ? "Unfollow"
+                  : "Follow"}
+              </button>
+            ))}
         </ProfileDetail>
       </ProfileDetailContainer>
       <div>
@@ -44,7 +88,7 @@ const Profile = ({ user }) => {
             active={activeTab === 0}
             onClick={() => onChangeTab(0)}
           >
-            Recipes
+            Recipes ({user.recipes.length})
           </ProfileRecipesNav>
           <ProfileRecipesNav
             active={activeTab === 1}
@@ -54,10 +98,23 @@ const Profile = ({ user }) => {
           </ProfileRecipesNav>
         </ProfileRecipesHeader>
         <Grid>
-          {user.recipes.map((recipe) => (
-            <RecipeCard key={recipe._id} recipe={recipe} />
-          ))}
+          {data.map((recipe, index) => {
+            if (data.length === index + 1) {
+              return (
+                <RecipeCard
+                  key={recipe._id}
+                  recipe={recipe}
+                  ref={lastElementRef}
+                />
+              );
+            }
+            return <RecipeCard key={recipe._id} recipe={recipe} />;
+          })}
         </Grid>
+        <LoadingMoreContainer>
+          {loading && <Spinner />}
+          {error && <h3>Something went wrong when fetching data</h3>}
+        </LoadingMoreContainer>
       </div>
     </ProfileContainer>
   );
