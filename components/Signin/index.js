@@ -13,13 +13,13 @@ const formInputs = [
     type: "password",
     placeholder: "Password",
     name: "password",
-    options: { minLength: 6 },
+    options: { required: true, minLength: 6 },
     errorMsg: "Password must be at least 6 or more characters",
   },
 ];
 
 const Signin = () => {
-  const { signin, error } = useAuth();
+  const { signin, loading } = useAuth();
   const onSubmit = (data) => {
     signin(data);
   };
@@ -32,7 +32,7 @@ const Signin = () => {
       linkText="Sign up"
       link="/signup"
       submitText="Sign in"
-      error={error}
+      loading={loading}
       onSubmit={onSubmit}
     />
   );

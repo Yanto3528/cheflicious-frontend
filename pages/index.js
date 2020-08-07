@@ -7,8 +7,12 @@ const HomePage = (props) => {
 };
 
 export const getServerSideProps = async () => {
-  const res = await axios.get("/api/recipes");
-  return { props: { recipes: res.data.data, nextPage: res.data.nextPage } };
+  try {
+    const res = await axios.get("/api/recipes");
+    return { props: { recipes: res.data.data, nextPage: res.data.nextPage } };
+  } catch (error) {
+    return { props: { recipes: [], nextPage: false } };
+  }
 };
 
 export default HomePage;

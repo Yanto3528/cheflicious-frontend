@@ -16,13 +16,21 @@ import {
   FormGroup,
 } from "../../../../styles/shared/Form";
 import Button from "../../../../styles/shared/Button";
+import ErrorText from "../../../../styles/shared/ErrorText";
 
 const ProfileEditAccount = () => {
   const { user } = useAuth();
   const { setAlert } = useAlert();
   const { imagePreview, handleChangeImage, handleImageUpload } = useImage();
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, setValue, getValues, error } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    errors,
+    reset,
+  } = useForm({
     defaultValues: {
       name: user && user.name,
       bio: user && user.bio,
@@ -41,6 +49,7 @@ const ProfileEditAccount = () => {
       setAlert(error.response.data.error, "danger");
     } finally {
       setLoading(false);
+      reset();
     }
   };
 
@@ -82,8 +91,12 @@ const ProfileEditAccount = () => {
               placeholder="Enter your name"
               id="name"
               name="name"
+              error={errors.name}
               ref={register({ required: true })}
             />
+            {errors && errors.name && (
+              <ErrorText>Name cannot be empty</ErrorText>
+            )}
           </FormGroup>
           <FormGroup>
             <label htmlFor="bio">Bio</label>

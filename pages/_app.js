@@ -8,6 +8,8 @@ import { SWRConfig } from "swr";
 import { ThemeProvider } from "styled-components";
 import RootProvider from "../context/RootContext";
 import Layout from "../components/Layout";
+import Alert from "../components/Alert";
+
 import GlobalStyles from "../styles/GlobalStyles";
 import theme from "../styles/theme";
 import "nprogress/nprogress.css";
@@ -37,6 +39,7 @@ function MyApp({ Component, pageProps, router }) {
       <GlobalStyles />
       <SWRConfig value={options}>
         <RootProvider>
+          <Alert />
           {renderLayout ? (
             <Layout>
               <Container>

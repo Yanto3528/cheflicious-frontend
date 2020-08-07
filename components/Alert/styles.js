@@ -36,7 +36,7 @@ export const AlertInnerContainer = styled.div`
   padding: 20px;
   &:after {
     content: "";
-    width: calc(100% + 10px);
+    width: calc(100% + 5px);
     height: 100%;
     position: absolute;
     top: 0;

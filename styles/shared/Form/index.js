@@ -24,6 +24,11 @@ const inputBaseStyles = css`
     `}
 `;
 
+const pillStyles = css`
+  border-radius: 50px;
+  padding: 15px 20px;
+`;
+
 export const Form = styled.form`
   background-color: ${({ theme }) => theme.lightgrey};
   box-shadow: ${({ theme }) => theme.boxShadow};
@@ -34,6 +39,7 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   ${inputBaseStyles}
+  ${({ pill }) => pill && pillStyles}
 `;
 
 export const Textarea = styled.textarea`
@@ -54,6 +60,7 @@ export const FormGroup = styled.div`
   margin-bottom: 20px;
   padding: 0 10px;
   position: relative;
+  width: ${({ width }) => width};
   label {
     display: block;
     font-weight: 600;

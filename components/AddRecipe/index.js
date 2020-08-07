@@ -4,24 +4,19 @@ import { v4 } from "uuid";
 import axios from "axios";
 import { useAlert } from "../../context/AlertContext";
 import useImage from "../../lib/hook/useImage";
-import { Camera, Add } from "../Icons";
 import Select from "../Select";
 import Ingredient from "./Ingredient";
 import Instruction from "./Instruction";
 import CloseIcon from "../CloseIcon";
+import Button from "../Button";
+import InputFile from "./InputFile";
+import FormList from "./FormList";
 import { difficultyData } from "./constant";
 import { addRecipeVariants } from "../../utils/variants";
 
-import {
-  AddRecipeContainer,
-  InputFileContainer,
-  AddRecipeFormGroupContainer,
-  AddButton,
-  CameraUpload,
-} from "./styles";
+import { AddRecipeContainer } from "./styles";
 import ErrorText from "../../styles/shared/ErrorText";
 import { Form, Input, Textarea, FormGroup } from "../../styles/shared/Form";
-import Button from "../../styles/shared/Button";
 
 let errors = {};
 
@@ -52,6 +47,7 @@ const AddRecipe = ({ titleText, toggle }) => {
   const [categories, setCategories] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [difficultyOptions] = useState(difficultyData);
+  const [loading, setLoading] = useState(false);
 
   const {
     imagePreview,
@@ -59,8 +55,6 @@ const AddRecipe = ({ titleText, toggle }) => {
     handleImageUpload,
     handleRemoveImagePreview,
   } = useImage();
-
-  const [error, setError] = useState(null);
 
   const { setAlert } = useAlert();
 
@@ -157,11 +151,13 @@ const AddRecipe = ({ titleText, toggle }) => {
         instructions,
         categories,
       };
+      setLoading(true);
       const res = await axios.post("/api/recipes", data);
       setAlert(res.data.message);
     } catch (error) {
-      setError(error.response.data.error);
       setAlert(error.response.data.error, "danger");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -175,29 +171,11 @@ const AddRecipe = ({ titleText, toggle }) => {
       <CloseIcon top wide size="4rem" onClick={toggle} />
       <h2>{titleText}</h2>
       <Form onSubmit={onSubmit}>
-        <InputFileContainer src={imagePreview}>
-          <label htmlFor="file">
-            <input
-              type="file"
-              name="file"
-              id="file"
-              onChange={handleChangeImage}
-            />
-            {!imagePreview && (
-              <CameraUpload>
-                <Camera />
-              </CameraUpload>
-            )}
-          </label>
-          {imagePreview && (
-            <CloseIcon
-              top
-              size="30px"
-              color="black"
-              onClick={handleRemoveImagePreview}
-            />
-          )}
-        </InputFileContainer>
+        <InputFile
+          imagePreview={imagePreview}
+          onChange={handleChangeImage}
+          onRemove={handleRemoveImagePreview}
+        />
         <FormGroup>
           <label htmlFor="title">Title</label>
           <Input
@@ -274,56 +252,28 @@ const AddRecipe = ({ titleText, toggle }) => {
             errors={errors}
           />
         </FormGroup>
-        <AddRecipeFormGroupContainer>
-          <h3>Ingredients</h3>
-          {ingredients.map((ingredient, index) => (
-            <Ingredient
-              key={ingredient.id}
-              ingredient={ingredient}
-              index={index}
-              onChange={onChangeIngredient}
-              onRemove={onRemoveIngredient}
-              errors={errors}
-            />
-          ))}
-          {errors && errors.ingredient && (
-            <ErrorText>*Please enter at least 1 ingredient</ErrorText>
-          )}
-          <AddButton onClick={addIngredient}>
-            <span>
-              <Add />
-            </span>
-            <p>Add Ingredients</p>
-          </AddButton>
-        </AddRecipeFormGroupContainer>
-        <AddRecipeFormGroupContainer>
-          <h3>Instructions</h3>
-          {instructions.map((instruction, index) => (
-            <Instruction
-              key={instruction.id}
-              instruction={instruction}
-              index={index}
-              onChange={onChangeInstruction}
-              onRemove={onRemoveInstruction}
-              errors={errors}
-            />
-          ))}
-          {errors && errors.instruction && (
-            <ErrorText>*Please enter at least 1 instruction</ErrorText>
-          )}
-          <AddButton onClick={addInstruction}>
-            <span>
-              <Add />
-            </span>
-            <p>Add Instruction</p>
-          </AddButton>
-        </AddRecipeFormGroupContainer>
-        <Button type="submit">Submit</Button>
-        {error && (
-          <ErrorText fontSize="1.6rem" margin="10px" center>
-            {error}
-          </ErrorText>
-        )}
+        <FormList
+          component={Ingredient}
+          title="Ingredients"
+          values={ingredients}
+          name="ingredients"
+          onChange={onChangeIngredient}
+          onRemove={onRemoveIngredient}
+          onAdd={addIngredient}
+          errors={errors}
+        />
+        <FormList
+          component={Instruction}
+          title="Instructions"
+          values={instructions}
+          onChange={onChangeInstruction}
+          onRemove={onRemoveInstruction}
+          onAdd={addInstruction}
+          errors={errors}
+        />
+        <Button type="submit" loading={loading}>
+          Submit
+        </Button>
       </Form>
     </AddRecipeContainer>
   );

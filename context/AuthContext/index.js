@@ -4,6 +4,7 @@ import cookie from "js-cookie";
 import Router from "next/router";
 import authReducer from "./authReducer";
 import authTypes from "./authTypes";
+import { useAlert } from "../AlertContext";
 
 const AuthContext = createContext();
 
@@ -16,6 +17,7 @@ const AuthProvider = ({ children }) => {
     error: null,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const { setAlert } = useAlert();
 
   useEffect(() => {
     if (cookie.get("token")) {
@@ -40,6 +42,7 @@ const AuthProvider = ({ children }) => {
         type: authTypes.SIGN_UP_FAIL,
         payload: error.response.data.error,
       });
+      setAlert(error.response.data.error, "danger");
     } finally {
       setLoading(false);
     }
@@ -62,6 +65,7 @@ const AuthProvider = ({ children }) => {
         type: authTypes.SIGN_IN_FAIL,
         payload: error.response.data.error,
       });
+      setAlert(error.response.data.error, "danger");
     } finally {
       setLoading(false);
     }

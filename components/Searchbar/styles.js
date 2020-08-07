@@ -12,11 +12,16 @@ export const SearchbarContainer = styled.div`
       padding: 15px 20px;
       width: 100%;
     }
-    span {
+    button {
       position: absolute;
+      outline: none;
+      border: none;
+      background-color: transparent;
+      height: 25px;
+      width: 25px;
       top: 50%;
       right: 20px;
-      transform: translateY(-35%);
+      transform: translateY(-45%);
       cursor: pointer;
       svg {
         backface-visibility: hidden;

@@ -14,12 +14,13 @@ const loadingVariants = {
   },
 };
 
-const Spinner = () => {
+const Spinner = (props) => {
   return (
     <LoadingIcon
       variants={loadingVariants}
       initial="initial"
       animate="animate"
+      {...props}
     />
   );
 };

@@ -4,11 +4,11 @@ import AlertProvider from "../AlertContext";
 
 const RootProvider = ({ children }) => {
   return (
-    <AuthProvider>
-      <RecipeProvider>
-        <AlertProvider>{children}</AlertProvider>
-      </RecipeProvider>
-    </AuthProvider>
+    <AlertProvider>
+      <AuthProvider>
+        <RecipeProvider>{children}</RecipeProvider>
+      </AuthProvider>
+    </AlertProvider>
   );
 };
 

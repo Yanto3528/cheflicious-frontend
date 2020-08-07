@@ -27,7 +27,6 @@ const RecipeList = ({ title, recipes, url, nextPage }) => {
     },
     [loading, hasMore]
   );
-
   return (
     <RecipeListContainer>
       <h1>{title}</h1>
