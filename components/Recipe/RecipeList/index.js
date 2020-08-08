@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import RecipeCard from "../RecipeCard";
 import useInfiniteScroll from "../../../lib/hook/useInfiniteScroll";
 import Spinner from "../../Spinner";
@@ -8,26 +9,22 @@ import { LoadingMoreContainer } from "../../../styles/shared/LoadingIcon";
 
 const RecipeList = ({ title, recipes, url, nextPage }) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [ref, inView] = useInView();
   const { data, loading, error, hasMore } = useInfiniteScroll(
     recipes,
     url,
     pageNumber,
     nextPage
   );
-  const observer = useRef();
-  const lastElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
+  useEffect(() => {
+    setPageNumber(1);
+  }, [url]);
+  useEffect(() => {
+    if (inView && hasMore) {
+      setPageNumber((prevPage) => prevPage + 1);
+    }
+  }, [ref, inView, hasMore, nextPage]);
+
   return (
     <RecipeListContainer>
       <h1>{title}</h1>
@@ -39,13 +36,7 @@ const RecipeList = ({ title, recipes, url, nextPage }) => {
       <Grid>
         {data.map((recipe, index) => {
           if (data.length === index + 1) {
-            return (
-              <RecipeCard
-                key={recipe._id}
-                recipe={recipe}
-                ref={lastElementRef}
-              />
-            );
+            return <RecipeCard key={recipe._id} recipe={recipe} ref={ref} />;
           }
           return <RecipeCard key={recipe._id} recipe={recipe} />;
         })}

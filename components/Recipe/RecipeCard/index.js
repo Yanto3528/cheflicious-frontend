@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { Clock, Servings, HeartOutline, CommentOutline } from "../../Icons";
 import convertNumberToTime from "../../../utils/convertNumberToTime";
@@ -14,12 +13,6 @@ import InfoDetail from "../../../styles/shared/InfoDetail";
 import Difficulty from "../../../styles/shared/Difficulty";
 
 const RecipeCard = React.forwardRef(({ small, recipe }, ref) => {
-  const router = useRouter();
-
-  const handleChangeSingleRecipeRoute = () => {
-    router.push("/recipes/[slug]", `/recipes/${recipe.slug}`);
-  };
-
   return (
     <Link href="/recipes/[slug]" as={`/recipes/${recipe.slug}`}>
       <RecipeCardContainer small={small} ref={ref && ref}>
@@ -56,7 +49,8 @@ const RecipeCard = React.forwardRef(({ small, recipe }, ref) => {
                 <HeartOutline /> {recipe.likes.length} likes
               </span>
               <span>
-                <CommentOutline /> {recipe.comments.length} comments
+                <CommentOutline />{" "}
+                {recipe.comments ? recipe.comments.length : "0"} comments
               </span>
             </RecipeCardSocial>
           </React.Fragment>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const CommentsContainer = styled.div`
   margin-top: 25px;
@@ -22,16 +22,13 @@ export const LikesContainer = styled.div`
     margin-right: 5px;
     cursor: pointer;
     transition: all 0.4s;
-    path {
-      transition: all 0.4s;
-    }
     &:hover {
-      fill: ${({ theme }) => theme.red};
       transform: scale(1.2);
-      path {
-        stroke: ${({ theme }) => theme.red};
-      }
     }
+  }
+  span {
+    width: 145px;
+    text-align: right;
   }
 `;
 

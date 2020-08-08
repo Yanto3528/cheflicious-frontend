@@ -1,9 +1,9 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import RecipeCard from "../Recipe/RecipeCard";
 import Spinner from "../Spinner";
 import { useAuth } from "../../context/AuthContext";
 import useInfiniteScroll from "../../lib/hook/useInfiniteScroll";
-import Button from "../Button";
 import { Star } from "../Icons";
 import {
   ProfileContainer,
@@ -16,14 +16,31 @@ import Avatar from "../../styles/shared/Avatar";
 import Grid from "../../styles/shared/Grid";
 import { LoadingMoreContainer } from "../../styles/shared/LoadingIcon";
 
-const Profile = ({ user, id }) => {
+const Profile = ({ user }) => {
   const [activeTab, setActiveTab] = useState(0);
+  const [ref, inView] = useInView();
   const {
     user: currentUser,
     followUser,
     unFollowUser,
     loading: userLoading,
   } = useAuth();
+  const [pageNumber, setPageNumber] = useState(1);
+  const { data, loading, error, hasMore } = useInfiniteScroll(
+    [],
+    `/api/recipes?author=${user._id}`,
+    pageNumber
+  );
+
+  useEffect(() => {
+    setPageNumber(1);
+  }, [user._id]);
+
+  useEffect(() => {
+    if (inView && hasMore) {
+      setPageNumber((prevPage) => prevPage + 1);
+    }
+  }, [ref, inView, hasMore]);
 
   const handleFollowAndUnfollow = () => {
     if (currentUser.following.includes(user._id)) {
@@ -32,27 +49,6 @@ const Profile = ({ user, id }) => {
       followUser(user._id);
     }
   };
-
-  const [pageNumber, setPageNumber] = useState(1);
-
-  const { data, loading, error, hasMore } = useInfiniteScroll(
-    [],
-    `/api/recipes?author=${user._id}`,
-    pageNumber
-  );
-  const observer = useRef();
-  const lastElementRef = useCallback(
-    (node) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          setPageNumber((prevPageNumber) => prevPageNumber + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
 
   const onChangeTab = (index) => setActiveTab(index);
 
@@ -100,13 +96,7 @@ const Profile = ({ user, id }) => {
         <Grid>
           {data.map((recipe, index) => {
             if (data.length === index + 1) {
-              return (
-                <RecipeCard
-                  key={recipe._id}
-                  recipe={recipe}
-                  ref={lastElementRef}
-                />
-              );
+              return <RecipeCard key={recipe._id} recipe={recipe} ref={ref} />;
             }
             return <RecipeCard key={recipe._id} recipe={recipe} />;
           })}
