@@ -21,7 +21,7 @@ const AddComment = ({ recipeId }) => {
   };
 
   const onSubmit = async (data) => {
-    await API(`/api/recipes/${recipeId}/comments`, data, "POST");
+    await API("POST", `/api/recipes/${recipeId}/comments`, data);
     reset();
   };
 

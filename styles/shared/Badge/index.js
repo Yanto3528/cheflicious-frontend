@@ -16,10 +16,23 @@ export default styled.span`
   }
 `;
 
+export const RoundedBadge = styled.span`
+  width: 18px;
+  height: 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.primary};
+  color: white;
+  position: absolute;
+  top: -15px;
+  right: -8px;
+`;
+
 export const BadgeGroup = styled.div`
   padding: 20px;
-  /* display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start; */
   gap: 10px;
 `;

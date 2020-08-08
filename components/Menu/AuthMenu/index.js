@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useAuth } from "../../../context/AuthContext";
 import { useRecipe } from "../../../context/RecipeContext";
+import { useNotification } from "../../../context/NotificationContext";
 import AccountDropdown from "../../Dropdown/AccountDropdown";
 import NotificationDropdown from "../../Dropdown/NotificationDropdown";
 import AddRecipe from "../../AddRecipe";
@@ -14,8 +15,9 @@ import {
   ChatBubbles,
   Notifications,
 } from "../../Icons";
-import Avatar from "../../../styles/shared/Avatar";
 import { NavMenu, NavMenuItem, MenuIcon } from "../styles";
+import Avatar from "../../../styles/shared/Avatar";
+import { RoundedBadge } from "../../../styles/shared/Badge";
 
 const AuthMenu = () => {
   const [
@@ -31,16 +33,15 @@ const AuthMenu = () => {
 
   const { showAddRecipe, toggleShowAddRecipe } = useRecipe();
   const { user } = useAuth();
+  const { notifications } = useNotification();
 
   return (
     <React.Fragment>
       <NavMenu>
         <NavMenuItem onClick={toggleShowAddRecipe}>
-          {/* <Link href="/recipes/add"> */}
           <MenuIcon>
             <Add />
           </MenuIcon>
-          {/* </Link> */}
         </NavMenuItem>
         <NavMenuItem>
           <Link href="/categories">
@@ -60,6 +61,13 @@ const AuthMenu = () => {
           <NavMenuItem onClick={toggleNotificationDropdown}>
             <MenuIcon>
               <Notifications />
+              <RoundedBadge>
+                {
+                  notifications.filter(
+                    (notification) => notification.read === false
+                  ).length
+                }
+              </RoundedBadge>
             </MenuIcon>
             <AnimatePresence>
               {showNotificationDropdown && (

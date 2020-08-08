@@ -36,6 +36,7 @@ export const SignupButton = styled.a`
 
 export const MenuIcon = styled.span`
   cursor: pointer;
+  position: relative;
   svg {
     width: 25px;
     height: 25px;

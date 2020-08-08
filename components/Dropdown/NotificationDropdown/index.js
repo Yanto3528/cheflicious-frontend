@@ -1,3 +1,5 @@
+import ReactMarkdown from "react-markdown/with-html";
+import { useNotification } from "../../../context/NotificationContext";
 import dropdownVariants from "../variants";
 import {
   NotificationDropdownContainer,
@@ -7,6 +9,7 @@ import {
 import Avatar from "../../../styles/shared/Avatar";
 
 const NotificationDropdown = () => {
+  const { notifications } = useNotification();
   return (
     <NotificationDropdownContainer
       variants={dropdownVariants}
@@ -17,42 +20,20 @@ const NotificationDropdown = () => {
       <NotificationDropdownHeader>
         <h3>Notification</h3>
       </NotificationDropdownHeader>
-      <NotificationDropdownItem>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80"
-          alt=""
-        />
-        <div>
-          <p>
-            <strong>Chris William</strong> followed you
-          </p>
-          <span>4 days ago</span>
-        </div>
-      </NotificationDropdownItem>
-      <NotificationDropdownItem>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80"
-          alt=""
-        />
-        <div>
-          <p>
-            <strong>Chris William</strong> followed you
-          </p>
-          <span>4 days ago</span>
-        </div>
-      </NotificationDropdownItem>
-      <NotificationDropdownItem>
-        <Avatar
-          src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80"
-          alt=""
-        />
-        <div>
-          <p>
-            <strong>Chris William</strong> commented on your recipe
-          </p>
-          <span>4 days ago</span>
-        </div>
-      </NotificationDropdownItem>
+      {notifications.map((notification) => (
+        <NotificationDropdownItem key={notification._id}>
+          <Avatar
+            src={notification.sender.avatar}
+            alt={notification.sender.name}
+          />
+          <div>
+            <p>
+              <ReactMarkdown source={notification.message} escapeHtml={false} />
+            </p>
+            <span>4 days ago</span>
+          </div>
+        </NotificationDropdownItem>
+      ))}
     </NotificationDropdownContainer>
   );
 };

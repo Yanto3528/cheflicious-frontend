@@ -48,6 +48,8 @@ const authReducer = (state, action) => {
         ...state,
         loading: action.payload,
       };
+    default:
+      return state;
   }
 };
 
