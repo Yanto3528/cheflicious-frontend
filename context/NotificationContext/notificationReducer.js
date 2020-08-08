@@ -15,9 +15,10 @@ const notificationReducer = (state, action) => {
     case notificationTypes.READ_ALL_NOTIFICATIONS:
       return {
         ...state,
-        notifications: state.notifications.map(
-          (notification) => (notification.read = true)
-        ),
+        notifications: state.notifications.map((notification) => ({
+          ...notification,
+          read: true,
+        })),
       };
     case notificationTypes.DELETE_SINGLE_NOTIFICATION:
       return {

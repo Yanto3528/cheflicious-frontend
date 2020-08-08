@@ -35,6 +35,10 @@ const AuthMenu = () => {
   const { user } = useAuth();
   const { notifications } = useNotification();
 
+  const hasNotification = notifications.some(
+    (notification) => notification.read === false
+  );
+
   return (
     <React.Fragment>
       <NavMenu>
@@ -61,18 +65,18 @@ const AuthMenu = () => {
           <NavMenuItem onClick={toggleNotificationDropdown}>
             <MenuIcon>
               <Notifications />
-              <RoundedBadge>
-                {
-                  notifications.filter(
-                    (notification) => notification.read === false
-                  ).length
-                }
-              </RoundedBadge>
+              {hasNotification && (
+                <RoundedBadge>
+                  {
+                    notifications.filter(
+                      (notification) => notification.read === false
+                    ).length
+                  }
+                </RoundedBadge>
+              )}
             </MenuIcon>
             <AnimatePresence>
-              {showNotificationDropdown && (
-                <NotificationDropdown toggle={toggleNotificationDropdown} />
-              )}
+              {showNotificationDropdown && <NotificationDropdown />}
             </AnimatePresence>
           </NavMenuItem>
         </OutsideClickHandler>

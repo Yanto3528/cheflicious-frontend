@@ -16,7 +16,31 @@ export const NotificationDropdownContainer = styled(motion.div)`
 export const NotificationDropdownHeader = styled.div`
   background-color: white;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    color: ${({ theme }) => theme.primary};
+    cursor: pointer;
+  }
 `;
+
+export const NotificationItemContainer = styled.div`
+  max-height: 400px;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px ${({ theme }) => theme.grey};
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.grey2};
+    border-radius: 10px;
+  }
+`;
+
 export const NotificationDropdownItem = styled.div`
   padding: 20px;
   display: flex;
@@ -33,4 +57,23 @@ export const NotificationDropdownItem = styled.div`
   &:hover {
     background-color: ${({ theme }) => theme.lightgrey2};
   }
+  > div {
+    flex: 1;
+  }
+  > span {
+    position: static;
+    margin-top: 10px;
+    background-color: ${({ theme }) => theme.grey2};
+    border-radius: 50%;
+    svg {
+      path {
+        stroke: white;
+      }
+    }
+  }
+`;
+
+export const NotificationPlaceholder = styled.div`
+  padding: 20px;
+  text-align: center;
 `;

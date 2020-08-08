@@ -24,6 +24,7 @@ const AccountDropdown = ({ toggle }) => {
       initial="hidden"
       animate="visible"
       exit="exit"
+      onClick={(e) => e.stopPropagation()}
     >
       <AccountDropdownHeader>
         <Avatar src={user.avatar} alt={user.name} />
