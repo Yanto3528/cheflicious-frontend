@@ -495,7 +495,7 @@ export const TrashOutline = () => (
       d="M3.125 4.375H16.875"
       stroke="#737373"
       strokeWidth="1.25"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
     />
     <path

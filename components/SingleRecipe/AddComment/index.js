@@ -11,7 +11,7 @@ import Avatar from "../../../styles/shared/Avatar";
 const AddComment = ({ recipeId }) => {
   const [rows, setRows] = useState(1);
   const { user } = useAuth();
-  const { data: comment, loading, error, API } = useAxios();
+  const { data: comment, loading, API } = useAxios();
 
   const { register, handleSubmit, errors, reset } = useForm();
 

@@ -1,13 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import moment from "moment";
-import useToggle from "../../../lib/hook/useToggle";
 import { useAuth } from "../../../context/AuthContext";
 import { useAlert } from "../../../context/AlertContext";
 import AddComment from "../AddComment";
-import Dropdown from "../../Dropdown";
 import Comment from "../Comment";
-import { Ellipsis } from "../../Icons";
 
 import { HeartOutline, Heart } from "../../Icons";
 import { CommentsContainer, CommentsHeader, LikesContainer } from "./styles";
@@ -17,6 +13,7 @@ const Comments = ({ recipe }) => {
   const { user } = useAuth();
   const { setAlert } = useAlert();
   const [data, setData] = useState(recipe);
+  const [comments, setComments] = useState(recipe.comments);
   const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown] = useState(false);
 
@@ -43,6 +40,26 @@ const Comments = ({ recipe }) => {
     }
   };
 
+  const onDeleteComment = async (id) => {
+    try {
+      await axios.delete(`/api/comments/${id}`);
+      setComments(comments.filter((comment) => comment._id !== id));
+    } catch (error) {
+      setAlert("Cannot delete comment at the moment.", "danger");
+    }
+  };
+
+  const onEditComment = async (id, data) => {
+    try {
+      const res = await axios.put(`/api/comments/${id}`, data);
+      setComments(
+        comments.map((comment) => (comment._id === id ? res.data : comment))
+      );
+    } catch (error) {
+      setAlert("Cannot edit comment at the moment.", "danger");
+    }
+  };
+
   return (
     <CommentsContainer>
       <CommentsHeader>
@@ -52,9 +69,14 @@ const Comments = ({ recipe }) => {
           <span>{data.likes.length} people likes this</span>
         </LikesContainer>
       </CommentsHeader>
-      {data.comments &&
-        data.comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
+      {comments &&
+        comments.map((comment) => (
+          <Comment
+            key={comment._id}
+            comment={comment}
+            onDelete={onDeleteComment}
+            onEdit={onEditComment}
+          />
         ))}
       <AddComment recipeId={recipe._id} />
     </CommentsContainer>

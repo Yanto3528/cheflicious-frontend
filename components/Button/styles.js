@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export default styled.button`
   outline: none;
@@ -18,4 +18,9 @@ export default styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+  ${({ neutral }) =>
+    neutral &&
+    css`
+      background-color: ${({ theme }) => theme.grey2};
+    `}
 `;

@@ -40,3 +40,19 @@ export const EllipsisContainer = styled.span`
   position: relative;
   font-size: 1.4rem;
 `;
+
+export const CommentForm = styled.form`
+  button {
+    width: 75px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .button-group {
+    display: flex;
+    button:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+`;
