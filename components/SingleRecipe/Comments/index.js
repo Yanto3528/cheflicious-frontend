@@ -1,19 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
 import moment from "moment";
+import useToggle from "../../../lib/hook/useToggle";
 import { useAuth } from "../../../context/AuthContext";
 import { useAlert } from "../../../context/AlertContext";
 import AddComment from "../AddComment";
+import Dropdown from "../../Dropdown";
+import Comment from "../Comment";
+import { Ellipsis } from "../../Icons";
 
 import { HeartOutline, Heart } from "../../Icons";
-import {
-  CommentsContainer,
-  Comment,
-  CommentText,
-  CommentsHeader,
-  CommentHeader,
-  LikesContainer,
-} from "./styles";
+import { CommentsContainer, CommentsHeader, LikesContainer } from "./styles";
 import Avatar from "../../../styles/shared/Avatar";
 
 const Comments = ({ recipe }) => {
@@ -21,6 +18,7 @@ const Comments = ({ recipe }) => {
   const { setAlert } = useAlert();
   const [data, setData] = useState(recipe);
   const [loading, setLoading] = useState(false);
+  const [showDropdown, toggleDropdown] = useState(false);
 
   const onLikeRecipe = async () => {
     if (loading) {
@@ -36,8 +34,7 @@ const Comments = ({ recipe }) => {
       } else {
         setData({ ...data, likes: [...data.likes, user._id] });
       }
-      const res = await axios.put(`/api/recipes/${recipe._id}/like`);
-      setData(res.data);
+      await axios.put(`/api/recipes/${recipe._id}/like`);
     } catch (error) {
       console.log(error);
       setAlert("Cannot like recipe at the moment", "danger");
@@ -57,16 +54,7 @@ const Comments = ({ recipe }) => {
       </CommentsHeader>
       {data.comments &&
         data.comments.map((comment) => (
-          <Comment key={comment._id}>
-            <Avatar src={comment.author.avatar} alt={comment.author.name} />
-            <div>
-              <CommentHeader>
-                <p>{comment.author.name}</p>
-                <span>{moment(comment.createdAt).fromNow()}</span>
-              </CommentHeader>
-              <CommentText>{comment.content}</CommentText>
-            </div>
-          </Comment>
+          <Comment key={comment._id} comment={comment} />
         ))}
       <AddComment recipeId={recipe._id} />
     </CommentsContainer>

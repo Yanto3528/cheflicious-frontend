@@ -31,31 +31,3 @@ export const LikesContainer = styled.div`
     text-align: right;
   }
 `;
-
-export const Comment = styled.div`
-  display: flex;
-  align-items: flex-start;
-  padding: 20px 0;
-  border-bottom: 1px solid ${({ theme }) => theme.grey2};
-  > div {
-    flex: 1;
-  }
-`;
-
-export const CommentText = styled.p`
-  white-space: pre;
-`;
-
-export const CommentHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  p {
-    margin-right: 20px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.darkgrey};
-  }
-  span {
-    font-size: 1.2rem;
-  }
-`;

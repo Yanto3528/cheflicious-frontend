@@ -34,13 +34,13 @@ const AccountDropdown = ({ toggle }) => {
         </div>
       </AccountDropdownHeader>
       <Link href="/profile/[id]" as={`/profile/${user._id}`}>
-        <AccountDropdownItem>
+        <AccountDropdownItem onClick={toggle}>
           <Person />
           <span>My profile</span>
         </AccountDropdownItem>
       </Link>
       <Link href="/profile/edit/account">
-        <AccountDropdownItem>
+        <AccountDropdownItem onClick={toggle}>
           <Setting />
           <span>Settings</span>
         </AccountDropdownItem>
