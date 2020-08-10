@@ -1,5 +1,5 @@
 import AuthForm from "../AuthForm";
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 
 const formInputs = [
   {
@@ -19,7 +19,7 @@ const formInputs = [
 ];
 
 const Signin = () => {
-  const { signin, loading } = useAuth();
+  const { signin, loading } = useAuthContext();
   const onSubmit = (data) => {
     signin(data);
   };

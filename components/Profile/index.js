@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import RecipeCard from "../Recipe/RecipeCard";
 import Spinner from "../Spinner";
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import useInfiniteScroll from "../../lib/hook/useInfiniteScroll";
 import { Star } from "../Icons";
 import {
@@ -24,7 +24,7 @@ const Profile = ({ user }) => {
     followUser,
     unFollowUser,
     loading: userLoading,
-  } = useAuth();
+  } = useAuthContext();
   const [pageNumber, setPageNumber] = useState(1);
   const { data, loading, error, hasMore } = useInfiniteScroll(
     [],

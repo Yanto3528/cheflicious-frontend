@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../../context/AuthContext";
-import { useAlert } from "../../../context/AlertContext";
+import { useAuthContext } from "../../../context/AuthContext";
+import { useAlertContext } from "../../../context/AlertContext";
 import AddComment from "../AddComment";
 import Comment from "../Comment";
 
@@ -10,8 +10,8 @@ import { CommentsContainer, CommentsHeader, LikesContainer } from "./styles";
 import Avatar from "../../../styles/shared/Avatar";
 
 const Comments = ({ recipe }) => {
-  const { user } = useAuth();
-  const { setAlert } = useAlert();
+  const { user } = useAuthContext();
+  const { setAlert } = useAlertContext();
   const [data, setData] = useState(recipe);
   const [comments, setComments] = useState(recipe.comments);
   const [loading, setLoading] = useState(false);

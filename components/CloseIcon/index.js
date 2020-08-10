@@ -1,10 +1,10 @@
 import { Close } from "../Icons";
 import CloseIconContainer from "./styles";
 
-const CloseIcon = ({ ...props }) => {
+const CloseIcon = ({ name, ...props }) => {
   return (
-    <CloseIconContainer {...props}>
-      <Close />
+    <CloseIconContainer data-name={name} {...props}>
+      <Close name={name} />
     </CloseIconContainer>
   );
 };

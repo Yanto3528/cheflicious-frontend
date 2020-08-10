@@ -163,13 +163,14 @@ export const Clock = () => (
   </svg>
 );
 
-export const Close = () => (
+export const Close = ({ name }) => (
   <svg
     width="20"
     height="20"
     viewBox="0 0 20 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    data-name={name}
   >
     <path
       d="M14.375 14.375L5.625 5.625"

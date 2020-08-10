@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 
-export const AddRecipeContainer = styled(motion.div)`
+export const RecipeInputContainer = styled(motion.div)`
   position: absolute;
   top: 0;
   left: 0;
@@ -15,7 +15,7 @@ export const AddRecipeContainer = styled(motion.div)`
   padding: 50px 0;
 `;
 
-export const AddRecipeFormGroupContainer = styled.div`
+export const RecipeInputFormGroupContainer = styled.div`
   > div:not(:last-child) {
     margin-bottom: 10px;
   }
@@ -51,21 +51,5 @@ export const AddButton = styled.div`
         stroke: ${({ theme }) => theme.primary};
       }
     }
-  }
-`;
-
-export const SubmitButton = styled.button`
-  outline: none;
-  border: none;
-  font-size: 1.4rem;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.primary};
-  color: white;
-  padding: 10px;
-  width: 100%;
-  cursor: pointer;
-  transition: all 0.4s;
-  &:hover {
-    opacity: 0.8;
   }
 `;

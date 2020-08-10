@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import Avatar from "../../../styles/shared/Avatar";
 import { Setting, Person, PowerOff } from "../../Icons";
 import dropdownVariants from "../variants";
@@ -11,7 +11,7 @@ import {
 } from "./styles";
 
 const AccountDropdown = ({ toggle }) => {
-  const { user, signout } = useAuth();
+  const { user, signout } = useAuthContext();
 
   const handleLogout = () => {
     toggle();

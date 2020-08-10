@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useAuth } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
 import Searchbar from "../Searchbar";
 import Menu from "../Menu";
 import AuthMenu from "../Menu/AuthMenu";
@@ -8,7 +8,7 @@ import { HeaderContainer, Logo, Nav } from "./styles";
 import Container from "../../styles/shared/Container";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   return (
     <HeaderContainer>

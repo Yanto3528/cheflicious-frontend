@@ -2,12 +2,12 @@ import Link from "next/link";
 import useToggle from "../../../lib/hook/useToggle";
 import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
-import { useAuth } from "../../../context/AuthContext";
-import { useRecipe } from "../../../context/RecipeContext";
-import { useNotification } from "../../../context/NotificationContext";
+import { useAuthContext } from "../../../context/AuthContext";
+import { useRecipeContext } from "../../../context/RecipeContext";
+import { useNotificationContext } from "../../../context/NotificationContext";
 import AccountDropdown from "../../Dropdown/AccountDropdown";
 import NotificationDropdown from "../../Dropdown/NotificationDropdown";
-import AddRecipe from "../../AddRecipe";
+import RecipeInput from "../../RecipeInput";
 
 import {
   Add,
@@ -31,9 +31,9 @@ const AuthMenu = () => {
     setNotificationDropdown,
   ] = useToggle(false);
 
-  const { showAddRecipe, toggleShowAddRecipe } = useRecipe();
-  const { user } = useAuth();
-  const { notifications } = useNotification();
+  const { showAddRecipe, toggleShowAddRecipe } = useRecipeContext();
+  const { user } = useAuthContext();
+  const { notifications } = useNotificationContext();
 
   const hasNotification = notifications.some(
     (notification) => notification.read === false
@@ -93,7 +93,7 @@ const AuthMenu = () => {
       </NavMenu>
       <AnimatePresence>
         {showAddRecipe && (
-          <AddRecipe titleText="Create Recipe" toggle={toggleShowAddRecipe} />
+          <RecipeInput titleText="Create Recipe" toggle={toggleShowAddRecipe} />
         )}
       </AnimatePresence>
     </React.Fragment>

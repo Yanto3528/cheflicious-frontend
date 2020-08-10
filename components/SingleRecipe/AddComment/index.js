@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import useAxios from "../../../lib/hook/useAxios";
 import calculateRows from "../../../utils/calculateRows";
 
@@ -10,7 +10,7 @@ import Avatar from "../../../styles/shared/Avatar";
 
 const AddComment = ({ recipeId }) => {
   const [rows, setRows] = useState(1);
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const { data: comment, loading, API } = useAxios();
 
   const { register, handleSubmit, errors, reset } = useForm();

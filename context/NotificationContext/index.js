@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from "react";
 import axios from "axios";
 import notificationReducer from "./notificationReducer";
 import notificationTypes from "./notificationTypes";
-import { useAlert } from "../AlertContext";
+import { useAlertContext } from "../AlertContext";
 
 const NotificationContext = createContext();
 
@@ -10,7 +10,7 @@ const NotificationProvider = ({ children }) => {
   const initialState = {
     notifications: [],
   };
-  const { setAlert } = useAlert();
+  const { setAlert } = useAlertContext();
 
   const [state, dispatch] = useReducer(notificationReducer, initialState);
 
@@ -83,7 +83,7 @@ const NotificationProvider = ({ children }) => {
   );
 };
 
-export const useNotification = () => {
+export const useNotificationContext = () => {
   const context = useContext(NotificationContext);
   return context;
 };

@@ -1,6 +1,27 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { BadgeGroup } from "../../../styles/shared/Badge";
 import { motion } from "framer-motion";
+
+export const RecipeCardDetail = styled.div`
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const RecipeCardImageContainer = styled.div`
+  overflow: hidden;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+`;
 
 export const RecipeCardContainer = styled(motion.div)`
   display: flex;
@@ -21,27 +42,12 @@ export const RecipeCardContainer = styled(motion.div)`
   ${BadgeGroup} {
     flex: 1;
   }
-`;
-
-export const RecipeCardImageContainer = styled.div`
-  overflow: hidden;
-  position: relative;
-  img {
-    width: 100%;
-    height: ${({ small }) => (small ? "200px" : "300px")};
-    object-fit: cover;
-    transition: all 0.5s;
-    &:hover {
-      transform: scale(1.1);
-    }
+  ${RecipeCardDetail} {
+    padding: ${({ small }) => (small ? "20px" : "0")};
   }
-`;
-
-export const RecipeCardDetail = styled.div`
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${RecipeCardImageContainer} {
+    height: ${({ small }) => (small ? "200px" : "300px")};
+  }
 `;
 
 export const RecipeCategories = styled.div`

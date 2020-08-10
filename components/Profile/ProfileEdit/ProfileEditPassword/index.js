@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useAlert } from "../../../../context/AlertContext";
+import { useAlertContext } from "../../../../context/AlertContext";
 
 import ProfileEditNav from "../ProfileEditNav";
 import ProfileEditContainer from "../styles";
@@ -10,7 +10,7 @@ import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
 
 const ProfileEditPassword = () => {
-  const { setAlert } = useAlert();
+  const { setAlert } = useAlertContext();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, errors, watch, reset } = useForm();
 

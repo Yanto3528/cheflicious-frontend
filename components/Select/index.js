@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
 import { Close } from "../Icons";
@@ -24,25 +24,34 @@ import {
 
 let variants;
 
-const Select = ({
-  isMulti,
-  placeholder,
-  options,
-  values,
-  name,
-  onSelect,
-  onAdd,
-  onRemove,
-  errors,
-}) => {
+const Select = (props) => {
+  const {
+    isMulti,
+    placeholder,
+    options,
+    values,
+    name,
+    onSelect,
+    onAdd,
+    onRemove,
+    errors,
+  } = props;
   const [showDropdown, toggleShowDropdown, setShowDropdown] = useToggle(false);
+  const [optionData, setOptionData] = useState([]);
 
   useEffect(() => {
     variants = plaholderStartVariants;
   }, []);
 
+  useEffect(() => {
+    if (optionData.length === 0) {
+      setOptionData(options);
+    }
+  }, [options]);
+
   const onSelectMultipleItem = (option) => {
     onAdd(option);
+    setOptionData(optionData.filter((opt) => opt._id !== option._id));
   };
 
   const onSelectItem = (option) => {
@@ -52,6 +61,17 @@ const Select = ({
 
   const onRemoveSelectedItem = (option) => {
     onRemove(option);
+    setOptionData(
+      [...optionData, option].sort(function (a, b) {
+        if (a.value < b.value) {
+          return -1;
+        }
+        if (a.value > b.value) {
+          return 1;
+        }
+        return 0;
+      })
+    );
     if (values.length === 1) {
       if (variants !== placeholderVariants) {
         variants = placeholderVariants;
@@ -115,18 +135,18 @@ const Select = ({
               exit="exit"
               onClick={(e) => e.stopPropagation()}
             >
-              {options.map((option) => (
+              {optionData.map((opt) => (
                 <DropdownItem
-                  key={option._id}
+                  key={opt._id}
                   onClick={(e) => {
                     if (isMulti) {
-                      onSelectMultipleItem(option);
+                      onSelectMultipleItem(opt);
                     } else {
-                      onSelectItem(option);
+                      onSelectItem(opt);
                     }
                   }}
                 >
-                  {option.value}
+                  {opt.value}
                 </DropdownItem>
               ))}
             </Dropdown>

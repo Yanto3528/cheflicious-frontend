@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown/with-html";
-import { useNotification } from "../../../context/NotificationContext";
+import { useNotificationContext } from "../../../context/NotificationContext";
 import dropdownVariants from "../variants";
 import CloseIcon from "../../CloseIcon";
 import {
@@ -18,7 +18,7 @@ const NotificationDropdown = () => {
     readAllNotifications,
     deleteSingleNotification,
     deleteNotifications,
-  } = useNotification();
+  } = useNotificationContext();
 
   useEffect(() => {
     readAllNotifications();

@@ -2,17 +2,25 @@ import { useEffect } from "react";
 import axios from "axios";
 import cookie from "js-cookie";
 import io from "socket.io-client";
-import { useRecipe } from "../../context/RecipeContext";
-import { useAuth } from "../../context/AuthContext";
-import { useNotification } from "../../context/NotificationContext";
+import { useRecipeContext } from "../../context/RecipeContext";
+import { useAuthContext } from "../../context/AuthContext";
+import { useNotificationContext } from "../../context/NotificationContext";
+import RecipeInput from "../RecipeInput";
 import Header from "../Header";
+import { AnimatePresence } from "framer-motion";
 
 let socket;
 
 const Layout = ({ children }) => {
-  const { showAddRecipe } = useRecipe();
-  const { setUser, user } = useAuth();
-  const { getNotifications, addNotification } = useNotification();
+  const {
+    recipe,
+    showAddRecipe,
+    showEditRecipe,
+    toggleShowAddRecipe,
+    toggleShowEditRecipe,
+  } = useRecipeContext();
+  const { setUser, user } = useAuthContext();
+  const { getNotifications, addNotification } = useNotificationContext();
 
   useEffect(() => {
     if (user) {
@@ -35,10 +43,36 @@ const Layout = ({ children }) => {
     // eslint-disable-next-line
   }, [user]);
 
+  let content;
+  if (showAddRecipe) {
+    content = (
+      <AnimatePresence>
+        <RecipeInput
+          key="create-recipe"
+          titleText="Create Recipe"
+          toggle={toggleShowAddRecipe}
+        />
+      </AnimatePresence>
+    );
+  } else if (showEditRecipe) {
+    content = (
+      <AnimatePresence>
+        <RecipeInput
+          key="edit-recipe"
+          titleText="Edit Recipe"
+          toggle={toggleShowEditRecipe}
+          recipe={recipe}
+        />
+      </AnimatePresence>
+    );
+  } else {
+    content = children;
+  }
+
   return (
     <React.Fragment>
       <Header />
-      {!showAddRecipe && children}
+      {content}
     </React.Fragment>
   );
 };

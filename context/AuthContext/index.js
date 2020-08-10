@@ -4,7 +4,7 @@ import cookie from "js-cookie";
 import Router from "next/router";
 import authReducer from "./authReducer";
 import authTypes from "./authTypes";
-import { useAlert } from "../AlertContext";
+import { useAlertContext } from "../AlertContext";
 
 const AuthContext = createContext();
 
@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
     error: null,
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const { setAlert } = useAlert();
+  const { setAlert } = useAlertContext();
 
   useEffect(() => {
     if (cookie.get("token")) {
@@ -157,7 +157,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
+export const useAuthContext = () => {
   const context = useContext(AuthContext);
   return context;
 };

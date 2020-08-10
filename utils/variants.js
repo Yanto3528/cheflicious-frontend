@@ -35,7 +35,7 @@ export const recipeCardVariants = {
   },
 };
 
-export const addRecipeVariants = {
+export const recipeInputVariants = {
   hidden: {
     y: "100%",
   },

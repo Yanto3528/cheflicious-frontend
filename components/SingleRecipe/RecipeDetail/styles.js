@@ -22,6 +22,20 @@ export const RecipeDetailContainer = styled.section`
 export const RecipeDetailHeader = styled.div`
   margin-bottom: 30px;
   padding: 0 20px;
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+      cursor: pointer;
+      position: relative;
+      svg {
+        path: {
+          fill: ${({ theme }) => theme.darkgrey};
+        }
+      }
+    }
+  }
   h1 {
     font-size: 3rem;
   }

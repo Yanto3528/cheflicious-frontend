@@ -4,7 +4,7 @@ import moment from "moment";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
 import { AnimatePresence } from "framer-motion";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import useToggle from "../../../lib/hook/useToggle";
 import Dropdown from "../../Dropdown";
 import { Ellipsis } from "../../Icons";
@@ -28,7 +28,7 @@ const Comment = ({ comment, onDelete, onEdit }) => {
   const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown, setDropdown] = useToggle();
   const [showEdit, toggleEdit] = useToggle();
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const { register, handleSubmit, errors, reset } = useForm({
     defaultValues: { content: comment.content },

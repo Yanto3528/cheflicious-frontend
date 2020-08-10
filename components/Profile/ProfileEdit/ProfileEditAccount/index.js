@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../../context/AuthContext";
-import { useAlert } from "../../../../context/AlertContext";
+import { useAuthContext } from "../../../../context/AuthContext";
+import { useAlertContext } from "../../../../context/AlertContext";
 import useImage from "../../../../lib/hook/useImage";
 import ProfileEditNav from "../ProfileEditNav";
 
@@ -19,8 +19,8 @@ import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
 
 const ProfileEditAccount = () => {
-  const { user } = useAuth();
-  const { setAlert } = useAlert();
+  const { user } = useAuthContext();
+  const { setAlert } = useAlertContext();
   const { imagePreview, handleChangeImage, handleImageUpload } = useImage();
   const [loading, setLoading] = useState(false);
   const {

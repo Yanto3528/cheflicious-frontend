@@ -1,4 +1,4 @@
-import { useAlert } from "../../context/AlertContext";
+import { useAlertContext } from "../../context/AlertContext";
 import { AnimatePresence } from "framer-motion";
 import ClientOnlyPortal from "../ClientOnlyPortal";
 import { CheckMark, Close } from "../Icons";
@@ -11,7 +11,7 @@ import {
 import { slideInVariants } from "../../utils/variants";
 
 const Alert = () => {
-  const { alerts } = useAlert();
+  const { alerts } = useAlertContext();
   return (
     <ClientOnlyPortal selector="#modal-root">
       <AlertContainer>

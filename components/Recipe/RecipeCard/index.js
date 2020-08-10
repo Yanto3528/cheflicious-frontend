@@ -15,7 +15,7 @@ import Difficulty from "../../../styles/shared/Difficulty";
 const RecipeCard = React.forwardRef(({ small, recipe }, ref) => {
   return (
     <Link href="/recipes/[slug]" as={`/recipes/${recipe.slug}`}>
-      <RecipeCardContainer small={small} ref={ref && ref}>
+      <RecipeCardContainer ref={ref && ref} small={small}>
         <RecipeCardImageContainer>
           <motion.img src={recipe.image} alt={recipe.title} />
         </RecipeCardImageContainer>
