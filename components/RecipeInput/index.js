@@ -44,7 +44,7 @@ const RecipeInput = ({ titleText, toggle, isEdit, recipe }) => {
     onSelectDifficulty,
     handleChange,
     onSubmit,
-  } = useRecipe(recipe);
+  } = useRecipe(recipe, toggle, isEdit);
   const {
     title,
     description,

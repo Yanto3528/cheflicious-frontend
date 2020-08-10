@@ -43,7 +43,7 @@ export const RecipeCardContainer = styled(motion.div)`
     flex: 1;
   }
   ${RecipeCardDetail} {
-    padding: ${({ small }) => (small ? "20px" : "0")};
+    padding: ${({ small }) => (small ? "20px" : "0 20px")};
   }
   ${RecipeCardImageContainer} {
     height: ${({ small }) => (small ? "200px" : "300px")};

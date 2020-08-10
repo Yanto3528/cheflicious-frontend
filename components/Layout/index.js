@@ -62,6 +62,7 @@ const Layout = ({ children }) => {
           titleText="Edit Recipe"
           toggle={toggleShowEditRecipe}
           recipe={recipe}
+          isEdit
         />
       </AnimatePresence>
     );
