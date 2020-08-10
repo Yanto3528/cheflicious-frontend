@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -7,16 +8,18 @@ import { useAlertContext } from "../../../context/AlertContext";
 import { useRecipeContext } from "../../../context/RecipeContext";
 import RecipeInstructions from "../RecipeInstructions";
 import RecipeIngredients from "../RecipeIngredients";
-import RecipeInput from "../../RecipeInput";
 import Dropdown from "../../Dropdown";
-import { Ellipsis } from "../../Icons";
+import Modal from "../../Modal";
+import { Ellipsis, Close } from "../../Icons";
 import useToggle from "../../../lib/hook/useToggle";
 
 import { RecipeDetailContainer, RecipeDetailHeader } from "./styles";
 import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 
 const SingleRecipeDetail = ({ recipe }) => {
+  const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown, setDropdown] = useToggle();
+  const [showModal, toggleModal] = useToggle();
   const { toggleShowEditRecipe } = useRecipeContext();
   const { setAlert } = useAlertContext();
   const router = useRouter();
@@ -25,11 +28,14 @@ const SingleRecipeDetail = ({ recipe }) => {
 
   const onDeleteRecipe = async () => {
     try {
+      setLoading(true);
       const res = await axios.delete(`/api/recipes/${recipe._id}`);
       setAlert(res.data.message);
       router.push("/");
     } catch (error) {
       setAlert("Cannot delete recipe at the moment.", "danger");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,7 +65,7 @@ const SingleRecipeDetail = ({ recipe }) => {
                     <Dropdown
                       toggle={toggleDropdown}
                       toggleEdit={onEditRecipe}
-                      onDelete={onDeleteRecipe}
+                      onDelete={toggleModal}
                     />
                   )}
                 </AnimatePresence>
@@ -84,6 +90,18 @@ const SingleRecipeDetail = ({ recipe }) => {
           difficulty={recipe.difficulty}
         />
       </RecipeDetailContainer>
+      <AnimatePresence>
+        {showModal && (
+          <Modal
+            title="Are you sure?"
+            subtitle="Do you really want to delete this?"
+            icon={Close}
+            onClick={onDeleteRecipe}
+            toggle={toggleModal}
+            loading={loading}
+          />
+        )}
+      </AnimatePresence>
     </React.Fragment>
   );
 };

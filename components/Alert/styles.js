@@ -17,7 +17,7 @@ export const AlertContainer = styled.div`
   top: 30px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 200;
+  z-index: 4000;
 `;
 
 export const AlertOuterContainer = styled(motion.div)`

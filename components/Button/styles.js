@@ -23,4 +23,9 @@ export default styled.button`
     css`
       background-color: ${({ theme }) => theme.grey2};
     `}
+  ${({ red }) =>
+    red &&
+    css`
+      background-color: ${({ theme }) => theme.red};
+    `}
 `;
