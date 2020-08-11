@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import useSWR from "swr";
+import moment from "moment";
 import ReactMarkdown from "react-markdown/with-html";
-import { useNotificationContext } from "../../../context/NotificationContext";
+import useAxios from "../../../lib/hook/useAxios";
 import dropdownVariants from "../variants";
 import CloseIcon from "../../CloseIcon";
 import {
@@ -13,16 +15,36 @@ import {
 import Avatar from "../../../styles/shared/Avatar";
 
 const NotificationDropdown = () => {
-  const {
-    notifications,
-    readAllNotifications,
-    deleteSingleNotification,
-    deleteNotifications,
-  } = useNotificationContext();
+  const { data: notifications, mutate } = useSWR("/api/notifications");
+  const { API } = useAxios();
+
+  const readAllNotifications = async () => {
+    mutate(
+      notifications.map((notification) => ({ ...notification, read: true })),
+      false
+    );
+    await API("PUT", "/api/notifications");
+    mutate();
+  };
 
   useEffect(() => {
     readAllNotifications();
   }, []);
+
+  const deleteSingleNotification = async (id) => {
+    mutate(
+      notifications.filter((notification) => notification._id !== id),
+      false
+    );
+    await API("DELETE", `/api/notifications/${id}`);
+    mutate();
+  };
+
+  const deleteNotifications = async () => {
+    mutate([], false);
+    await API("DELETE", "/api/notifications");
+    mutate();
+  };
 
   return (
     <NotificationDropdownContainer
@@ -49,7 +71,7 @@ const NotificationDropdown = () => {
                   source={notification.message}
                   escapeHtml={false}
                 />
-                <span>4 days ago</span>
+                <span>{moment(notification.createdAt).fromNow()}</span>
               </div>
               <CloseIcon
                 onClick={() => deleteSingleNotification(notification._id)}

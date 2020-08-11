@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ProfileContainer = styled.div``;
 export const ProfileDetailContainer = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 50px;
 `;
 

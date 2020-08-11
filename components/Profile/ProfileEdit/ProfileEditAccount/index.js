@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useAuthContext } from "../../../../context/AuthContext";
+import axios from "axios";
+import useSWR from "swr";
 import { useAlertContext } from "../../../../context/AlertContext";
 import useImage from "../../../../lib/hook/useImage";
 import ProfileEditNav from "../ProfileEditNav";
@@ -19,7 +19,7 @@ import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
 
 const ProfileEditAccount = () => {
-  const { user } = useAuthContext();
+  const { data: currentUser } = useSWR("/api/users/me");
   const { setAlert } = useAlertContext();
   const { imagePreview, handleChangeImage, handleImageUpload } = useImage();
   const [loading, setLoading] = useState(false);
@@ -32,8 +32,8 @@ const ProfileEditAccount = () => {
     reset,
   } = useForm({
     defaultValues: {
-      name: user && user.name,
-      bio: user && user.bio,
+      name: currentUser && currentUser.name,
+      bio: currentUser && currentUser.bio,
     },
   });
 
@@ -54,25 +54,25 @@ const ProfileEditAccount = () => {
   };
 
   useEffect(() => {
-    if (user && getValues("name") === "") {
-      setValue("name", user.name);
-      setValue("bio", user.bio);
+    if (currentUser && getValues("name") === "") {
+      setValue("name", currentUser.name);
+      setValue("bio", currentUser.bio);
     }
-  }, [user]);
+  }, [currentUser]);
 
   return (
-    user && (
+    currentUser && (
       <ProfileEditContainer>
         <ProfileEditNav />
         <Form onSubmit={handleSubmit(onSubmit)}>
           <ProfileEditAccountHeader>
             <Avatar
-              src={imagePreview ? imagePreview : user.avatar}
-              alt={user.name}
+              src={imagePreview ? imagePreview : currentUser.avatar}
+              alt={currentUser.name}
               size="70px"
             />
             <div>
-              <p>{user.name}</p>
+              <p>{currentUser.name}</p>
               <label htmlFor="file">
                 <input
                   type="file"

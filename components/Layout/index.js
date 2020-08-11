@@ -1,10 +1,7 @@
-import { useEffect } from "react";
-import axios from "axios";
-import cookie from "js-cookie";
+import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import useSWR from "swr";
 import { useRecipeContext } from "../../context/RecipeContext";
-import { useAuthContext } from "../../context/AuthContext";
-import { useNotificationContext } from "../../context/NotificationContext";
 import RecipeInput from "../RecipeInput";
 import Header from "../Header";
 import { AnimatePresence } from "framer-motion";
@@ -19,20 +16,21 @@ const Layout = ({ children }) => {
     toggleShowAddRecipe,
     toggleShowEditRecipe,
   } = useRecipeContext();
-  const { setUser, user } = useAuthContext();
-  const { getNotifications, addNotification } = useNotificationContext();
-
-  useEffect(() => {
-    if (user) {
-      getNotifications();
-    }
-  }, [user]);
+  const [loading, setLoading] = useState(true);
+  const { data: currentUser } = useSWR("/api/users/me", {
+    onSuccess: () => setLoading(false),
+    onError: () => setLoading(false),
+  });
+  const { data: notifications, mutate } = useSWR("/api/notifications");
 
   useEffect(() => {
     socket = io(process.env.NEXT_PUBLIC_BACKEND_URL);
-    if (user) {
-      socket.emit("online", user._id);
+    if (currentUser) {
+      socket.emit("online", currentUser._id);
     }
+    const addNotification = (notification) => {
+      mutate((data) => [...data, notification]);
+    };
     socket.on("getNotification", (notification) => {
       addNotification(notification);
     });
@@ -41,7 +39,11 @@ const Layout = ({ children }) => {
       socket.off();
     };
     // eslint-disable-next-line
-  }, [user]);
+  }, [currentUser]);
+
+  if (loading) {
+    return null;
+  }
 
   let content;
   if (showAddRecipe) {

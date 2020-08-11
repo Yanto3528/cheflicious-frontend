@@ -5,14 +5,13 @@ import Comments from "./Comments";
 import RelatedRecipe from "./RelatedRecipe";
 
 import { SingleRecipeContainer } from "./styles";
+import { RecipeDetailContainer } from "./RecipeDetail/styles";
 
 const SingleRecipe = ({ recipe, relatedRecipes }) => {
   const { setRecipe } = useRecipeContext();
 
   useEffect(() => {
-    if (recipe) {
-      setRecipe(recipe);
-    }
+    setRecipe(recipe);
   }, []);
 
   return (

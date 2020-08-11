@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import moment from "moment";
-import axios from "axios";
+import useSWR from "swr";
 import OutsideClickHandler from "react-outside-click-handler";
 import { AnimatePresence } from "framer-motion";
-import { useAuthContext } from "../../../context/AuthContext";
 import useToggle from "../../../lib/hook/useToggle";
 import Dropdown from "../../Dropdown";
 import { Ellipsis } from "../../Icons";
@@ -24,11 +23,11 @@ import { AddCommentFormGroup } from "../AddComment/styles";
 import Avatar from "../../../styles/shared/Avatar";
 
 const Comment = ({ comment, onDelete, onEdit }) => {
+  const { data: currentUser } = useSWR("/api/users/me");
   const [rows, setRows] = useState(1);
   const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown, setDropdown] = useToggle();
   const [showEdit, toggleEdit] = useToggle();
-  const { user } = useAuthContext();
 
   const { register, handleSubmit, errors, reset } = useForm({
     defaultValues: { content: comment.content },
@@ -63,7 +62,7 @@ const Comment = ({ comment, onDelete, onEdit }) => {
             <p>{comment.author.name}</p>
             <span>{moment(comment.createdAt).fromNow()}</span>
           </CommentHeaderDetail>
-          {user && user._id === comment.author._id && !showEdit && (
+          {currentUser && currentUser._id === comment.author._id && !showEdit && (
             <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>
               <EllipsisContainer onClick={() => setDropdown(true)}>
                 <Ellipsis />

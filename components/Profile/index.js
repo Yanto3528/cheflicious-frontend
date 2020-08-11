@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import useSWR from "swr";
+import axios from "axios";
 import RecipeCard from "../Recipe/RecipeCard";
 import Spinner from "../Spinner";
-import { useAuthContext } from "../../context/AuthContext";
+import { useAlertContext } from "../../context/AlertContext";
 import useInfiniteScroll from "../../lib/hook/useInfiniteScroll";
 import { Star } from "../Icons";
 import {
@@ -17,14 +19,11 @@ import Grid from "../../styles/shared/Grid";
 import { LoadingMoreContainer } from "../../styles/shared/LoadingIcon";
 
 const Profile = ({ user }) => {
+  const { data: currentUser, mutate } = useSWR("/api/users/me");
+  const { setAlert } = useAlertContext();
   const [activeTab, setActiveTab] = useState(0);
+  const [userLoading, setUserLoading] = useState(false);
   const [ref, inView] = useInView();
-  const {
-    user: currentUser,
-    followUser,
-    unFollowUser,
-    loading: userLoading,
-  } = useAuthContext();
   const [pageNumber, setPageNumber] = useState(1);
   const { data, loading, error, hasMore } = useInfiniteScroll(
     [],
@@ -42,11 +41,22 @@ const Profile = ({ user }) => {
     }
   }, [ref, inView, hasMore]);
 
-  const handleFollowAndUnfollow = () => {
+  const handleFollowAndUnfollow = async () => {
+    let url;
     if (currentUser.following.includes(user._id)) {
-      unFollowUser(user._id);
+      url = `/api/users/${user._id}/unfollow`;
     } else {
-      followUser(user._id);
+      url = `/api/users/${user._id}/follow`;
+    }
+    setUserLoading(true);
+    try {
+      await axios.put(url);
+      mutate();
+    } catch (error) {
+      console.log(error);
+      setAlert(error.response.data.error, "danger");
+    } finally {
+      setUserLoading(false);
     }
   };
 

@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { useAuthContext } from "../../../context/AuthContext";
+import Router from "next/router";
+import axios from "axios";
+import useSWR from "swr";
+import { useAlertContext } from "../../../context/AlertContext";
 import Avatar from "../../../styles/shared/Avatar";
 import { Setting, Person, PowerOff } from "../../Icons";
 import dropdownVariants from "../variants";
@@ -11,11 +14,20 @@ import {
 } from "./styles";
 
 const AccountDropdown = ({ toggle }) => {
-  const { user, signout } = useAuthContext();
+  const { data: currentUser } = useSWR("/api/users/me", {
+    revalidateOnFocus: false,
+  });
+  const { setAlert } = useAlertContext();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     toggle();
-    signout();
+    try {
+      await axios.post("/api/auth/logout");
+      localStorage.removeItem("user");
+      Router.push("/signin");
+    } catch (error) {
+      setAlert("There was a problem when logging out", "danger");
+    }
   };
 
   return (
@@ -27,13 +39,13 @@ const AccountDropdown = ({ toggle }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <AccountDropdownHeader>
-        <Avatar src={user.avatar} alt={user.name} />
+        <Avatar src={currentUser.avatar} alt={currentUser.name} />
         <div>
-          <p>{user.name}</p>
-          <span>{user.email}</span>
+          <p>{currentUser.name}</p>
+          <span>{currentUser.email}</span>
         </div>
       </AccountDropdownHeader>
-      <Link href="/profile/[id]" as={`/profile/${user._id}`}>
+      <Link href="/profile/[id]" as={`/profile/${currentUser._id}`}>
         <AccountDropdownItem onClick={toggle}>
           <Person />
           <span>My profile</span>

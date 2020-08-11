@@ -1,21 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
-import { useAuthContext } from "../../../context/AuthContext";
+import useSWR from "swr";
 import { useAlertContext } from "../../../context/AlertContext";
 import AddComment from "../AddComment";
 import Comment from "../Comment";
 
 import { HeartOutline, Heart } from "../../Icons";
 import { CommentsContainer, CommentsHeader, LikesContainer } from "./styles";
-import Avatar from "../../../styles/shared/Avatar";
 
 const Comments = ({ recipe }) => {
-  const { user } = useAuthContext();
+  const { data: currentUser } = useSWR("/api/users/me");
   const { setAlert } = useAlertContext();
+
   const [data, setData] = useState(recipe);
   const [comments, setComments] = useState(recipe.comments);
   const [loading, setLoading] = useState(false);
-  const [showDropdown, toggleDropdown] = useState(false);
 
   const onLikeRecipe = async () => {
     if (loading) {
@@ -23,13 +22,13 @@ const Comments = ({ recipe }) => {
     }
     try {
       setLoading(true);
-      if (data.likes.includes(user._id)) {
+      if (data.likes.includes(currentUser._id)) {
         setData({
           ...data,
-          likes: data.likes.filter((like) => like !== user._id),
+          likes: data.likes.filter((like) => like !== currentUser._id),
         });
       } else {
-        setData({ ...data, likes: [...data.likes, user._id] });
+        setData({ ...data, likes: [...data.likes, currentUser._id] });
       }
       await axios.put(`/api/recipes/${recipe._id}/like`);
     } catch (error) {
@@ -65,7 +64,11 @@ const Comments = ({ recipe }) => {
       <CommentsHeader>
         <h3>Comments</h3>
         <LikesContainer onClick={onLikeRecipe}>
-          {user && data.likes.includes(user._id) ? <Heart /> : <HeartOutline />}
+          {currentUser && data.likes.includes(currentUser._id) ? (
+            <Heart />
+          ) : (
+            <HeartOutline />
+          )}
           <span>{data.likes.length} people likes this</span>
         </LikesContainer>
       </CommentsHeader>

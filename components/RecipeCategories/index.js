@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import useSWR from "swr";
 import { useRouter } from "next/router";
 import RecipeList from "../Recipe/RecipeList";
 import BackLink from "../../styles/shared/BackLink";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useAuthContext } from "../../context/AuthContext";
+import useSWR from "swr";
 import Searchbar from "../Searchbar";
 import Menu from "../Menu";
 import AuthMenu from "../Menu/AuthMenu";
@@ -8,7 +8,9 @@ import { HeaderContainer, Logo, Nav } from "./styles";
 import Container from "../../styles/shared/Container";
 
 const Header = () => {
-  const { user } = useAuthContext();
+  const { data: currentUser } = useSWR("/api/users/me", {
+    revalidateOnFocus: false,
+  });
 
   return (
     <HeaderContainer>
@@ -18,7 +20,7 @@ const Header = () => {
             <Logo src="/logo.svg" alt="cheflicious-logo" />
           </Link>
           <Searchbar />
-          {user ? <AuthMenu /> : <Menu />}
+          {currentUser ? <AuthMenu /> : <Menu />}
         </Nav>
       </Container>
     </HeaderContainer>

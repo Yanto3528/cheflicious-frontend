@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import useSWR from "swr";
 import OutsideClickHandler from "react-outside-click-handler";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
@@ -17,14 +18,13 @@ import { RecipeDetailContainer, RecipeDetailHeader } from "./styles";
 import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 
 const SingleRecipeDetail = ({ recipe }) => {
+  const { data: currentUser } = useSWR("/api/users/me");
   const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown, setDropdown] = useToggle();
   const [showModal, toggleModal] = useToggle();
   const { toggleShowEditRecipe } = useRecipeContext();
   const { setAlert } = useAlertContext();
   const router = useRouter();
-
-  const onEditRecipe = () => toggleShowEditRecipe();
 
   const onDeleteRecipe = async () => {
     try {
@@ -57,20 +57,22 @@ const SingleRecipeDetail = ({ recipe }) => {
         <RecipeDetailHeader>
           <div>
             <h1>{recipe.title}</h1>
-            <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>
-              <span onClick={toggleDropdown}>
-                <Ellipsis />
-                <AnimatePresence>
-                  {showDropdown && (
-                    <Dropdown
-                      toggle={toggleDropdown}
-                      toggleEdit={onEditRecipe}
-                      onDelete={toggleModal}
-                    />
-                  )}
-                </AnimatePresence>
-              </span>
-            </OutsideClickHandler>
+            {currentUser && currentUser._id === recipe.author._id && (
+              <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>
+                <span onClick={toggleDropdown}>
+                  <Ellipsis />
+                  <AnimatePresence>
+                    {showDropdown && (
+                      <Dropdown
+                        toggle={toggleDropdown}
+                        toggleEdit={toggleShowEditRecipe}
+                        onDelete={toggleModal}
+                      />
+                    )}
+                  </AnimatePresence>
+                </span>
+              </OutsideClickHandler>
+            )}
           </div>
           <span>
             by{" "}

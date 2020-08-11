@@ -1,10 +1,9 @@
 import Link from "next/link";
+import useSWR from "swr";
 import useToggle from "../../../lib/hook/useToggle";
 import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
-import { useAuthContext } from "../../../context/AuthContext";
 import { useRecipeContext } from "../../../context/RecipeContext";
-import { useNotificationContext } from "../../../context/NotificationContext";
 import AccountDropdown from "../../Dropdown/AccountDropdown";
 import NotificationDropdown from "../../Dropdown/NotificationDropdown";
 import RecipeInput from "../../RecipeInput";
@@ -31,13 +30,13 @@ const AuthMenu = () => {
     setNotificationDropdown,
   ] = useToggle(false);
 
+  const { data: currentUser } = useSWR("/api/users/me");
+  const { data: notifications } = useSWR("/api/notifications");
   const { showAddRecipe, toggleShowAddRecipe } = useRecipeContext();
-  const { user } = useAuthContext();
-  const { notifications } = useNotificationContext();
 
-  const hasNotification = notifications.some(
-    (notification) => notification.read === false
-  );
+  const hasNotification =
+    notifications &&
+    notifications.some((notification) => notification.read === false);
 
   return (
     <React.Fragment>
@@ -82,7 +81,11 @@ const AuthMenu = () => {
         </OutsideClickHandler>
         <OutsideClickHandler onOutsideClick={() => setAccountDropdown(false)}>
           <NavMenuItem onClick={toggleAccountDropdown}>
-            <Avatar marginRight="0" src={user.avatar} alt={user.name} />
+            <Avatar
+              marginRight="0"
+              src={currentUser.avatar}
+              alt={currentUser.name}
+            />
             <AnimatePresence>
               {showAccountDropdown && (
                 <AccountDropdown toggle={toggleAccountDropdown} />
