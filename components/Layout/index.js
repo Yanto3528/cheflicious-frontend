@@ -21,7 +21,9 @@ const Layout = ({ children }) => {
     onSuccess: () => setLoading(false),
     onError: () => setLoading(false),
   });
-  const { data: notifications, mutate } = useSWR("/api/notifications");
+  const { data: notifications, mutate } = useSWR(
+    currentUser ? "/api/notifications" : null
+  );
 
   useEffect(() => {
     socket = io(process.env.NEXT_PUBLIC_BACKEND_URL);

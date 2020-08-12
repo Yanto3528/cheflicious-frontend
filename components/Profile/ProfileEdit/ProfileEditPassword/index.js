@@ -20,7 +20,6 @@ const ProfileEditPassword = () => {
       const res = await axios.put("/api/users/change-password", data);
       setAlert(res.data.message);
     } catch (error) {
-      console.log(error);
       setAlert(error.response.data.error, "danger");
     } finally {
       setLoading(false);

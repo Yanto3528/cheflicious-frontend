@@ -17,6 +17,14 @@ const recipeReducer = (state, action) => {
         ...state,
         showEditRecipe: !state.showEditRecipe,
       };
+    case recipeTypes.ADD_COMMENT:
+      return {
+        ...state,
+        recipe: {
+          ...state.recipe,
+          comments: [...state.recipe.comments, action.payload],
+        },
+      };
     default:
       return state;
   }

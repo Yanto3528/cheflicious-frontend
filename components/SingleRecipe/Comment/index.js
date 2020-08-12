@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import moment from "moment";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR from "swr";
 import OutsideClickHandler from "react-outside-click-handler";
 import { AnimatePresence } from "framer-motion";
@@ -17,21 +17,19 @@ import {
   CommentText,
   EllipsisContainer,
   CommentForm,
-  CommentInput,
 } from "./styles";
 import { AddCommentFormGroup } from "../AddComment/styles";
 import Avatar from "../../../styles/shared/Avatar";
 
+dayjs.extend(relativeTime);
+
 const Comment = ({ comment, onDelete, onEdit }) => {
   const { data: currentUser } = useSWR("/api/users/me");
+  const [content, setContent] = useState(comment.content);
   const [rows, setRows] = useState(1);
   const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown, setDropdown] = useToggle();
   const [showEdit, toggleEdit] = useToggle();
-
-  const { register, handleSubmit, errors, reset } = useForm({
-    defaultValues: { content: comment.content },
-  });
 
   const handleDelete = () => onDelete(comment._id);
 
@@ -43,14 +41,15 @@ const Comment = ({ comment, onDelete, onEdit }) => {
   const onChange = (e) => {
     const currentRows = calculateRows(e.target);
     setRows(currentRows);
+    setContent(e.target.value);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    await onEdit(comment._id, data);
+    await onEdit(comment._id, { content });
     setLoading(false);
     toggleEdit();
-    reset();
   };
 
   return (
@@ -60,7 +59,7 @@ const Comment = ({ comment, onDelete, onEdit }) => {
         <CommentHeader>
           <CommentHeaderDetail>
             <p>{comment.author.name}</p>
-            <span>{moment(comment.createdAt).fromNow()}</span>
+            <span>{dayjs(comment.createdAt).fromNow()}</span>
           </CommentHeaderDetail>
           {currentUser && currentUser._id === comment.author._id && !showEdit && (
             <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>
@@ -80,18 +79,18 @@ const Comment = ({ comment, onDelete, onEdit }) => {
           )}
         </CommentHeader>
         {showEdit ? (
-          <CommentForm onSubmit={handleSubmit(onSubmit)}>
+          <CommentForm onSubmit={onSubmit}>
             <AddCommentFormGroup>
               <textarea
                 placeholder="Write a comment..."
                 rows={rows}
                 onChange={onChange}
                 name="content"
-                ref={register({ required: true })}
+                value={content}
               />
             </AddCommentFormGroup>
             <div className="button-group">
-              <Button neutral onClick={toggleEdit} loading={loading}>
+              <Button neutral onClick={toggleEdit} disabled={loading}>
                 Cancel
               </Button>
               <Button loading={loading}>Submit</Button>

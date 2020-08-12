@@ -1,8 +1,20 @@
+import Head from "next/head";
 import axios from "axios";
 import RecipeCategories from "../../../components/RecipeCategories";
 
 const RecipesPage = (props) => {
-  return <RecipeCategories {...props} />;
+  return (
+    <React.Fragment>
+      <Head>
+        <title> {props.title} | Cheflicious</title>
+        <meta
+          name="description"
+          content={`Recipes for ${props.title.toLowerCase()}`}
+        />
+      </Head>
+      <RecipeCategories {...props} />
+    </React.Fragment>
+  );
 };
 
 export const getServerSideProps = async (ctx) => {

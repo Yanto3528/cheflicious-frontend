@@ -1,4 +1,5 @@
 import Router from "next/router";
+import Head from "next/head";
 import axios from "axios";
 import NProgress from "nprogress";
 import { SWRConfig } from "swr";
@@ -29,23 +30,28 @@ function MyApp({ Component, pageProps, router }) {
   const renderLayout = !router.pathname.startsWith("/sign");
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <SWRConfig value={options}>
-        <RootProvider>
-          <Alert />
-          {renderLayout ? (
-            <Layout>
-              <Container>
-                <Component {...pageProps} />
-              </Container>
-            </Layout>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </RootProvider>
-      </SWRConfig>
-    </ThemeProvider>
+    <React.Fragment>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <SWRConfig value={options}>
+          <RootProvider>
+            <Alert />
+            {renderLayout ? (
+              <Layout>
+                <Container>
+                  <Component {...pageProps} />
+                </Container>
+              </Layout>
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </RootProvider>
+        </SWRConfig>
+      </ThemeProvider>
+    </React.Fragment>
   );
 }
 

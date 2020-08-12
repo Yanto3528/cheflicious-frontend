@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
-import useAxios from "../../../lib/hook/useAxios";
 import calculateRows from "../../../utils/calculateRows";
 
 import Button from "../../Button";
 import { AddCommentFormContainer, AddCommentFormGroup } from "./styles";
 import Avatar from "../../../styles/shared/Avatar";
 
-const AddComment = ({ recipeId }) => {
-  const { data: currentUser } = useSWR("/api/users/me");
+const AddComment = ({ onAdd, currentUser }) => {
   const [rows, setRows] = useState(1);
-  const { loading, API } = useAxios();
+  const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit, errors, reset } = useForm();
 
@@ -21,16 +19,15 @@ const AddComment = ({ recipeId }) => {
   };
 
   const onSubmit = async (data) => {
-    await API("POST", `/api/recipes/${recipeId}/comments`, data);
+    setLoading(true);
+    await onAdd(data);
+    setLoading(false);
     reset();
   };
 
   return (
     <AddCommentFormContainer onSubmit={handleSubmit(onSubmit)}>
-      <Avatar
-        src={currentUser && currentUser.avatar}
-        alt={currentUser && currentUser.name}
-      />
+      <Avatar src={currentUser.avatar} alt={currentUser.name} />
       <AddCommentFormGroup>
         <textarea
           placeholder="Write a comment..."

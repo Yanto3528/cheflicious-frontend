@@ -1,8 +1,20 @@
+import Head from "next/head";
 import axios from "axios";
 import SingleRecipe from "../../components/SingleRecipe";
 
 const SingleRecipePage = (props) => {
-  return <SingleRecipe {...props} />;
+  return (
+    <React.Fragment>
+      <Head>
+        <title> {props.recipe.title} | Cheflicious</title>
+        <meta
+          name="description"
+          content={props.recipe.description.substring(0, 160)}
+        />
+      </Head>
+      <SingleRecipe {...props} />
+    </React.Fragment>
+  );
 };
 
 export const getServerSideProps = async (ctx) => {

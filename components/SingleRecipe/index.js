@@ -5,20 +5,23 @@ import Comments from "./Comments";
 import RelatedRecipe from "./RelatedRecipe";
 
 import { SingleRecipeContainer } from "./styles";
-import { RecipeDetailContainer } from "./RecipeDetail/styles";
 
 const SingleRecipe = ({ recipe, relatedRecipes }) => {
-  const { setRecipe } = useRecipeContext();
+  const { setRecipe, recipe: currentRecipe } = useRecipeContext();
 
   useEffect(() => {
     setRecipe(recipe);
   }, []);
 
+  if (!currentRecipe) {
+    return null;
+  }
+
   return (
     <SingleRecipeContainer>
       <div>
-        <RecipeDetail recipe={recipe} />
-        <Comments recipe={recipe} />
+        <RecipeDetail recipe={currentRecipe} />
+        <Comments recipe={currentRecipe} />
       </div>
       <RelatedRecipe relatedRecipes={relatedRecipes} />
     </SingleRecipeContainer>

@@ -1,26 +1,29 @@
 import axios from "axios";
 import Head from "next/head";
 import Home from "../components/Home";
-import Page from "../components/Page";
-import { authAPI } from "../lib/api";
 
 const HomePage = ({ currentUser, ...props }) => {
   return (
-    <Page currentUser={currentUser}>
+    <React.Fragment>
+      <Head>
+        <title>Sharing Recipes around the world | Cheflicious</title>
+        <meta
+          name="description"
+          content="Looking for some delicious recipe for your next cooking? People are sharing their most delicious recipe with others around the world. Join now"
+        />
+      </Head>
       <Home {...props} />
-    </Page>
+    </React.Fragment>
   );
 };
 
 export const getServerSideProps = async (ctx) => {
   try {
     const res = await axios.get("/api/recipes");
-    // const currentUser = await authAPI(ctx);
     return {
       props: {
         recipes: res.data.data,
         nextPage: res.data.nextPage,
-        // currentUser,
       },
     };
   } catch (error) {

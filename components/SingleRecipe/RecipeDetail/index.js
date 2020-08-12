@@ -1,10 +1,11 @@
 import { useState } from "react";
-import Link from "next/link";
+import { AnimatePresence } from "framer-motion";
 import axios from "axios";
 import useSWR from "swr";
 import OutsideClickHandler from "react-outside-click-handler";
-import { AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useRouter } from "next/router";
+
 import { useAlertContext } from "../../../context/AlertContext";
 import { useRecipeContext } from "../../../context/RecipeContext";
 import RecipeInstructions from "../RecipeInstructions";
@@ -12,6 +13,7 @@ import RecipeIngredients from "../RecipeIngredients";
 import Dropdown from "../../Dropdown";
 import Modal from "../../Modal";
 import { Ellipsis, Close } from "../../Icons";
+
 import useToggle from "../../../lib/hook/useToggle";
 
 import { RecipeDetailContainer, RecipeDetailHeader } from "./styles";

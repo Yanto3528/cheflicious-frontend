@@ -53,7 +53,6 @@ const Profile = ({ user }) => {
       await axios.put(url);
       mutate();
     } catch (error) {
-      console.log(error);
       setAlert(error.response.data.error, "danger");
     } finally {
       setUserLoading(false);

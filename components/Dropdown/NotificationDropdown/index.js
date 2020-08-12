@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useSWR from "swr";
-import moment from "moment";
-import ReactMarkdown from "react-markdown/with-html";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import useAxios from "../../../lib/hook/useAxios";
 import dropdownVariants from "../variants";
 import CloseIcon from "../../CloseIcon";
@@ -13,6 +13,8 @@ import {
   NotificationPlaceholder,
 } from "./styles";
 import Avatar from "../../../styles/shared/Avatar";
+
+dayjs.extend(relativeTime);
 
 const NotificationDropdown = () => {
   const { data: notifications, mutate } = useSWR("/api/notifications");
@@ -67,11 +69,10 @@ const NotificationDropdown = () => {
                 alt={notification.sender.name}
               />
               <div>
-                <ReactMarkdown
-                  source={notification.message}
-                  escapeHtml={false}
+                <div
+                  dangerouslySetInnerHTML={{ __html: notification.message }}
                 />
-                <span>{moment(notification.createdAt).fromNow()}</span>
+                <span>{dayjs(notification.createdAt).fromNow()}</span>
               </div>
               <CloseIcon
                 onClick={() => deleteSingleNotification(notification._id)}

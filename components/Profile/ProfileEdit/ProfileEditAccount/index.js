@@ -45,7 +45,6 @@ const ProfileEditAccount = () => {
       const res = await axios.put("/api/users/update", formData);
       setAlert(res.data.message);
     } catch (error) {
-      console.log(error);
       setAlert(error.response.data.error, "danger");
     } finally {
       setLoading(false);
