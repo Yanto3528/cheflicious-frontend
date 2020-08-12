@@ -1,22 +1,13 @@
 import styled, { css } from "styled-components";
-
-const pillStyles = css`
-  outline: none;
-  border: none;
-  border-radius: 50px;
-  padding: 15px 20px;
-  width: 100%;
-  transition: all 0.4s;
-`;
+import { FormGroup } from "../../styles/shared/Form";
 
 export const AuthFormContainer = styled.div`
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   > img {
-    height: 100%;
+    width: 50%;
     object-fit: cover;
-    flex-basis: 50%;
   }
   > div {
     background-color: ${({ theme }) => theme.primaryLight};
@@ -25,6 +16,14 @@ export const AuthFormContainer = styled.div`
     align-items: center;
     justify-content: center;
   }
+  @media only screen and (max-width: 1150px) {
+    > img {
+      display: none;
+    }
+    > div {
+      flex-basis: 100%;
+    }
+  }
 `;
 
 export const Form = styled.form`
@@ -32,6 +31,11 @@ export const Form = styled.form`
   flex-direction: column;
   align-items: center;
   width: 550px;
+  max-width: 100vw;
+  padding: 0 10px;
+  ${FormGroup} {
+    padding: 0;
+  }
   img {
     width: 200px;
     cursor: pointer;
@@ -53,4 +57,5 @@ export const Form = styled.form`
 export const FormSubtitle = styled.p`
   margin-top: 20px;
   margin-bottom: 30px;
+  text-align: center;
 `;

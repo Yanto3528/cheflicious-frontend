@@ -16,7 +16,11 @@ import { Ellipsis, Close } from "../../Icons";
 
 import useToggle from "../../../lib/hook/useToggle";
 
-import { RecipeDetailContainer, RecipeDetailHeader } from "./styles";
+import {
+  RecipeDetailContainer,
+  RecipeDetailHeader,
+  EllipsisContainer,
+} from "./styles";
 import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
 
 const SingleRecipeDetail = ({ recipe }) => {
@@ -61,7 +65,7 @@ const SingleRecipeDetail = ({ recipe }) => {
             <h1>{recipe.title}</h1>
             {currentUser && currentUser._id === recipe.author._id && (
               <OutsideClickHandler onOutsideClick={() => setDropdown(false)}>
-                <span onClick={toggleDropdown}>
+                <EllipsisContainer onClick={toggleDropdown}>
                   <Ellipsis />
                   <AnimatePresence>
                     {showDropdown && (
@@ -72,7 +76,7 @@ const SingleRecipeDetail = ({ recipe }) => {
                       />
                     )}
                   </AnimatePresence>
-                </span>
+                </EllipsisContainer>
               </OutsideClickHandler>
             )}
           </div>

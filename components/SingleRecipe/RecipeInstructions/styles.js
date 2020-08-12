@@ -18,6 +18,11 @@ export const RecipeInstructionsHeader = styled.div`
       margin-left: 20px;
     }
   }
+  @media only screen and (max-width: 500px) {
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
 `;
 
 export const RecipeInstructionsStepContainer = styled.div`

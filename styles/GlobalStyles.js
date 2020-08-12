@@ -9,6 +9,9 @@ export default createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 62.5%;
+    @media only screen and (max-width: 500px) {
+      font-size: 50%;
+    }
   }
 
   body {
@@ -18,6 +21,7 @@ export default createGlobalStyle`
     background-color: ${({ theme }) => theme.lightgrey};
     line-height: 1.5;
     padding-bottom: 50px;
+    height: 100vh;
   }
   h1, h2, h3, h4, h5,h6 {
     font-family: "Poppins", sans-serif;

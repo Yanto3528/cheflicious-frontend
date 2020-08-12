@@ -15,6 +15,11 @@ export const RecipeIngredientsHeader = styled.div`
   h2 {
     font-weight: 600;
   }
+  @media only screen and (max-width: 500px) {
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
 `;
 
 export const RecipeIngredientList = styled.ul`

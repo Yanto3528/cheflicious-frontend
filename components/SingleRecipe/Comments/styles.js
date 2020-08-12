@@ -27,7 +27,6 @@ export const LikesContainer = styled.div`
     }
   }
   span {
-    width: 145px;
     text-align: right;
   }
 `;

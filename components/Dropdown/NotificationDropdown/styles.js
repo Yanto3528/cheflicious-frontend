@@ -6,12 +6,19 @@ export const NotificationDropdownContainer = styled(motion.div)`
   bottom: 10px;
   right: 0;
   z-index: 20;
-  transform: translateY(100%);
+  transform: translate(100%);
   background-color: ${({ theme }) => theme.lightgrey};
   box-shadow: ${({ theme }) => theme.boxShadow};
   border-radius: 5px;
   overflow: hidden;
   width: 400px;
+  @media only screen and (max-width: 800px) {
+    right: -100px;
+    bottom: -10px;
+  }
+  @media only screen and (max-width: 500px) {
+    width: 90vw;
+  }
 `;
 export const NotificationDropdownHeader = styled.div`
   background-color: white;

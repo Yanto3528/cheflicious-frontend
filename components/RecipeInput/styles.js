@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const RecipeInputContainer = styled(motion.div)`
@@ -6,13 +6,19 @@ export const RecipeInputContainer = styled(motion.div)`
   top: 0;
   left: 0;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: white;
   z-index: 100;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 50px 0;
+  @media only screen and (max-width: 500px) {
+    > span:first-child {
+      top: 10px;
+      right: 10px;
+    }
+  }
 `;
 
 export const RecipeInputFormGroupContainer = styled.div`

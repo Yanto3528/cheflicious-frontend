@@ -3,14 +3,30 @@ import styled from "styled-components";
 export const NavMenu = styled.ul`
   display: flex;
   align-items: center;
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+    justify-content: center;
+  }
+  @media only screen and (max-width: 500px) {
+    /* justify-content: space-between; */
+  }
+  > *:not(:first-child) {
+    margin-left: 40px;
+  }
 `;
 
 export const NavMenuItem = styled.li`
-  margin-left: 40px;
+  /* margin-left: 40px; */
   padding: 20px 0;
   position: relative;
   img {
     cursor: pointer;
+  }
+  @media only screen and (max-width: 800px) {
+    padding: 10px 0;
+  }
+  @media only screen and (max-width: 500px) {
+    flex: 1;
   }
 `;
 

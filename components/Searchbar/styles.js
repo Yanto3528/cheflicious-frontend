@@ -1,7 +1,15 @@
 import styled from "styled-components";
 
 export const SearchbarContainer = styled.div`
-  width: 500px;
+  width: 60%;
+  @media only screen and (max-width: 1050px) {
+    max-width: 500px;
+    margin-left: 20px;
+    width: 80%;
+  }
+  @media only screen and (max-width: 800px) {
+    flex: 1;
+  }
   form {
     position: relative;
     input {

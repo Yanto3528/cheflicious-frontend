@@ -61,7 +61,8 @@ const Comments = ({ recipe }) => {
           ) : (
             <HeartOutline />
           )}
-          <span>{data.likes.length} people likes this</span>
+          {/* <span>{data.likes.length} people likes this</span> */}
+          <span>999 people likes this</span>
         </LikesContainer>
       </CommentsHeader>
       {comments &&

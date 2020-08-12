@@ -48,15 +48,15 @@ const AuthForm = (props) => {
               );
             }
           )}
+          <Button pill padding="15px 20px" fontSize="1.6rem" loading={loading}>
+            {submitText}
+          </Button>
           <span>
             {accountText}{" "}
             <Link href={link}>
               <a>{linkText}</a>
             </Link>
           </span>
-          <Button pill padding="15px 20px" fontSize="1.6rem" loading={loading}>
-            {submitText}
-          </Button>
         </Form>
       </div>
     </AuthFormContainer>

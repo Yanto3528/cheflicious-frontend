@@ -5,6 +5,12 @@ export const ProfileDetailContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+  @media only screen and (max-width: 500px) {
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
 `;
 
 export const ProfileDetail = styled.div`

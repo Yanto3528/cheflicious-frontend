@@ -8,13 +8,13 @@ export const RecipeDetailContainer = styled.section`
   overflow: hidden;
   img {
     width: 100%;
-    height: 600px;
+    height: calc(width / 1.33333);
     object-fit: cover;
   }
   ${BadgeGroup} {
     padding: 10px 20px;
     ${Badge} {
-      margin-bottom: 0;
+      margin-bottom: 10px;
     }
   }
 `;
@@ -26,15 +26,6 @@ export const RecipeDetailHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    span {
-      cursor: pointer;
-      position: relative;
-      svg {
-        path: {
-          fill: ${({ theme }) => theme.darkgrey};
-        }
-      }
-    }
   }
   h1 {
     font-size: 3rem;
@@ -44,5 +35,32 @@ export const RecipeDetailHeader = styled.div`
   }
   p {
     margin-top: 10px;
+  }
+  @media only screen and (max-width: 500px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+`;
+
+export const EllipsisContainer = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  svg {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    path: {
+      fill: ${({ theme }) => theme.darkgrey};
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
