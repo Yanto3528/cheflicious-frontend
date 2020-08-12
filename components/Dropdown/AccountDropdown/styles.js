@@ -12,6 +12,10 @@ export const AccountDropdownContainer = styled(motion.div)`
   border-radius: 5px;
   overflow: hidden;
   width: 300px;
+  @media only screen and (max-width: 500px) {
+    width: 90vw;
+    bottom: 0;
+  }
 `;
 
 export const AccountDropdownHeader = styled.div`

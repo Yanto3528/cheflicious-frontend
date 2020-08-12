@@ -9,4 +9,7 @@ export const SingleRecipeContainer = styled.main`
     grid-template-columns: 1fr;
     grid-gap: 24px;
   }
+  > div:first-child {
+    max-width: 100%;
+  }
 `;

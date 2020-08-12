@@ -29,9 +29,9 @@ const RecipeList = ({ title, recipes, url, nextPage }) => {
     <RecipeListContainer>
       <h1>{title}</h1>
       {recipes.length === 0 && (
-        <h2>
+        <h3>
           Unfortunately, <span>{title}</span> does not have any recipe.
-        </h2>
+        </h3>
       )}
       <Grid>
         {data.map((recipe, index) => {

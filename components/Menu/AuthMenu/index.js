@@ -14,7 +14,7 @@ import {
   ChatBubbles,
   Notifications,
 } from "../../Icons";
-import { NavMenu, NavMenuItem, MenuIcon } from "../styles";
+import { AuthNavMenu, NavMenuItem, MenuIcon } from "../styles";
 import Avatar from "../../../styles/shared/Avatar";
 import { RoundedBadge } from "../../../styles/shared/Badge";
 
@@ -40,7 +40,7 @@ const AuthMenu = () => {
 
   return (
     <React.Fragment>
-      <NavMenu>
+      <AuthNavMenu>
         <NavMenuItem onClick={toggleShowAddRecipe}>
           <MenuIcon>
             <Add />
@@ -93,7 +93,7 @@ const AuthMenu = () => {
             </AnimatePresence>
           </NavMenuItem>
         </OutsideClickHandler>
-      </NavMenu>
+      </AuthNavMenu>
       <AnimatePresence>
         {showAddRecipe && (
           <RecipeInput titleText="Create Recipe" toggle={toggleShowAddRecipe} />

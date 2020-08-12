@@ -14,13 +14,21 @@ export const RecipeInstructionsHeader = styled.div`
   > div {
     display: flex;
     align-items: center;
-    span {
+    > span {
       margin-left: 20px;
     }
   }
   @media only screen and (max-width: 500px) {
     h2 {
       font-size: 1.8rem;
+    }
+    > div {
+      > span {
+        margin-left: 10px;
+      }
+      > span:not(:last-child) {
+        margin-left: 0;
+      }
     }
   }
 `;

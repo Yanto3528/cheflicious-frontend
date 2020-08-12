@@ -9,4 +9,10 @@ export default styled.span`
     height: 20px;
     margin-right: 5px;
   }
+  @media only screen and (max-width: 360px) {
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
 `;

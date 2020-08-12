@@ -18,4 +18,8 @@ export default styled.span`
         return theme.success;
     }
   }};
+  @media only screen and (max-width: 360px) {
+    width: 15px;
+    height: 15px;
+  }
 `;

@@ -6,9 +6,16 @@ export const ProfileDetailContainer = styled.div`
   align-items: center;
   margin-bottom: 50px;
   @media only screen and (max-width: 500px) {
+    align-items: flex-start;
     img {
       width: 100px;
       height: 100px;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    img {
+      width: 60px;
+      height: 60px;
     }
   }
 `;
@@ -41,6 +48,11 @@ export const ProfileDetail = styled.div`
     &:disabled {
       cursor: not-allowed;
       opacity: 0.5;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    h1 {
+      font-size: 2rem;
     }
   }
 `;

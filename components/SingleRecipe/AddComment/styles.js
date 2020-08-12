@@ -7,6 +7,12 @@ export const AddCommentFormContainer = styled.form`
   img {
     align-self: flex-start;
   }
+  @media only screen and (max-width: 360px) {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
 `;
 export const AddCommentFormGroup = styled.div`
   display: flex;
@@ -30,5 +36,11 @@ export const AddCommentFormGroup = styled.div`
     align-self: flex-end;
     width: auto;
     margin-left: 10px;
+  }
+  @media only screen and (max-width: 360px) {
+    textarea,
+    button {
+      padding: 10px;
+    }
   }
 `;

@@ -8,6 +8,12 @@ export const CommentContainer = styled.div`
   > div {
     flex: 1;
   }
+  @media only screen and (max-width: 360px) {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
 `;
 
 export const CommentText = styled.p`

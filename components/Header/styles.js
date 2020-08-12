@@ -5,6 +5,7 @@ export const HeaderContainer = styled.header`
   top: 0;
   z-index: 50;
   min-height: 80px;
+  width: 100vw;
   margin-bottom: 50px;
   background-color: white;
   box-shadow: ${({ theme }) => theme.boxShadow};
@@ -23,6 +24,9 @@ export const Logo = styled.img`
   }
   @media only screen and (max-width: 500px) {
     width: 90px;
+  }
+  @media only screen and (max-width: 320px) {
+    width: 80px;
   }
 `;
 

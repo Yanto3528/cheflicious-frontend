@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { Search } from "../Icons";
-import { SearchbarContainer } from "./styles";
+import { SearchbarContainer, SearchInput, SearchButton } from "./styles";
 
 const Searchbar = () => {
   const { register, handleSubmit } = useForm();
@@ -14,15 +14,15 @@ const Searchbar = () => {
   return (
     <SearchbarContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+        <SearchInput
           type="text"
           placeholder="Search recipes..."
           name="search"
           ref={register}
         />
-        <button>
+        <SearchButton>
           <Search />
-        </button>
+        </SearchButton>
       </form>
     </SearchbarContainer>
   );

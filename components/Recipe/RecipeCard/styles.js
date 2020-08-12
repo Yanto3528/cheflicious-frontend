@@ -12,6 +12,8 @@ export const RecipeCardDetail = styled.div`
 export const RecipeCardImageContainer = styled.div`
   overflow: hidden;
   position: relative;
+  width: 100%;
+  height: calc(width / 1.3333);
   img {
     width: 100%;
     height: 100%;
@@ -46,7 +48,18 @@ export const RecipeCardContainer = styled(motion.div)`
     padding: ${({ small }) => (small ? "20px" : "0 20px")};
   }
   ${RecipeCardImageContainer} {
-    height: ${({ small }) => (small ? "200px" : "300px")};
+    max-height: ${({ small }) => (small ? "200px" : "300px")};
+  }
+  @media only screen and (max-width: 360px) {
+    h2 {
+      padding: 10px;
+    }
+    ${RecipeCardDetail} {
+      padding: 10px;
+    }
+    ${BadgeGroup} {
+      padding: 10px;
+    }
   }
 `;
 
@@ -57,6 +70,7 @@ export const RecipeCategories = styled.div`
   align-items: center;
   gap: 10px;
 `;
+
 export const RecipeCardSocial = styled.div`
   padding: 20px;
   border-top: 1px solid ${({ theme }) => theme.lightgrey2};
@@ -73,5 +87,8 @@ export const RecipeCardSocial = styled.div`
       height: 20px;
       margin-right: 5px;
     }
+  }
+  @media only screen and (max-width: 360px) {
+    padding: 10px;
   }
 `;

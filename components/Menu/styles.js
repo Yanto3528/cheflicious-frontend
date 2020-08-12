@@ -1,22 +1,32 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const NavMenu = styled.ul`
+const baseMenuStyles = css`
   display: flex;
   align-items: center;
+  > *:not(:first-child) {
+    margin-left: 40px;
+  }
   @media only screen and (max-width: 800px) {
     width: 100%;
     justify-content: center;
   }
   @media only screen and (max-width: 500px) {
-    /* justify-content: space-between; */
+    position: relative;
   }
-  > *:not(:first-child) {
-    margin-left: 40px;
+`;
+
+export const NavMenu = styled.ul`
+  ${baseMenuStyles}
+`;
+
+export const AuthNavMenu = styled.ul`
+  ${baseMenuStyles}
+  @media only screen and (max-width: 500px) {
+    justify-content: space-between;
   }
 `;
 
 export const NavMenuItem = styled.li`
-  /* margin-left: 40px; */
   padding: 20px 0;
   position: relative;
   img {
@@ -26,7 +36,13 @@ export const NavMenuItem = styled.li`
     padding: 10px 0;
   }
   @media only screen and (max-width: 500px) {
-    flex: 1;
+    position: static;
+  }
+  @media only screen and (max-width: 320px) {
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
 `;
 
@@ -56,5 +72,14 @@ export const MenuIcon = styled.span`
   svg {
     width: 25px;
     height: 25px;
+  }
+  @media only screen and (max-width: 500px) {
+    position: static;
+  }
+  @media only screen and (max-width: 320px) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;

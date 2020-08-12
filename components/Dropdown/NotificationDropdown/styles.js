@@ -13,11 +13,13 @@ export const NotificationDropdownContainer = styled(motion.div)`
   overflow: hidden;
   width: 400px;
   @media only screen and (max-width: 800px) {
-    right: -100px;
+    right: -125px;
     bottom: -10px;
   }
   @media only screen and (max-width: 500px) {
     width: 90vw;
+    right: 0;
+    bottom: 0;
   }
 `;
 export const NotificationDropdownHeader = styled.div`

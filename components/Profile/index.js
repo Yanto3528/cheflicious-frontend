@@ -95,12 +95,6 @@ const Profile = ({ user }) => {
           >
             Recipes ({user.recipes.length})
           </ProfileRecipesNav>
-          <ProfileRecipesNav
-            active={activeTab === 1}
-            onClick={() => onChangeTab(1)}
-          >
-            <Star /> Favorites
-          </ProfileRecipesNav>
         </ProfileRecipesHeader>
         <Grid>
           {data.map((recipe, index) => {

@@ -14,7 +14,7 @@ import {
 } from "./styles";
 
 const AccountDropdown = ({ toggle }) => {
-  const { data: currentUser } = useSWR("/api/users/me", {
+  const { data: currentUser, mutate } = useSWR("/api/users/me", {
     revalidateOnFocus: false,
   });
   const { setAlert } = useAlertContext();
@@ -23,7 +23,7 @@ const AccountDropdown = ({ toggle }) => {
     toggle();
     try {
       await axios.post("/api/auth/logout");
-      localStorage.removeItem("user");
+      mutate(null);
       Router.push("/signin");
     } catch (error) {
       setAlert("There was a problem when logging out", "danger");
