@@ -24,6 +24,9 @@ axios.defaults.withCredentials = true;
 const options = {
   fetcher: (url) => axios.get(url).then((res) => res.data),
   revalidateOnFocus: false,
+  onErrorRetry: (err, key, config, revalidate, revalidateOps) => {
+    revalidate = false;
+  },
 };
 
 function MyApp({ Component, pageProps, router }) {

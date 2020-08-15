@@ -1,5 +1,7 @@
 import Link from "next/link";
+import useSWR from "swr";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import Button from "../Button";
 import { AuthFormContainer, Form, FormSubtitle } from "./styles";
@@ -7,6 +9,9 @@ import { Input, FormGroup } from "../../styles/shared/Form";
 import ErrorText from "../../styles/shared/ErrorText";
 
 const AuthForm = (props) => {
+  const { data: currentUser } = useSWR("/api/users/me");
+  const router = useRouter();
+
   const {
     loading,
     formInputs,
@@ -19,6 +24,10 @@ const AuthForm = (props) => {
   } = props;
 
   const { register, handleSubmit, errors } = useForm();
+
+  if (currentUser) {
+    router.push("/error", "/");
+  }
 
   return (
     <AuthFormContainer>

@@ -12,6 +12,9 @@ const baseMenuStyles = css`
   }
   @media only screen and (max-width: 500px) {
     position: relative;
+    > *:not(:first-child) {
+      margin-left: 0;
+    }
   }
 `;
 
@@ -37,8 +40,8 @@ export const NavMenuItem = styled.li`
   }
   @media only screen and (max-width: 500px) {
     position: static;
-  }
-  @media only screen and (max-width: 320px) {
+    padding: 0;
+    padding-top: 10px;
     img {
       width: 40px;
       height: 40px;
@@ -72,14 +75,5 @@ export const MenuIcon = styled.span`
   svg {
     width: 25px;
     height: 25px;
-  }
-  @media only screen and (max-width: 500px) {
-    position: static;
-  }
-  @media only screen and (max-width: 320px) {
-    svg {
-      width: 20px;
-      height: 20px;
-    }
   }
 `;

@@ -27,15 +27,16 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     socket = io(process.env.NEXT_PUBLIC_BACKEND_URL);
-    if (currentUser) {
-      socket.emit("online", currentUser._id);
-    }
     const addNotification = (notification) => {
       mutate((data) => [...data, notification]);
+      mutate();
     };
-    socket.on("getNotification", (notification) => {
-      addNotification(notification);
-    });
+    if (currentUser) {
+      socket.emit("online", currentUser._id);
+      socket.on("getNotification", (notification) => {
+        addNotification(notification);
+      });
+    }
     return () => {
       socket.emit("disconnect");
       socket.off();

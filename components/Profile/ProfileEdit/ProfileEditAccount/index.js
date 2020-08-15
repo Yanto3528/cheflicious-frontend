@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import axios from "axios";
 import useSWR from "swr";
 import { useAlertContext } from "../../../../context/AlertContext";
@@ -19,10 +20,11 @@ import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
 
 const ProfileEditAccount = () => {
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { data: currentUser, error } = useSWR("/api/users/me");
   const { setAlert } = useAlertContext();
   const { imagePreview, handleChangeImage, handleImageUpload } = useImage();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -53,11 +55,18 @@ const ProfileEditAccount = () => {
   };
 
   useEffect(() => {
+    if (error) {
+      router.push("/");
+    }
     if (currentUser && getValues("name") === "") {
       setValue("name", currentUser.name);
       setValue("bio", currentUser.bio);
     }
-  }, [currentUser]);
+  }, [currentUser, error]);
+
+  if (error) {
+    return null;
+  }
 
   return (
     currentUser && (

@@ -6,7 +6,6 @@ import RecipeCard from "../Recipe/RecipeCard";
 import Spinner from "../Spinner";
 import { useAlertContext } from "../../context/AlertContext";
 import useInfiniteScroll from "../../lib/hook/useInfiniteScroll";
-import { Star } from "../Icons";
 import {
   ProfileContainer,
   ProfileDetailContainer,

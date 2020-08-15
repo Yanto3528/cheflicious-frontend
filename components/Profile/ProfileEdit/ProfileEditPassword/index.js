@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import axios from "axios";
+import useSWR from "swr";
 import { useAlertContext } from "../../../../context/AlertContext";
 
 import ProfileEditNav from "../ProfileEditNav";
@@ -10,6 +12,8 @@ import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
 
 const ProfileEditPassword = () => {
+  const { data: currentUser } = useSWR("/api/users/me");
+  const router = useRouter();
   const { setAlert } = useAlertContext();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, errors, watch, reset } = useForm();
@@ -26,6 +30,11 @@ const ProfileEditPassword = () => {
       reset();
     }
   };
+
+  if (!currentUser) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <ProfileEditContainer>

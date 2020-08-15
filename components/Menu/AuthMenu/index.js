@@ -11,7 +11,7 @@ import RecipeInput from "../../RecipeInput";
 import {
   Add,
   CategoriesOutline,
-  ChatBubbles,
+  HomeOutline,
   Notifications,
 } from "../../Icons";
 import { AuthNavMenu, NavMenuItem, MenuIcon } from "../styles";
@@ -41,6 +41,13 @@ const AuthMenu = () => {
   return (
     <React.Fragment>
       <AuthNavMenu>
+        <NavMenuItem>
+          <Link href="/">
+            <MenuIcon>
+              <HomeOutline />
+            </MenuIcon>
+          </Link>
+        </NavMenuItem>
         <NavMenuItem onClick={toggleShowAddRecipe}>
           <MenuIcon>
             <Add />
@@ -52,11 +59,6 @@ const AuthMenu = () => {
               <CategoriesOutline />
             </MenuIcon>
           </Link>
-        </NavMenuItem>
-        <NavMenuItem>
-          <MenuIcon>
-            <ChatBubbles />
-          </MenuIcon>
         </NavMenuItem>
         <OutsideClickHandler
           onOutsideClick={() => setNotificationDropdown(false)}

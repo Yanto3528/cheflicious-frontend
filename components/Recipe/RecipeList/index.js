@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import RecipeCard from "../RecipeCard";
 import useInfiniteScroll from "../../../lib/hook/useInfiniteScroll";

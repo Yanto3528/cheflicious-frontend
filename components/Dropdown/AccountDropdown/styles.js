@@ -13,7 +13,7 @@ export const AccountDropdownContainer = styled(motion.div)`
   overflow: hidden;
   width: 300px;
   @media only screen and (max-width: 500px) {
-    width: 90vw;
+    width: 100vw;
     bottom: 0;
   }
 `;

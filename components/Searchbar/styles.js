@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SearchbarContainer = styled.div`
   width: 60%;
-  margin-right: 20px;
+  margin-right: 40px;
   @media only screen and (max-width: 1050px) {
     max-width: 500px;
     margin-left: 20px;

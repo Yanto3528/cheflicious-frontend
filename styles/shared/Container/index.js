@@ -6,4 +6,7 @@ export default styled.div`
   @media only screen and (max-width: 1275px) {
     padding: 0 20px;
   }
+  @media only screen and (max-width: 500px) {
+    padding: 0 10px;
+  }
 `;

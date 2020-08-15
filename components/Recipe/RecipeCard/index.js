@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Clock, Servings, HeartOutline, CommentOutline } from "../../Icons";
 import convertNumberToTime from "../../../utils/convertNumberToTime";
 import {
@@ -17,7 +16,7 @@ const RecipeCard = React.forwardRef(({ small, recipe }, ref) => {
     <Link href="/recipes/[slug]" as={`/recipes/${recipe.slug}`}>
       <RecipeCardContainer ref={ref && ref} small={small}>
         <RecipeCardImageContainer>
-          <motion.img src={recipe.image} alt={recipe.title} />
+          <img src={recipe.image} alt={recipe.title} />
         </RecipeCardImageContainer>
         <h2>{recipe.title}</h2>
         <RecipeCardDetail>

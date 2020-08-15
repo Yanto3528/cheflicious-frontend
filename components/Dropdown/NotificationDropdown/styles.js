@@ -17,7 +17,7 @@ export const NotificationDropdownContainer = styled(motion.div)`
     bottom: -10px;
   }
   @media only screen and (max-width: 500px) {
-    width: 90vw;
+    width: 100vw;
     right: 0;
     bottom: 0;
   }

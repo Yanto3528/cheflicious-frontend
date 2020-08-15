@@ -13,8 +13,13 @@ export const RecipeCardImageContainer = styled.div`
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: calc(width / 1.3333);
+  padding-top: 75%;
   img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -47,9 +52,9 @@ export const RecipeCardContainer = styled(motion.div)`
   ${RecipeCardDetail} {
     padding: ${({ small }) => (small ? "20px" : "0 20px")};
   }
-  ${RecipeCardImageContainer} {
+  /* ${RecipeCardImageContainer} {
     max-height: ${({ small }) => (small ? "200px" : "300px")};
-  }
+  } */
   @media only screen and (max-width: 360px) {
     h2 {
       padding: 10px;

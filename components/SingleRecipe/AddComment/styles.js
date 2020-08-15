@@ -31,6 +31,7 @@ export const AddCommentFormGroup = styled.div`
     resize: none;
     line-height: 1.5;
     flex: 1;
+    height: auto;
   }
   button {
     align-self: flex-end;
