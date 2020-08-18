@@ -10,7 +10,7 @@ const calculateRows = (element, minRows = 1, maxRows = 5) => {
   // Calculate textarea height
   const textareaScrollHeight = element.scrollHeight - paddingVertical;
 
-  // Calculate current rows and round it
+  // Calculate current rows
   const currentRows = ~~(textareaScrollHeight / lineHeight);
 
   if (currentRows === previousRows) {
