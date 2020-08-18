@@ -18,7 +18,8 @@ Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
+axios.defaults.baseURL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
 axios.defaults.withCredentials = true;
 
 const options = {

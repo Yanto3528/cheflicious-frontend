@@ -28,7 +28,7 @@ const RecipeList = ({ title, recipes, url, nextPage }) => {
   return (
     <RecipeListContainer>
       <h1>{title}</h1>
-      {recipes.length === 0 && (
+      {data.length === 0 && (
         <h3>
           Unfortunately, <span>{title}</span> does not have any recipe.
         </h3>

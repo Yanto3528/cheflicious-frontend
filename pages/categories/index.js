@@ -18,8 +18,12 @@ const CategoriesPage = ({ ...props }) => {
 };
 
 export const getStaticProps = async (ctx) => {
-  const res = await axios.get("/api/categories");
-  return { props: { categories: res.data } };
+  try {
+    const res = await axios.get("/api/categories");
+    return { props: { categories: res.data } };
+  } catch (error) {
+    return { props: { categories: [] } };
+  }
 };
 
 export default CategoriesPage;
