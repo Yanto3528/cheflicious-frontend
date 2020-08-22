@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useAlertContext } from "../../../context/AlertContext";
 import { useAuthContext } from "../../../context/AuthContext";
 import Avatar from "../../../styles/shared/Avatar";
@@ -15,12 +15,13 @@ import {
 const AccountDropdown = ({ toggle }) => {
   const { setAlert } = useAlertContext();
   const { currentUser, signOut } = useAuthContext();
+  const router = useRouter();
 
   const handleLogout = async () => {
     toggle();
     try {
       signOut();
-      Router.push("/signin");
+      router.push("/signin");
     } catch (error) {
       setAlert("There was a problem when logging out", "danger");
     }
