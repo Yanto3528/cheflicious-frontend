@@ -10,9 +10,10 @@ import ProfileEditContainer from "../styles";
 import { Form, FormGroup, Input } from "../../../../styles/shared/Form";
 import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
+import { useAuthContext } from "../../../../context/AuthContext";
 
 const ProfileEditPassword = () => {
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { currentUser } = useAuthContext();
   const router = useRouter();
   const { setAlert } = useAlertContext();
   const [loading, setLoading] = useState(false);

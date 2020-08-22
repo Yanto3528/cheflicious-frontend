@@ -7,9 +7,10 @@ import Comment from "../Comment";
 
 import { HeartOutline, Heart } from "../../Icons";
 import { CommentsContainer, CommentsHeader, LikesContainer } from "./styles";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const Comments = ({ recipe }) => {
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { currentUser } = useAuthContext();
   const { loading, API } = useAxios();
 
   const [data, setData] = useState(recipe);

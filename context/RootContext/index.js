@@ -1,10 +1,13 @@
 import RecipeProvider from "../RecipeContext";
 import AlertProvider from "../AlertContext";
+import AuthProvider from "../AuthContext";
 
 const RootProvider = ({ children }) => {
   return (
     <AlertProvider>
-      <RecipeProvider>{children}</RecipeProvider>
+      <AuthProvider>
+        <RecipeProvider>{children}</RecipeProvider>
+      </AuthProvider>
     </AlertProvider>
   );
 };

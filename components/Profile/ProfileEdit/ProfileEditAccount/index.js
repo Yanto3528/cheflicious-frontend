@@ -18,9 +18,10 @@ import {
 } from "../../../../styles/shared/Form";
 import Button from "../../../../styles/shared/Button";
 import ErrorText from "../../../../styles/shared/ErrorText";
+import { useAuthContext } from "../../../../context/AuthContext";
 
 const ProfileEditAccount = () => {
-  const { data: currentUser, error } = useSWR("/api/users/me");
+  const { currentUser, loading: userLoading } = useAuthContext();
   const { setAlert } = useAlertContext();
   const { imagePreview, handleChangeImage, handleImageUpload } = useImage();
   const [loading, setLoading] = useState(false);
@@ -55,16 +56,16 @@ const ProfileEditAccount = () => {
   };
 
   useEffect(() => {
-    if (error) {
+    if (!currentUser && !userLoading) {
       router.push("/");
     }
     if (currentUser && getValues("name") === "") {
       setValue("name", currentUser.name);
       setValue("bio", currentUser.bio);
     }
-  }, [currentUser, error]);
+  }, [currentUser, userLoading]);
 
-  if (error) {
+  if (!currentUser && !userLoading) {
     return null;
   }
 

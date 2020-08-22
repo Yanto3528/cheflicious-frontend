@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import io from "socket.io-client";
+import cookie from "js-cookie";
 import useSWR from "swr";
 import { useRecipeContext } from "../../context/RecipeContext";
 import RecipeInput from "../RecipeInput";
 import Header from "../Header";
 import { AnimatePresence } from "framer-motion";
+import { useAuthContext } from "../../context/AuthContext";
 
 let socket;
 
@@ -16,14 +18,16 @@ const Layout = ({ children }) => {
     toggleShowAddRecipe,
     toggleShowEditRecipe,
   } = useRecipeContext();
-  const [loading, setLoading] = useState(true);
-  const { data: currentUser } = useSWR("/api/users/me", {
-    onSuccess: () => setLoading(false),
-    onError: () => setLoading(false),
-  });
+  const { currentUser, loading, loadUser } = useAuthContext();
   const { data: notifications, mutate } = useSWR(
     currentUser ? "/api/notifications" : null
   );
+
+  useEffect(() => {
+    if (cookie.get("token")) {
+      loadUser();
+    }
+  }, []);
 
   useEffect(() => {
     socket = io(process.env.NEXT_PUBLIC_BACKEND_URL);

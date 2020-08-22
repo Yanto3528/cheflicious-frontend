@@ -1,5 +1,4 @@
 import Link from "next/link";
-import useSWR from "swr";
 import Searchbar from "../Searchbar";
 import Menu from "../Menu";
 import AuthMenu from "../Menu/AuthMenu";
@@ -13,11 +12,10 @@ import {
   HamburgerMenu,
 } from "./styles";
 import Container from "../../styles/shared/Container";
+import { useAuthContext } from "../../context/AuthContext";
 
 const Header = () => {
-  const { data: currentUser } = useSWR("/api/users/me", {
-    revalidateOnFocus: false,
-  });
+  const { currentUser } = useAuthContext();
   const [showMenu, toggleMenu] = useToggle();
 
   return (

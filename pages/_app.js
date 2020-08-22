@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import Router from "next/router";
 import Head from "next/head";
 import axios from "axios";
 import NProgress from "nprogress";
 import { SWRConfig } from "swr";
 import { ThemeProvider } from "styled-components";
+import cookie from "js-cookie";
+
 import RootProvider from "../context/RootContext";
 import Layout from "../components/Layout";
 import Alert from "../components/Alert";
@@ -32,6 +35,13 @@ const options = {
 
 function MyApp({ Component, pageProps, router }) {
   const renderLayout = !router.pathname.startsWith("/sign");
+
+  useEffect(() => {
+    if (cookie.get("token")) {
+      const token = cookie.get("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, [cookie.get("token")]);
 
   return (
     <React.Fragment>

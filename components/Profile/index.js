@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import useSWR from "swr";
 import axios from "axios";
 import RecipeCard from "../Recipe/RecipeCard";
 import Spinner from "../Spinner";
@@ -16,9 +15,10 @@ import {
 import Avatar from "../../styles/shared/Avatar";
 import Grid from "../../styles/shared/Grid";
 import { LoadingMoreContainer } from "../../styles/shared/LoadingIcon";
+import { useAuthContext } from "../../context/AuthContext";
 
 const Profile = ({ user }) => {
-  const { data: currentUser, mutate } = useSWR("/api/users/me");
+  const { currentUser, updateUser } = useAuthContext();
   const { setAlert } = useAlertContext();
   const [activeTab, setActiveTab] = useState(0);
   const [userLoading, setUserLoading] = useState(false);
@@ -49,8 +49,8 @@ const Profile = ({ user }) => {
     }
     setUserLoading(true);
     try {
-      await axios.put(url);
-      mutate();
+      const res = await axios.put(url);
+      updateUser(res.data);
     } catch (error) {
       setAlert(error.response.data.error, "danger");
     } finally {

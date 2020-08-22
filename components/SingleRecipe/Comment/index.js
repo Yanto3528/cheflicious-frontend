@@ -20,11 +20,12 @@ import {
 } from "./styles";
 import { AddCommentFormGroup } from "../AddComment/styles";
 import Avatar from "../../../styles/shared/Avatar";
+import { useAuthContext } from "../../../context/AuthContext";
 
 dayjs.extend(relativeTime);
 
 const Comment = ({ comment, onDelete, onEdit }) => {
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { currentUser } = useAuthContext();
   const [content, setContent] = useState(comment.content);
   const [rows, setRows] = useState(1);
   const [loading, setLoading] = useState(false);

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import useSWR from "swr";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
@@ -7,9 +6,10 @@ import Button from "../Button";
 import { AuthFormContainer, Form, FormSubtitle } from "./styles";
 import { Input, FormGroup } from "../../styles/shared/Form";
 import ErrorText from "../../styles/shared/ErrorText";
+import { useAuthContext } from "../../context/AuthContext";
 
 const AuthForm = (props) => {
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { currentUser } = useAuthContext();
   const router = useRouter();
 
   const {

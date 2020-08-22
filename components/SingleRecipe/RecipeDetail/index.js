@@ -22,9 +22,10 @@ import {
   EllipsisContainer,
 } from "./styles";
 import Badge, { BadgeGroup } from "../../../styles/shared/Badge";
+import { useAuthContext } from "../../../context/AuthContext";
 
 const SingleRecipeDetail = ({ recipe }) => {
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { currentUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [showDropdown, toggleDropdown, setDropdown] = useToggle();
   const [showModal, toggleModal] = useToggle();

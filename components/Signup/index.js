@@ -1,6 +1,5 @@
 import AuthForm from "../AuthForm";
-import useAxios from "../../lib/hook/useAxios";
-import { mutate } from "swr";
+import { useAuthContext } from "../../context/AuthContext";
 
 const formInputs = [
   {
@@ -27,11 +26,10 @@ const formInputs = [
 ];
 
 const Signup = () => {
-  const { loading, API } = useAxios();
+  const { signUp, loading } = useAuthContext();
 
   const onSubmit = (data) => {
-    API("POST", "/api/auth/register", data, "/");
-    mutate("/api/users/me");
+    signUp(data);
   };
   return (
     <AuthForm

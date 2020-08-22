@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Router from "next/router";
-import axios from "axios";
-import useSWR from "swr";
 import { useAlertContext } from "../../../context/AlertContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import Avatar from "../../../styles/shared/Avatar";
 import { Setting, Person, PowerOff } from "../../Icons";
 import dropdownVariants from "../variants";
@@ -14,16 +13,13 @@ import {
 } from "./styles";
 
 const AccountDropdown = ({ toggle }) => {
-  const { data: currentUser, mutate } = useSWR("/api/users/me", {
-    revalidateOnFocus: false,
-  });
   const { setAlert } = useAlertContext();
+  const { currentUser, signOut } = useAuthContext();
 
   const handleLogout = async () => {
     toggle();
     try {
-      await axios.post("/api/auth/logout");
-      mutate(null);
+      signOut();
       Router.push("/signin");
     } catch (error) {
       setAlert("There was a problem when logging out", "danger");

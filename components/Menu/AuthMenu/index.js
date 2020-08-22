@@ -4,6 +4,7 @@ import useToggle from "../../../lib/hook/useToggle";
 import { AnimatePresence } from "framer-motion";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useRecipeContext } from "../../../context/RecipeContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import AccountDropdown from "../../Dropdown/AccountDropdown";
 import NotificationDropdown from "../../Dropdown/NotificationDropdown";
 import RecipeInput from "../../RecipeInput";
@@ -30,7 +31,7 @@ const AuthMenu = () => {
     setNotificationDropdown,
   ] = useToggle(false);
 
-  const { data: currentUser } = useSWR("/api/users/me");
+  const { currentUser } = useAuthContext();
   const { data: notifications } = useSWR("/api/notifications");
   const { showAddRecipe, toggleShowAddRecipe } = useRecipeContext();
 
