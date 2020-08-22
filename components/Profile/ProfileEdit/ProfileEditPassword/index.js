@@ -12,7 +12,7 @@ import ErrorText from "../../../../styles/shared/ErrorText";
 import { useAuthContext } from "../../../../context/AuthContext";
 
 const ProfileEditPassword = () => {
-  const { currentUser } = useAuthContext();
+  const { currentUser, loading: userLoading } = useAuthContext();
   const router = useRouter();
   const { setAlert } = useAlertContext();
   const [loading, setLoading] = useState(false);
@@ -31,8 +31,13 @@ const ProfileEditPassword = () => {
     }
   };
 
-  if (!currentUser) {
-    router.push("/");
+  useEffect(() => {
+    if (!currentUser && !userLoading) {
+      router.push("/");
+    }
+  }, [currentUser, userLoading]);
+
+  if (!currentUser && !userLoading) {
     return null;
   }
 
@@ -90,7 +95,7 @@ const ProfileEditPassword = () => {
             <ErrorText>Password do not match</ErrorText>
           )}
         </FormGroup>
-        <Button>Change Password</Button>
+        <Button loading={loading}>Change Password</Button>
       </Form>
     </ProfileEditContainer>
   );
