@@ -60,7 +60,10 @@ const AuthProvider = ({ children }) => {
 
   const loadUser = async () => {
     try {
-      const res = await axios.get("/api/users/me");
+      const token = cookie.get("token");
+      const res = await axios.get("/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch({ type: authTypes.LOAD_USER_SUCCESS, payload: res.data });
     } catch (error) {
       setAlert(error.response.data.error, "danger");

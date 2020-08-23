@@ -15,7 +15,6 @@ export const InputFileContainer = styled.div`
       css`
         width: 100%;
         height: 100%;
-        cursor: pointer;
         background-image: ${({ src }) => `url(${src})`};
         background-position: center;
         background-size: cover;

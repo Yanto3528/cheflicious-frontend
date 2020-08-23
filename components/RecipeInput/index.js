@@ -3,6 +3,7 @@ import axios from "axios";
 
 // Hook and Contexts
 import useRecipe from "../../lib/hook/useRecipe";
+import useImage from "../../lib/hook/useImage";
 
 // Components
 import Select from "../Select";
@@ -40,6 +41,7 @@ const RecipeInput = ({ titleText, toggle, isEdit, recipe }) => {
     handleChange,
     onSubmit,
   } = useRecipe(recipe, toggle, isEdit);
+
   const {
     title,
     description,
